@@ -5,20 +5,20 @@ This package contains mapping configurations to convert Dataverse JSON into **DC
 ---
 
 ## Files Included
-- **dcat-root.txt**: Defines prefixes, DCAT elements, and structural relations.
-- **dcat-dataset.txt**: Maps Dataverse dataset-level metadata to DCAT fields.
-- **dcat-distribution.txt**: Maps file-level metadata to DCAT distributions.
-- **dcat-dataservice.txt**: Defines and populates the DataService node for the Dataverse API.
-- **dcat-catalog.txt**: Maps catalog-wide metadata including contact and publisher.
+- **dcat-root.properties**: Defines prefixes, DCAT elements, and structural relations.
+- **dcat-dataset.properties**: Maps Dataverse dataset-level metadata to DCAT fields.
+- **dcat-distribution.properties**: Maps file-level metadata to DCAT distributions.
+- **dcat-dataservice.properties**: Defines and populates the DataService node for the Dataverse API.
+- **dcat-catalog.properties**: Maps catalog-wide metadata including contact and publisher.
 
 ---
 
 ## How the Mapping Works
 
-### 1. dcat-root.txt
+### 1. dcat-root.properties
 Defines global prefixes, including DCAT, DCT, FOAF, VCARD, SKOS, LOCN, GeoSPARQL, SPDX, RDF, OWL, and ELI. Configures element declarations and their relationships—e.g., linking datasets to catalogs and services.
 
-### 2. dcat-dataset.txt
+### 2. dcat-dataset.properties
 Translates dataset metadata into key DCAT entities:
 - **Identifiers**: DOI mapped to `dct:identifier`.
 - **Title/Description**: Uses language-tagged literals (`en`).
@@ -35,7 +35,7 @@ Translates dataset metadata into key DCAT entities:
    - Maps Dataverse values to official EU HVD category IRIs and attaches local `skos:prefLabel` for offline SHACL validation.
 - **Spatial Metadata**: Maps geospatial coverage to `dct:spatial` → `dct:Location` → `locn:Address` → structured address components; optional geometry nodes included.
 
-### 3. dcat-distribution.txt
+### 3. dcat-distribution.properties
 Translates file metadata into DCAT distributions:
 - **Byte size**: `dcat:byteSize` as `xsd:nonNegativeInteger`.
 - **Media type**: IANA type mapped to `dct:MediaType`.
@@ -44,7 +44,7 @@ Translates file metadata into DCAT distributions:
 - **Service**: Links to the API DataService node.
 - **Checksum**: Creates a SPDX `Checksum` node with a typed algorithm and hexBinary value. The algorithm is modeled as a blank node with `owl:sameAs` to standard IRIs, satisfying SHACL constraints.
 
-### 4. dcat-dataservice.txt
+### 4. dcat-dataservice.properties
 Captures metadata about the Dataverse API:
 - **Title/Description**: Human-readable info.
 - **Identifier**: API base URL.
@@ -53,7 +53,7 @@ Captures metadata about the Dataverse API:
 - **Language, Keywords, Access Rights, Theme, License**: Satisfy DCAT‑AP‑NL minCard constraints.
 - **Creator, Publisher, Contact**: Modeled similarly to dataset.
 
-### 5. dcat-catalog.txt
+### 5. dcat-catalog.properties
 Maps the catalog to DCAT:
 - **Contact**: vCard `Kind` with full name, email, and URL.
 - **Publisher**: FOAF Agent with ROR linking and multilingual names.
