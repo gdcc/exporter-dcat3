@@ -52,7 +52,7 @@ class DcatApNL30ComplianceTest {
         URL dcatRootPropertiesUrl =
                 getClass()
                         .getClassLoader()
-                        .getResource("input/config_AP_NL30/dcat-root.properties");
+                        .getResource( "AP_NL30/mapping/dcat-root.properties" );
         assertThat(dcatRootPropertiesUrl).isNotNull();
         File dcatRootPropetiesFile = new File(dcatRootPropertiesUrl.toURI());
         System.setProperty(RootConfigLoader.SYS_PROP, dcatRootPropetiesFile.getAbsolutePath());

@@ -160,6 +160,16 @@
   </dependencies>
 
   <build>
+
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+      </testResource>
+      <testResource>
+        <directory>application_profiles</directory>
+      </testResource>
+    </testResources>
+
     <plugins>
 
       <plugin>

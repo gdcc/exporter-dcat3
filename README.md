@@ -48,6 +48,54 @@ The exporter reads mapping files such as:
 - `dcat-dataservice.properties`
 - `dcat-catalog.properties`
 
+This plugin builds a DCAT entity-relational model based on:
+1. dcat-root.properties – defines the core DCAT structure.
+2. Entity-specific .properties files – each file represents a DCAT entity and its relationships.
+
+Under the application_profiles directory, you will find several ready-to-use profiles:
+
+### Lightweight Application Profile
+A minimal configuration that does not require additional metadata. Can act as a base for own / further development.
+
+### [Dutch National Application Profile (DCAT-AP-NL 3.0)](https://docs.geostandaarden.nl/dcat/dcat-ap-nl30/)
+The official Dutch profile, including mappings for all mandatory fields. This is completed with the Tab Separated Value definition of required additional fields.
+
+### Why Application Profiles?
+Application profiles define how DCAT is applied in a specific context—national, sectoral, or domain-specific. They ensure interoperability and consistency when publishing metadata.
+
+### How to Contribute: 
+We welcome contributions of national, sectoral, or other reusable application profiles. To add a new profile:
+
+Create a new subdirectory under application_profiles/ (e.g., application_profiles/<profile_name>).
+Add a mapping/ folder containing:
+* dcat-root.properties - describing the structure
+* One .properties file per DCAT entity (e.g., dcat-catalog.properties, dcat-dataset.properties, etc.).
+
+Include: 
+* a short README.md in the profile directory with:
+* The purpose and context of the profile.
+* A link to the official specification (if available).
+
+Example Structure:
+```text
+application_profiles/
+   my-profile/
+      mapping/
+         dcat-root.properties
+         dcat-catalog.properties
+         dcat-dataset.properties
+      my-profile-mandatory.tsv - definition of additional metadata block(s)
+      my-profile-optional.tsv - definition of additional metadata block(s)
+      my-profile.properties - language bundle(s)   
+   ...
+   README.md
+```
+⚠️ **Point of Attention**: When defining mappings for an application profile using TSV files, it is recommended to split mandatory and optional fields into separate files.
+This approach makes it easier for users to:
+* Reuse the mandatory mappings
+* Include optional mappings when required
+* Add their onw optional mappings
+
 > **Location:** place all mapping files in a directory pointed to the JVM system property:
 >
 > ```java
@@ -68,7 +116,7 @@ The exporter reads mapping files such as:
 - **Relations**: n:m links between element subjects applied after model merge.
 
 See [DOCUMENTATION.md](DOCUMENTATION.md) for the full reference.
-See also [this](src/test/resources/input/config_AP_NL30/README.md) example for a mapping example.
+See also [this](application_profiles/AP_NL30/README.md) example for a mapping example.
 
 ---
 

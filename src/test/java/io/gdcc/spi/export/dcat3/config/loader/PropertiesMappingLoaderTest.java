@@ -5,6 +5,7 @@ import static io.gdcc.spi.export.util.AssertionsUtil.assertValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import io.gdcc.spi.export.dcat3.config.model.NodeTemplate;
@@ -23,7 +24,7 @@ public class PropertiesMappingLoaderTest {
 
     @Test
     void loads_subject() throws Exception {
-        ResourceConfig resourceConfig = load("input/config_AP_NL30/dcat-catalog.properties");
+        ResourceConfig resourceConfig = load( "AP_NL30/mapping/dcat-catalog.properties" );
 
         assertThat(resourceConfig.subject().iriConst())
                 .isEqualTo("https://data.example.org/catalog/gdn-test");
@@ -33,7 +34,7 @@ public class PropertiesMappingLoaderTest {
 
     @Test
     void loads_literal_properties_with_lang_and_json_or_const() throws Exception {
-        ResourceConfig resourceConfig = load("input/config_AP_NL30/dcat-catalog.properties");
+        ResourceConfig resourceConfig = load( "AP_NL30/mapping/dcat-catalog.properties" );
 
         ValueSource titleEn = resourceConfig.props().get("title_en");
         assertValueSource(
@@ -62,7 +63,7 @@ public class PropertiesMappingLoaderTest {
 
     @Test
     void loads_node_ref_properties_and_node_templates() throws Exception {
-        ResourceConfig resourceConfig = load("input/config_AP_NL30/dcat-catalog.properties");
+        ResourceConfig resourceConfig = load( "AP_NL30/mapping/dcat-catalog.properties" );
 
         // contact node-ref property
         ValueSource cp = resourceConfig.props().get("contactPoint");
@@ -145,7 +146,7 @@ public class PropertiesMappingLoaderTest {
             props.foo.bar = unknown
             """;
         ResourceConfig resourceConfig =
-                new ResourceConfigLoader().load(new java.io.ByteArrayInputStream(props.getBytes()));
+                new ResourceConfigLoader().load(new ByteArrayInputStream( props.getBytes()));
 
         // loader should have created ValueSource and set the known field only
         assertThat(resourceConfig.props()).containsKey("foo");
