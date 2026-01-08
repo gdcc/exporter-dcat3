@@ -13,7 +13,7 @@ class ExportDataTest {
 
         // -- prepare
         ExportDataProvider exportDataProvider =
-                getExportDataProvider("src/test/resources/input/export_data_source_1");
+                getExportDataProvider("src/test/resources/input/export_data_source_lightweight");
         ExportData result = ExportData.builder().provider(exportDataProvider).build();
 
         // -- verify

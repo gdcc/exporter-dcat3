@@ -1,0 +1,40 @@
+#metadataBlock	name	dataverseAlias	displayName	blockURI
+	DCATMetadata		DCAT AP-NL 3.0 dataset metadata
+#datasetField	name	title	description	watermark	fieldType	displayOrder	displayFormat	advancedSearchField	allowControlledVocabulary	allowmultiples	facetable	displayoncreate	required	parent	metadatablock_id	termURI
+	accessRights	Access rights	This property contains information indicating whether the dataset is publicly accessible, has access restrictions, or is not accessible.	public	text	3	#VALUE	FALSE	TRUE	FALSE	TRUE	TRUE	TRUE		DCATMetadata
+	identifier	Identifier	Identifier is used for the unique identification of the data.		text	1	#VALUE	TRUE	FALSE	FALSE	FALSE	TRUE	TRUE		DCATMetadata
+	keyword	Keyword	This property contains commonly used words or formalised phrases to describe a dataset that do not come from a controlled vocabulary.		text	6	#VALUE	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE		DCATMetadata
+	publisher	Publisher	The organisation responsible for publishing the dataset.	Geological Survey of the Netherlands	text	2	#VALUE	TRUE	TRUE	FALSE	TRUE	TRUE	TRUE		DCATMetadata
+	theme	Theme	The category of the dataset.		text	4	#VALUE	TRUE	TRUE	TRUE	TRUE	TRUE	TRUE		DCATMetadata	http://publications.europa.eu/resource/authority/data-theme
+	applicableLegislation	Applicable legislation	This property contains the HvD legislation that mandates the creation or management of the dataset.		url	5	"<a href=""#VALUE"">#VALUE</a>"	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE		DCATMetadata
+	hvdCompliant	HvD compliant	Indicates wheter or not the dataset is subject to the High-Value Datasets Implementation Regulation.		none	7		FALSE	FALSE	FALSE	FALSE	TRUE	FALSE		DCATMetadata
+	hvdApplicableLegislation	HvD applicable legislation	This property contains the HvD legislation that mandates the creation or management of the dataset.	https://eur-lex.europa.eu/eli/reg_impl/2023/138/oj	url	8	"<a href=""#VALUE"">#VALUE</a>"	FALSE	TRUE	FALSE	TRUE	TRUE	TRUE	hvdCompliant	DCATMetadata
+	hvdCategory	HvD category	This property contains the HVD category to which this dataset belongs, if the dataset falls under the High-Value Datasets Implementing Regulation.		text	9	#VALUE	FALSE	TRUE	TRUE	TRUE	TRUE	TRUE	hvdCompliant	DCATMetadata
+	GDNdomain	Domain	A type of dataset		text	0	#VALUE	FALSE	TRUE	FALSE	TRUE	TRUE	TRUE		DCATMetadata
+	rights	Rights	A statement specifying the rights associated with distribution. This shall only include the remaining rights that are not covered by the licence or access rights.		text	10	#VALUE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE		DCATMetadata
+#controlledVocabulary	DatasetField	Value	identifier	displayOrder	termURI
+	accessRights	public	public	0
+	accessRights	non_public	non_public	1
+	accessRights	restricted	restricted	2
+	publisher	geo_survey_nl	geo_survey_nl	0
+	theme	ener	ener	0	http://publications.europa.eu/resource/authority/data-theme/ENER
+	theme	tech	tech	1	http://publications.europa.eu/resource/authority/data-theme/TECH
+	theme	envi	envi	2	http://publications.europa.eu/resource/authority/data-theme/ENVI
+	hvdApplicableLegislation	eu_2023_138	eu_2023_138	0	https://eur-lex.europa.eu/eli/reg_impl/2023/138/oj
+	hvdCategory	geology	geology	0
+	hvdCategory	mineral_resources	mineral_resources	1
+	hvdCategory	soil	soil	2
+	hvdCategory	energy_resources	energy_resources	3
+	hvdCategory	environmental_monitoring_facilities	environmental_monitoring_facilities	4
+	hvdCategory	area_management	area_management	5
+	hvdCategory	industrial_facilities	industrial_facilities	6
+	GDNdomain	co2_storage	co2_storage	0	
+	GDNdomain	energy_transition	energy_transition	1	
+	GDNdomain	geology	geology	2	
+	GDNdomain	geothermal_energy	geothermal_energy	3	
+	GDNdomain	groundwater	groundwater	4	
+	GDNdomain	hydrogen_storage	hydrogen_storage	5	
+	GDNdomain	seismicity	seismicity	6	
+	GDNdomain	oil_gas	oil_gas	7	
+	GDNdomain	rocksalt	rocksalt	8	
+	GDNdomain	subsidence	subsidence	9	
