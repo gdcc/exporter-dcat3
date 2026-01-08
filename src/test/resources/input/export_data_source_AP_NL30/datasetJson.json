@@ -130,9 +130,9 @@
           }
         ]
       },
-      "GDNDatasetMetadata": {
+      "DCATMetadata": {
         "displayName": "GDN dataset metadata",
-        "name": "GDNDatasetMetadata",
+        "name": "DCATMetadata",
         "fields": [
           {
             "typeName": "GDNdomain",
@@ -141,25 +141,25 @@
             "value": "geothermal_energy"
           },
           {
-            "typeName": "GDNidentifier",
+            "typeName": "identifier",
             "multiple": false,
             "typeClass": "primitive",
             "value": "Test"
           },
           {
-            "typeName": "GDNpublisher",
+            "typeName": "publisher",
             "multiple": false,
             "typeClass": "controlledVocabulary",
             "value": "geo_survey_nl"
           },
           {
-            "typeName": "GDNaccessRights",
+            "typeName": "accessRights",
             "multiple": false,
             "typeClass": "controlledVocabulary",
             "value": "restricted"
           },
           {
-            "typeName": "GDNtheme",
+            "typeName": "theme",
             "multiple": true,
             "typeClass": "controlledVocabulary",
             "value": [
@@ -167,18 +167,18 @@
             ]
           },
           {
-            "typeName": "GDNhvdCompliant",
+            "typeName": "hvdCompliant",
             "multiple": false,
             "typeClass": "compound",
             "value": {
-              "GDNhvdApplicableLegislation": {
-                "typeName": "GDNhvdApplicableLegislation",
+              "hvdApplicableLegislation": {
+                "typeName": "hvdApplicableLegislation",
                 "multiple": false,
                 "typeClass": "controlledVocabulary",
                 "value": "eu_2023_138"
               },
-              "GDNhvdCategory": {
-                "typeName": "GDNhvdCategory",
+              "hvdCategory": {
+                "typeName": "hvdCategory",
                 "multiple": true,
                 "typeClass": "controlledVocabulary",
                 "value": [

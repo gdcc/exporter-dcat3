@@ -4,6 +4,10 @@ This package contains mapping configurations to convert Dataverse JSON into **DC
 
 ---
 
+⚠️ **Point of Attention**: The mapping to the Dutch AP-NL-3.0 profile is currently incomplete. It does not include all optional or recommended fields, as it has been tailored to the specific user 
+context. The intention is to remove any fields and TSV entries that do not apply to your organization. Additional relevant DCAT-AP-NL 3.0 mappings can, of course, be added over time.
+
+
 ## Files Included
 - **dcat-root.properties**: Defines prefixes, DCAT elements, and structural relations.
 - **dcat-dataset.properties**: Maps Dataverse dataset-level metadata to DCAT fields.

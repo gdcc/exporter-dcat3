@@ -84,17 +84,11 @@ application_profiles/
          dcat-root.properties
          dcat-catalog.properties
          dcat-dataset.properties
-      my-profile-mandatory.tsv - definition of additional metadata block(s)
-      my-profile-optional.tsv - definition of additional metadata block(s)
+      my-profile.tsv - definition of additional metadata block(s)
       my-profile.properties - language bundle(s)   
    ...
    README.md
 ```
-⚠️ **Point of Attention**: When defining mappings for an application profile using TSV files, it is recommended to split mandatory and optional fields into separate files.
-This approach makes it easier for users to:
-* Reuse the mandatory mappings
-* Include optional mappings when required
-* Add their onw optional mappings
 
 > **Location:** place all mapping files in a directory pointed to the JVM system property:
 >
@@ -102,7 +96,7 @@ This approach makes it easier for users to:
 > public static final String SYS_PROP = "dataverse.dcat3.config";
 > ```
 >
-> Configure it similar to the exporters directory:
+> Configure it similar to the exporters' directory:
 >
 > ```xml
 > <jvm-options>-Ddataverse.dcat3.config=/path/to/dcat3-config</jvm-options>

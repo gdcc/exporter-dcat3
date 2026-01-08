@@ -115,47 +115,47 @@
             "value" : "2025-12-17"
           } ]
         },
-        "GDNDatasetMetadata" : {
+        "DCATMetadata" : {
           "displayName" : "GDN dataset metadata",
-          "name" : "GDNDatasetMetadata",
+          "name" : "DCATMetadata",
           "fields" : [ {
             "typeName" : "GDNdomain",
             "multiple" : false,
             "typeClass" : "controlledVocabulary",
             "value" : "geothermal_energy"
           }, {
-            "typeName" : "GDNidentifier",
+            "typeName" : "identifier",
             "multiple" : false,
             "typeClass" : "primitive",
             "value" : "Test"
           }, {
-            "typeName" : "GDNpublisher",
+            "typeName" : "publisher",
             "multiple" : false,
             "typeClass" : "controlledVocabulary",
             "value" : "geo_survey_nl"
           }, {
-            "typeName" : "GDNaccessRights",
+            "typeName" : "accessRights",
             "multiple" : false,
             "typeClass" : "controlledVocabulary",
             "value" : "restricted"
           }, {
-            "typeName" : "GDNtheme",
+            "typeName" : "theme",
             "multiple" : true,
             "typeClass" : "controlledVocabulary",
             "value" : [ "tech" ]
           }, {
-            "typeName" : "GDNhvdCompliant",
+            "typeName" : "hvdCompliant",
             "multiple" : false,
             "typeClass" : "compound",
             "value" : {
-              "GDNhvdApplicableLegislation" : {
-                "typeName" : "GDNhvdApplicableLegislation",
+              "hvdApplicableLegislation" : {
+                "typeName" : "hvdApplicableLegislation",
                 "multiple" : false,
                 "typeClass" : "controlledVocabulary",
                 "value" : "eu_2023_138"
               },
-              "GDNhvdCategory" : {
-                "typeName" : "GDNhvdCategory",
+              "hvdCategory" : {
+                "typeName" : "hvdCategory",
                 "multiple" : true,
                 "typeClass" : "controlledVocabulary",
                 "value" : [ "energy_resources", "env_monitoring", "area_management" ]
@@ -294,18 +294,18 @@
         "citation:authorName" : "Admin, Dataverse",
         "citation:authorAffiliation" : "Dataverse.org"
       },
-      "GDNDatasetMetadata:GDNhvdCompliant" : {
-        "GDNDatasetMetadata:GDNhvdApplicableLegislation" : "eu_2023_138",
-        "GDNDatasetMetadata:GDNhvdCategory" : [ "energy_resources", "env_monitoring", "area_management" ]
+      "DCATMetadata:hvdCompliant" : {
+        "DCATMetadata:hvdApplicableLegislation" : "eu_2023_138",
+        "DCATMetadata:hvdCategory" : [ "energy_resources", "env_monitoring", "area_management" ]
       },
-      "GDNDatasetMetadata:GDNtheme" : "tech",
+      "DCATMetadata:theme" : "tech",
       "citation:depositor" : "Admin, Dataverse",
       "title" : "test",
-      "GDNDatasetMetadata:GDNpublisher" : "geo_survey_nl",
+      "DCATMetadata:publisher" : "geo_survey_nl",
       "dateOfDeposit" : "2025-12-17",
-      "GDNDatasetMetadata:GDNaccessRights" : "restricted",
-      "GDNDatasetMetadata:GDNdomain" : "geothermal_energy",
-      "GDNDatasetMetadata:GDNidentifier" : "Test",
+      "DCATMetadata:accessRights" : "restricted",
+      "DCATMetadata:GDNdomain" : "geothermal_energy",
+      "DCATMetadata:identifier" : "Test",
       "subject" : "Earth and Environmental Sciences",
       "@id" : "https://doi.org/10.83300/GDN/4MEPY2",
       "@type" : [ "ore:Aggregation", "schema:Dataset" ],
@@ -394,7 +394,7 @@
       "schema:hasPart" : [ "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=3", "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=4", "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=6", "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=5" ]
     },
     "@context" : {
-      "GDNDatasetMetadata" : "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/schema/GDNDatasetMetadata#",
+      "DCATMetadata" : "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/schema/DCATMetadata#",
       "author" : "http://purl.org/dc/terms/creator",
       "citation" : "https://dataverse.org/schema/citation/",
       "dateOfDeposit" : "http://purl.org/dc/terms/dateSubmitted",
