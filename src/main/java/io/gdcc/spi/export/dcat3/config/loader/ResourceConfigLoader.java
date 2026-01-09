@@ -70,7 +70,7 @@ public class ResourceConfigLoader {
         // -------------------------
         // Nodes accumulation
         // -------------------------
-        Map<String, NodeAccumulators> nodeAcc = new LinkedHashMap<>();
+        Map<String, NodeAccumulators> nodeAccumulatorMap = new LinkedHashMap<>();
         for (String propertyName : property.stringPropertyNames()) {
             Matcher propertyMatcher = NODE_PATTERN.matcher(propertyName);
             if (!propertyMatcher.matches()) {
@@ -80,36 +80,55 @@ public class ResourceConfigLoader {
             String tail = propertyMatcher.group(2);
             String v = property.getProperty(propertyName);
 
-            NodeAccumulators accs =
-                    nodeAcc.computeIfAbsent(nodeId, k -> new NodeAccumulators(nodeId));
+            NodeAccumulators nodeAccumulators =
+                    nodeAccumulatorMap.computeIfAbsent(nodeId, k -> new NodeAccumulators(nodeId));
 
             switch (tail) {
-                case "kind" -> accs.kind = v;
-                case "iri.const" -> accs.iriConst = v;
-                case "type" -> accs.type = v;
+                case "kind" -> nodeAccumulators.kind = v;
+                case "iri.const" -> nodeAccumulators.iriConst = v;
+                case "iri.json" -> nodeAccumulators.iriJson = v;
+                case "iri.format" -> nodeAccumulators.iriFormat = v;
+                case "type" -> nodeAccumulators.type = v;
+                case "multi" -> nodeAccumulators.multi = Boolean.parseBoolean(v);
                 default -> {
+                    // existing: node.props.*
                     Matcher nodePropertyPatternMatcher = NODE_PROPERTY_PATTERN.matcher(tail);
                     if (nodePropertyPatternMatcher.matches()) {
                         String propId = nodePropertyPatternMatcher.group(1);
                         String propTail = nodePropertyPatternMatcher.group(2);
                         ValueSourceAccumulator vAcc =
-                                accs.props.computeIfAbsent(
+                                nodeAccumulators.props.computeIfAbsent(
                                         propId, k -> new ValueSourceAccumulator());
                         apply(vAcc, propTail, v);
+                    }
+                    // NEW: node-level iriMap (nodes.<id>.map.KEY = IRI)
+                    else if (tail.startsWith("map.")) {
+                        String key = tail.substring("map.".length());
+                        nodeAccumulators.iriMap.put(key, v);
                     }
                 }
             }
         }
+
         // finalize nodes
         Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
-        for (Map.Entry<String, NodeAccumulators> e : nodeAcc.entrySet()) {
+        for (Map.Entry<String, NodeAccumulators> e : nodeAccumulatorMap.entrySet()) {
             NodeAccumulators na = e.getValue();
             Map<String, ValueSource> nodeProps = new LinkedHashMap<>();
             for (Map.Entry<String, ValueSourceAccumulator> pe : na.props.entrySet()) {
                 nodeProps.put(pe.getKey(), pe.getValue().toValueSource());
             }
             NodeTemplate nodeTemplate =
-                    new NodeTemplate(na.nodeId, na.kind, na.iriConst, na.type, nodeProps);
+                    new NodeTemplate(
+                            na.nodeId,
+                            na.kind,
+                            na.iriConst,
+                            na.iriJson, // NEW
+                            na.iriFormat, // NEW
+                            na.type,
+                            na.multi, // NEW
+                            na.iriMap, // NEW
+                            nodeProps);
             nodes.put(na.nodeId, nodeTemplate);
         }
 
@@ -153,7 +172,13 @@ public class ResourceConfigLoader {
     /** Holds per-node accumulators: node-level fields + property accumulators. */
     static final class NodeAccumulators {
         final String nodeId;
-        String kind, iriConst, type;
+        String kind;
+        String iriConst;
+        String iriJson;
+        String iriFormat;
+        String type;
+        boolean multi;
+        Map<String, String> iriMap = new LinkedHashMap<>();
         Map<String, ValueSourceAccumulator> props = new LinkedHashMap<>();
 
         NodeAccumulators(String nodeId) {

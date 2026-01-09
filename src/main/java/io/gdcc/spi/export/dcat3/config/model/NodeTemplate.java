@@ -7,4 +7,12 @@ import java.util.Map;
  * @param type CURIE or IRI
  */
 public record NodeTemplate(
-        String id, String kind, String iriConst, String type, Map<String, ValueSource> props) {}
+        String id,
+        String kind,
+        String iriConst,
+        String iriJson,
+        String iriFormat,
+        String type,
+        boolean multi,
+        Map<String, String> iriMap,
+        Map<String, ValueSource> props) {}

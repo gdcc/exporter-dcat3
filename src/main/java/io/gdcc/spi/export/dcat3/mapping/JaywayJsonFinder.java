@@ -75,7 +75,9 @@ public class JaywayJsonFinder {
         }
         List<String> out = new ArrayList<>(raw.size());
         for (Object object : raw) {
-            if (object == null) continue;
+            if (object == null) {
+                continue;
+            }
             if (object instanceof CharSequence) {
                 out.add(object.toString());
             } else if (object instanceof Number || object instanceof Boolean) {

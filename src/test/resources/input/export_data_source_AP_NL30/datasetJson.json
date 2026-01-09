@@ -1,29 +1,29 @@
 {
   "id": 2,
-  "identifier": "GDN/4MEPY2",
-  "persistentUrl": "https://doi.org/10.83300/GDN/4MEPY2",
+  "identifier": "GDN/XAIHYX",
+  "persistentUrl": "https://doi.org/10.83300/GDN/XAIHYX",
   "protocol": "doi",
   "authority": "10.83300",
   "separator": "/",
-  "publisher": "Root",
-  "publicationDate": "2025-12-17",
-  "storageIdentifier": "local://10.83300/GDN/4MEPY2",
+  "publisher": "Dataverse Geological Survey of the Netherlands",
+  "publicationDate": "2026-01-09",
+  "storageIdentifier": "local://10.83300/GDN/XAIHYX",
   "datasetType": "dataset",
   "datasetVersion": {
-    "id": 4,
+    "id": 1,
     "datasetId": 2,
-    "datasetPersistentId": "doi:10.83300/GDN/4MEPY2",
-    "storageIdentifier": "local://10.83300/GDN/4MEPY2",
-    "versionNumber": 4,
+    "datasetPersistentId": "doi:10.83300/GDN/XAIHYX",
+    "storageIdentifier": "local://10.83300/GDN/XAIHYX",
+    "versionNumber": 1,
     "versionMinorNumber": 0,
     "versionState": "RELEASED",
     "latestVersionPublishingState": "RELEASED",
     "UNF": "UNF:6:0WEcnD0cAy+0OAxMv05cKg==",
-    "lastUpdateTime": "2025-12-18T14:56:06Z",
-    "releaseTime": "2025-12-18T14:56:06Z",
-    "createTime": "2025-12-18T14:55:59Z",
-    "publicationDate": "2025-12-17",
-    "citationDate": "2025-12-17",
+    "lastUpdateTime": "2026-01-09T12:04:55Z",
+    "releaseTime": "2026-01-09T12:04:55Z",
+    "createTime": "2026-01-09T12:00:19Z",
+    "publicationDate": "2026-01-09",
+    "citationDate": "2026-01-09",
     "license": {
       "name": "CC0 1.0",
       "uri": "http://creativecommons.org/publicdomain/zero/1.0",
@@ -43,7 +43,7 @@
             "typeName": "title",
             "multiple": false,
             "typeClass": "primitive",
-            "value": "test"
+            "value": "Test Dataset"
           },
           {
             "typeName": "author",
@@ -55,13 +55,25 @@
                   "typeName": "authorName",
                   "multiple": false,
                   "typeClass": "primitive",
-                  "value": "Admin, Dataverse"
+                  "value": "Author"
                 },
                 "authorAffiliation": {
                   "typeName": "authorAffiliation",
                   "multiple": false,
                   "typeClass": "primitive",
-                  "value": "Dataverse.org"
+                  "value": "Author Affiliation"
+                },
+                "authorIdentifierScheme": {
+                  "typeName": "authorIdentifierScheme",
+                  "multiple": false,
+                  "typeClass": "controlledVocabulary",
+                  "value": "ISNI"
+                },
+                "authorIdentifier": {
+                  "typeName": "authorIdentifier",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "AuthorID"
                 }
               }
             ]
@@ -76,19 +88,19 @@
                   "typeName": "datasetContactName",
                   "multiple": false,
                   "typeClass": "primitive",
-                  "value": "Admin, Dataverse"
+                  "value": "PoC"
                 },
                 "datasetContactAffiliation": {
                   "typeName": "datasetContactAffiliation",
                   "multiple": false,
                   "typeClass": "primitive",
-                  "value": "Dataverse.org"
+                  "value": "PoC Affiliation"
                 },
                 "datasetContactEmail": {
                   "typeName": "datasetContactEmail",
                   "multiple": false,
                   "typeClass": "primitive",
-                  "value": "dataverse@mailinator.com"
+                  "value": "poc@mailinator.com"
                 }
               }
             ]
@@ -103,7 +115,13 @@
                   "typeName": "dsDescriptionValue",
                   "multiple": false,
                   "typeClass": "primitive",
-                  "value": "sdasdsa"
+                  "value": "Test description"
+                },
+                "dsDescriptionDate": {
+                  "typeName": "dsDescriptionDate",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "2026-01-09"
                 }
               }
             ]
@@ -126,218 +144,223 @@
             "typeName": "dateOfDeposit",
             "multiple": false,
             "typeClass": "primitive",
-            "value": "2025-12-17"
+            "value": "2026-01-09"
+          }
+        ]
+      },
+      "geospatial": {
+        "displayName": "Geospatial Metadata",
+        "name": "geospatial",
+        "fields": [
+          {
+            "typeName": "geographicCoverage",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "country": {
+                  "typeName": "country",
+                  "multiple": false,
+                  "typeClass": "controlledVocabulary",
+                  "value": "Netherlands"
+                },
+                "state": {
+                  "typeName": "state",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Utrecht"
+                },
+                "city": {
+                  "typeName": "city",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Utrecht"
+                },
+                "otherGeographicCoverage": {
+                  "typeName": "otherGeographicCoverage",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Zeist"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "geographicUnit",
+            "multiple": true,
+            "typeClass": "primitive",
+            "value": [
+              "village"
+            ]
+          },
+          {
+            "typeName": "geographicBoundingBox",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "westLongitude": {
+                  "typeName": "westLongitude",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "5.190"
+                },
+                "eastLongitude": {
+                  "typeName": "eastLongitude",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "5.280"
+                },
+                "northLatitude": {
+                  "typeName": "northLatitude",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "52.110"
+                },
+                "southLatitude": {
+                  "typeName": "southLatitude",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "52.050"
+                }
+              }
+            ]
           }
         ]
       },
       "DCATMetadata": {
-        "displayName": "GDN dataset metadata",
+        "displayName": "DCAT AP-NL 3.0 Metadata",
         "name": "DCATMetadata",
         "fields": [
           {
-            "typeName": "GDNdomain",
-            "multiple": false,
-            "typeClass": "controlledVocabulary",
-            "value": "geothermal_energy"
-          },
-          {
-            "typeName": "identifier",
+            "typeName": "DCATidentifier",
             "multiple": false,
             "typeClass": "primitive",
-            "value": "Test"
+            "value": "DCAT identifier"
           },
           {
-            "typeName": "publisher",
+            "typeName": "DCATpublisher",
             "multiple": false,
             "typeClass": "controlledVocabulary",
             "value": "geo_survey_nl"
           },
           {
-            "typeName": "accessRights",
+            "typeName": "DCATaccessRights",
             "multiple": false,
             "typeClass": "controlledVocabulary",
-            "value": "restricted"
+            "value": "public"
           },
           {
-            "typeName": "theme",
+            "typeName": "DCATtheme",
             "multiple": true,
             "typeClass": "controlledVocabulary",
             "value": [
-              "tech"
+              "ener"
             ]
           },
           {
-            "typeName": "hvdCompliant",
+            "typeName": "DCAThvdCompliant",
             "multiple": false,
             "typeClass": "compound",
             "value": {
-              "hvdApplicableLegislation": {
-                "typeName": "hvdApplicableLegislation",
+              "DCAThvdApplicableLegislation": {
+                "typeName": "DCAThvdApplicableLegislation",
                 "multiple": false,
                 "typeClass": "controlledVocabulary",
                 "value": "eu_2023_138"
               },
-              "hvdCategory": {
-                "typeName": "hvdCategory",
+              "DCAThvdCategory": {
+                "typeName": "DCAThvdCategory",
                 "multiple": true,
                 "typeClass": "controlledVocabulary",
                 "value": [
-                  "energy_resources",
-                  "env_monitoring",
-                  "area_management"
+                  "mineral_resources"
                 ]
               }
             }
+          },
+          {
+            "typeName": "DCATrights",
+            "multiple": false,
+            "typeClass": "primitive",
+            "value": "My rights"
+          }
+        ]
+      },
+      "GDNMetadata": {
+        "displayName": "Geological Survey Metadata",
+        "name": "GDNMetadata",
+        "fields": [
+          {
+            "typeName": "GDNdomain",
+            "multiple": false,
+            "typeClass": "controlledVocabulary",
+            "value": "seismicity"
           }
         ]
       }
     },
-    "geospatial": {
-      "displayName": "Geospatial Metadata",
-      "name": "geospatial",
-      "fields": [
-        {
-          "typeName": "geographicCoverage",
-          "multiple": true,
-          "typeClass": "compound",
-          "value": [
-            {
-              "country": {
-                "typeName": "country",
-                "multiple": false,
-                "typeClass": "controlledVocabulary",
-                "value": "Netherlands"
-              },
-              "state": {
-                "typeName": "state",
-                "multiple": false,
-                "typeClass": "primitive",
-                "value": "Utrecht"
-              },
-              "city": {
-                "typeName": "city",
-                "multiple": false,
-                "typeClass": "primitive",
-                "value": "Utrecht"
-              },
-              "otherGeographicCoverage": {
-                "typeName": "otherGeographicCoverage",
-                "multiple": false,
-                "typeClass": "primitive",
-                "value": "Princetonlaan 6, 3584 CB Utrecht"
-              }
-            }
-          ]
-        }
-      ]
-    },
     "files": [
-    {
-      "label": "CPU Utilization (1).tab",
-      "restricted": false,
-      "version": 1,
-      "datasetVersionId": 4,
-      "dataFile": {
-        "id": 3,
-        "persistentId": "",
-        "filename": "CPU Utilization (1).tab",
-        "contentType": "text/tab-separated-values",
-        "friendlyType": "Tab-Delimited",
-        "filesize": 9503,
-        "storageIdentifier": "local://19b2c115b77-f861d0d485f2",
-        "originalFileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "originalFormatLabel": "MS Excel Spreadsheet",
-        "originalFileSize": 15441,
-        "originalFileName": "CPU Utilization (1).xlsx",
-        "UNF": "UNF:6:0WEcnD0cAy+0OAxMv05cKg==",
-        "rootDataFileId": -1,
-        "md5": "f40d06503f00c8df28bc3d9cd7f28f8e",
-        "checksum": {
-          "type": "MD5",
-          "value": "f40d06503f00c8df28bc3d9cd7f28f8e"
-        },
-        "tabularData": true,
-        "creationDate": "2025-12-17",
-        "publicationDate": "2025-12-17",
-        "fileAccessRequest": true
+      {
+        "description": "csv file",
+        "label": "CPU Utilization (1).tab",
+        "restricted": false,
+        "version": 3,
+        "datasetVersionId": 1,
+        "dataFile": {
+          "id": 3,
+          "persistentId": "",
+          "filename": "CPU Utilization (1).tab",
+          "contentType": "text/tab-separated-values",
+          "friendlyType": "Tab-Delimited",
+          "filesize": 9503,
+          "description": "csv file",
+          "storageIdentifier": "local://19ba2a0b3b9-e0f9bb35858c",
+          "originalFileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "originalFormatLabel": "MS Excel Spreadsheet",
+          "originalFileSize": 15441,
+          "originalFileName": "CPU Utilization (1).xlsx",
+          "UNF": "UNF:6:0WEcnD0cAy+0OAxMv05cKg==",
+          "rootDataFileId": -1,
+          "md5": "f40d06503f00c8df28bc3d9cd7f28f8e",
+          "checksum": {
+            "type": "MD5",
+            "value": "f40d06503f00c8df28bc3d9cd7f28f8e"
+          },
+          "tabularData": true,
+          "creationDate": "2026-01-09",
+          "publicationDate": "2026-01-09",
+          "fileAccessRequest": true
+        }
+      },
+      {
+        "description": "Text file",
+        "label": "nexus.log",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 1,
+        "dataFile": {
+          "id": 4,
+          "persistentId": "",
+          "filename": "nexus.log",
+          "contentType": "text/plain",
+          "friendlyType": "Plain Text",
+          "filesize": 4957401,
+          "description": "Text file",
+          "storageIdentifier": "local://19ba2a06ee0-0099284a872f",
+          "rootDataFileId": -1,
+          "md5": "eec9c71c5044295bf5c769a37997503c",
+          "checksum": {
+            "type": "MD5",
+            "value": "eec9c71c5044295bf5c769a37997503c"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-09",
+          "publicationDate": "2026-01-09",
+          "fileAccessRequest": true
+        }
       }
-    },
-    {
-      "label": "dcat-root.properties",
-      "restricted": false,
-      "version": 1,
-      "datasetVersionId": 4,
-      "dataFile": {
-        "id": 4,
-        "persistentId": "",
-        "filename": "dcat-root.properties",
-        "contentType": "application/octet-stream",
-        "friendlyType": "Unknown",
-        "filesize": 3168,
-        "storageIdentifier": "local://19b31b0f547-18671ce3ac27",
-        "rootDataFileId": -1,
-        "md5": "c06407eca8f8bb295b6c9174ad936acc",
-        "checksum": {
-          "type": "MD5",
-          "value": "c06407eca8f8bb295b6c9174ad936acc"
-        },
-        "tabularData": false,
-        "creationDate": "2025-12-18",
-        "publicationDate": "2025-12-18",
-        "fileAccessRequest": true
-      }
-    },
-    {
-      "label": "export.rdf",
-      "restricted": false,
-      "version": 1,
-      "datasetVersionId": 4,
-      "dataFile": {
-        "id": 6,
-        "persistentId": "",
-        "filename": "export.rdf",
-        "contentType": "application/rdf+xml",
-        "friendlyType": "application/rdf+xml",
-        "filesize": 3918,
-        "storageIdentifier": "local://19b31f5e7e9-ad8790009d0e",
-        "rootDataFileId": -1,
-        "md5": "e2b46812ace1c85600ca43e085bbdb26",
-        "checksum": {
-          "type": "MD5",
-          "value": "e2b46812ace1c85600ca43e085bbdb26"
-        },
-        "tabularData": false,
-        "creationDate": "2025-12-18",
-        "publicationDate": "2025-12-18",
-        "fileAccessRequest": true
-      }
-    },
-    {
-      "label": "Invictus-inschrijfformulier-junioren-230323.pdf",
-      "restricted": false,
-      "version": 1,
-      "datasetVersionId": 4,
-      "dataFile": {
-        "id": 5,
-        "persistentId": "",
-        "filename": "Invictus-inschrijfformulier-junioren-230323.pdf",
-        "contentType": "application/pdf",
-        "friendlyType": "Adobe PDF",
-        "filesize": 190223,
-        "storageIdentifier": "local://19b31b15635-ca843e231b04",
-        "rootDataFileId": -1,
-        "md5": "222a22c84686ccbd541a29c19784001b",
-        "checksum": {
-          "type": "MD5",
-          "value": "222a22c84686ccbd541a29c19784001b"
-        },
-        "tabularData": false,
-        "creationDate": "2025-12-18",
-        "publicationDate": "2025-12-18",
-        "fileAccessRequest": true
-      }
-    }
-  ],
-  "citation": "Admin, Dataverse, 2025, \"test\", https://doi.org/10.83300/GDN/4MEPY2, Root, V4, UNF:6:0WEcnD0cAy+0OAxMv05cKg== [fileUNF]"
-}
+    ],
+    "citation": "Author, 2026, \"Test Dataset\", https://doi.org/10.83300/GDN/XAIHYX, Dataverse Geological Survey of the Netherlands, V1, UNF:6:0WEcnD0cAy+0OAxMv05cKg== [fileUNF]"
+  }
 }

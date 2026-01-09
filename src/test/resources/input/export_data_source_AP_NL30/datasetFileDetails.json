@@ -1,139 +1,108 @@
-[ {
-  "id" : 3,
-  "persistentId" : "",
-  "filename" : "CPU Utilization (1).tab",
-  "contentType" : "text/tab-separated-values",
-  "friendlyType" : "Tab-Delimited",
-  "filesize" : 9503,
-  "storageIdentifier" : "local://19b2c115b77-f861d0d485f2",
-  "originalFileFormat" : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  "originalFormatLabel" : "MS Excel Spreadsheet",
-  "originalFileSize" : 15441,
-  "originalFileName" : "CPU Utilization (1).xlsx",
-  "UNF" : "UNF:6:0WEcnD0cAy+0OAxMv05cKg==",
-  "rootDataFileId" : -1,
-  "md5" : "f40d06503f00c8df28bc3d9cd7f28f8e",
-  "checksum" : {
-    "type" : "MD5",
-    "value" : "f40d06503f00c8df28bc3d9cd7f28f8e"
-  },
-  "tabularData" : true,
-  "creationDate" : "2025-12-17",
-  "publicationDate" : "2025-12-17",
-  "fileAccessRequest" : true,
-  "restricted" : false,
-  "fileMetadataId" : 8,
-  "dataTables" : [ {
-    "varQuantity" : 3,
-    "caseQuantity" : 239,
-    "UNF" : "UNF:6:0WEcnD0cAy+0OAxMv05cKg==",
-    "dataVariables" : [ {
-      "id" : 3,
-      "name" : "Environment",
-      "label" : "Environment",
-      "weighted" : false,
-      "variableIntervalType" : "discrete",
-      "variableFormatType" : "CHARACTER",
-      "isOrderedCategorical" : false,
-      "fileOrder" : 0,
-      "UNF" : "UNF:6:8TyzIrCVDdjMNmNswpZ+tQ==",
-      "variableMetadata" : [ ]
-    }, {
-      "id" : 1,
-      "name" : "Application",
-      "label" : "Application",
-      "weighted" : false,
-      "variableIntervalType" : "discrete",
-      "variableFormatType" : "CHARACTER",
-      "isOrderedCategorical" : false,
-      "fileOrder" : 1,
-      "UNF" : "UNF:6:oPxINGf0flMZ9+c4rBkJWw==",
-      "variableMetadata" : [ ]
-    }, {
-      "id" : 2,
-      "name" : "CPURequest",
-      "label" : "CPURequest",
-      "weighted" : false,
-      "variableIntervalType" : "contin",
-      "variableFormatType" : "NUMERIC",
-      "isOrderedCategorical" : false,
-      "fileOrder" : 2,
-      "UNF" : "UNF:6:dFs5oQx+rK7lrJI3EjL0RA==",
-      "variableMetadata" : [ ],
-      "summaryStatistics" : {
-        "mean" : "157.56302521008377",
-        "vald" : "238.0",
-        "stdev" : "1222.9566382538005",
-        "invd" : "1.0",
-        "max" : "18750.0",
-        "mode" : ".",
-        "min" : "25.0",
-        "medn" : "50.0"
+[
+  {
+    "id": 3,
+    "persistentId": "",
+    "filename": "CPU Utilization (1).tab",
+    "contentType": "text/tab-separated-values",
+    "friendlyType": "Tab-Delimited",
+    "filesize": 9503,
+    "description": "csv file",
+    "storageIdentifier": "local://19ba2a0b3b9-e0f9bb35858c",
+    "originalFileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "originalFormatLabel": "MS Excel Spreadsheet",
+    "originalFileSize": 15441,
+    "originalFileName": "CPU Utilization (1).xlsx",
+    "UNF": "UNF:6:0WEcnD0cAy+0OAxMv05cKg==",
+    "rootDataFileId": -1,
+    "md5": "f40d06503f00c8df28bc3d9cd7f28f8e",
+    "checksum": {
+      "type": "MD5",
+      "value": "f40d06503f00c8df28bc3d9cd7f28f8e"
+    },
+    "tabularData": true,
+    "creationDate": "2026-01-09",
+    "publicationDate": "2026-01-09",
+    "fileAccessRequest": true,
+    "restricted": false,
+    "fileMetadataId": 2,
+    "dataTables": [
+      {
+        "varQuantity": 3,
+        "caseQuantity": 239,
+        "UNF": "UNF:6:0WEcnD0cAy+0OAxMv05cKg==",
+        "dataVariables": [
+          {
+            "id": 3,
+            "name": "Environment",
+            "label": "Environment",
+            "weighted": false,
+            "variableIntervalType": "discrete",
+            "variableFormatType": "CHARACTER",
+            "isOrderedCategorical": false,
+            "fileOrder": 0,
+            "UNF": "UNF:6:8TyzIrCVDdjMNmNswpZ+tQ==",
+            "variableMetadata": []
+          },
+          {
+            "id": 2,
+            "name": "Application",
+            "label": "Application",
+            "weighted": false,
+            "variableIntervalType": "discrete",
+            "variableFormatType": "CHARACTER",
+            "isOrderedCategorical": false,
+            "fileOrder": 1,
+            "UNF": "UNF:6:oPxINGf0flMZ9+c4rBkJWw==",
+            "variableMetadata": []
+          },
+          {
+            "id": 1,
+            "name": "CPURequest",
+            "label": "CPURequest",
+            "weighted": false,
+            "variableIntervalType": "contin",
+            "variableFormatType": "NUMERIC",
+            "isOrderedCategorical": false,
+            "fileOrder": 2,
+            "UNF": "UNF:6:dFs5oQx+rK7lrJI3EjL0RA==",
+            "variableMetadata": [],
+            "summaryStatistics": {
+              "min": "25.0",
+              "vald": "238.0",
+              "mode": ".",
+              "mean": "157.56302521008377",
+              "max": "18750.0",
+              "invd": "1.0",
+              "medn": "50.0",
+              "stdev": "1222.9566382538005"
+            }
+          }
+        ]
       }
-    } ]
-  } ],
-  "varGroups" : [ ]
-}, {
-  "id" : 4,
-  "persistentId" : "",
-  "filename" : "dcat-root.properties",
-  "contentType" : "application/octet-stream",
-  "friendlyType" : "Unknown",
-  "filesize" : 3168,
-  "storageIdentifier" : "local://19b31b0f547-18671ce3ac27",
-  "rootDataFileId" : -1,
-  "md5" : "c06407eca8f8bb295b6c9174ad936acc",
-  "checksum" : {
-    "type" : "MD5",
-    "value" : "c06407eca8f8bb295b6c9174ad936acc"
+    ],
+    "varGroups": []
   },
-  "tabularData" : false,
-  "creationDate" : "2025-12-18",
-  "publicationDate" : "2025-12-18",
-  "fileAccessRequest" : true,
-  "restricted" : false,
-  "fileMetadataId" : 5,
-  "varGroups" : [ ]
-}, {
-  "id" : 6,
-  "persistentId" : "",
-  "filename" : "export.rdf",
-  "contentType" : "application/rdf+xml",
-  "friendlyType" : "application/rdf+xml",
-  "filesize" : 3918,
-  "storageIdentifier" : "local://19b31f5e7e9-ad8790009d0e",
-  "rootDataFileId" : -1,
-  "md5" : "e2b46812ace1c85600ca43e085bbdb26",
-  "checksum" : {
-    "type" : "MD5",
-    "value" : "e2b46812ace1c85600ca43e085bbdb26"
-  },
-  "tabularData" : false,
-  "creationDate" : "2025-12-18",
-  "publicationDate" : "2025-12-18",
-  "fileAccessRequest" : true,
-  "restricted" : false,
-  "fileMetadataId" : 6,
-  "varGroups" : [ ]
-}, {
-  "id" : 5,
-  "persistentId" : "",
-  "filename" : "Invictus-inschrijfformulier-junioren-230323.pdf",
-  "contentType" : "application/pdf",
-  "friendlyType" : "Adobe PDF",
-  "filesize" : 190223,
-  "storageIdentifier" : "local://19b31b15635-ca843e231b04",
-  "rootDataFileId" : -1,
-  "md5" : "222a22c84686ccbd541a29c19784001b",
-  "checksum" : {
-    "type" : "MD5",
-    "value" : "222a22c84686ccbd541a29c19784001b"
-  },
-  "tabularData" : false,
-  "creationDate" : "2025-12-18",
-  "publicationDate" : "2025-12-18",
-  "fileAccessRequest" : true,
-  "restricted" : false,
-  "fileMetadataId" : 7,
-  "varGroups" : [ ]
-} ]
+  {
+    "id": 4,
+    "persistentId": "",
+    "filename": "nexus.log",
+    "contentType": "text/plain",
+    "friendlyType": "Plain Text",
+    "filesize": 4957401,
+    "description": "Text file",
+    "storageIdentifier": "local://19ba2a06ee0-0099284a872f",
+    "rootDataFileId": -1,
+    "md5": "eec9c71c5044295bf5c769a37997503c",
+    "checksum": {
+      "type": "MD5",
+      "value": "eec9c71c5044295bf5c769a37997503c"
+    },
+    "tabularData": false,
+    "creationDate": "2026-01-09",
+    "publicationDate": "2026-01-09",
+    "fileAccessRequest": true,
+    "restricted": false,
+    "fileMetadataId": 1,
+    "varGroups": []
+  }
+]

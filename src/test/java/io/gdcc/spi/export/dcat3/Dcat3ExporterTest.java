@@ -39,7 +39,7 @@ class Dcat3ExporterTest {
 
         // -- prepare configuration (same as your original)
         URL dcatRootPropertiesUrl =
-                getClass().getClassLoader().getResource( "lightweight/mapping/dcat-root.properties" );
+                getClass().getClassLoader().getResource("lightweight/mapping/dcat-root.properties");
         assertThat(dcatRootPropertiesUrl).isNotNull();
         File dcatRootPropetiesFile = new File(dcatRootPropertiesUrl.toURI());
         System.setProperty(RootConfigLoader.SYS_PROP, dcatRootPropetiesFile.getAbsolutePath());
@@ -73,7 +73,9 @@ class Dcat3ExporterTest {
         // -- SHACL validation (same as your original)
         Model shapes = ModelFactory.createDefaultModel();
         shapes.read(
-                getClass().getClassLoader().getResourceAsStream( "input/validation_lightweight/shacl.ttl" ),
+                getClass()
+                        .getClassLoader()
+                        .getResourceAsStream("input/validation_lightweight/shacl.ttl"),
                 null,
                 "TURTLE");
 
