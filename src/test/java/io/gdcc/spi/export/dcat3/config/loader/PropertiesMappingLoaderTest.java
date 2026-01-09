@@ -222,7 +222,7 @@ public class PropertiesMappingLoaderTest {
     """;
 
         ResourceConfig cfg =
-                new ResourceConfigLoader().load(new java.io.ByteArrayInputStream(props.getBytes()));
+                new ResourceConfigLoader().load(new ByteArrayInputStream(props.getBytes()));
 
         // rights
         NodeTemplate rights = cfg.nodes().get("rights");

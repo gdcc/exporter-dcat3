@@ -74,7 +74,6 @@ class DcatApNL30ComplianceTest {
         exporter.exportDataset(provider, out);
         byte[] bytes = out.toByteArray();
         assertThat(bytes).as("Exporter should write RDF bytes").isNotEmpty();
-        System.out.println(new String(bytes));
 
         // -- parse exported RDF/XML
         Model dataModel = readModel(bytes, Lang.RDFXML);

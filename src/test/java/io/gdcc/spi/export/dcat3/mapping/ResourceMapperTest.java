@@ -5,12 +5,14 @@ import static org.mockito.Mockito.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.gdcc.spi.export.dcat3.config.model.NodeTemplate;
 import io.gdcc.spi.export.dcat3.config.model.ResourceConfig;
 import io.gdcc.spi.export.dcat3.config.model.ValueSource;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.junit.jupiter.api.DisplayName;
@@ -71,7 +73,7 @@ class ResourceMapperTest {
         // Verify RDF.type triple
         List<Statement> typeStmts =
                 model.listStatements(
-                                (Resource) null,
+                                null,
                                 model.getProperty(
                                         "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
                                 model.getResource("http://www.w3.org/ns/dcat#Dataset"))
@@ -81,9 +83,9 @@ class ResourceMapperTest {
         // Verify title literal with language
         List<Statement> titleStmts =
                 model.listStatements(
-                                (Resource) null,
+                                null,
                                 model.getProperty("http://purl.org/dc/terms/title"),
-                                (org.apache.jena.rdf.model.RDFNode) null)
+                                (RDFNode) null)
                         .toList();
         assertThat(titleStmts).hasSize(1);
         assertThat(titleStmts.get(0).getObject().asLiteral().getLanguage()).isEqualTo("en");
@@ -136,9 +138,9 @@ class ResourceMapperTest {
         // Verify identifier as IRI object
         List<Statement> idStmts =
                 model.listStatements(
-                                (Resource) null,
+                                null,
                                 model.getProperty("http://purl.org/dc/terms/identifier"),
-                                (org.apache.jena.rdf.model.RDFNode) null)
+                                (RDFNode) null)
                         .toList();
         assertThat(idStmts).hasSize(1);
         assertThat(idStmts.get(0).getObject().isResource()).isTrue();
@@ -181,9 +183,9 @@ class ResourceMapperTest {
 
         List<Statement> stmts =
                 model.listStatements(
-                                (Resource) null,
+                                null,
                                 model.getProperty("http://www.w3.org/ns/dcat#accessURL"),
-                                (org.apache.jena.rdf.model.RDFNode) null)
+                                (RDFNode) null)
                         .toList();
 
         assertThat(stmts).hasSize(1);
@@ -225,9 +227,9 @@ class ResourceMapperTest {
 
         List<Statement> stmts =
                 model.listStatements(
-                                (Resource) null,
+                                null,
                                 model.getProperty("http://purl.org/dc/terms/accessRights"),
-                                (org.apache.jena.rdf.model.RDFNode) null)
+                                (RDFNode) null)
                         .toList();
 
         assertThat(stmts).hasSize(1);
@@ -249,8 +251,8 @@ class ResourceMapperTest {
         when(rc.scopeJson()).thenReturn(null);
 
         // NodeTemplate 'acc' with iri.format
-        io.gdcc.spi.export.dcat3.config.model.NodeTemplate accT =
-                new io.gdcc.spi.export.dcat3.config.model.NodeTemplate(
+        NodeTemplate accT =
+                new NodeTemplate(
                         "acc",
                         "iri",
                         null,
@@ -260,8 +262,7 @@ class ResourceMapperTest {
                         false,
                         java.util.Collections.emptyMap(),
                         java.util.Collections.emptyMap());
-        Map<String, io.gdcc.spi.export.dcat3.config.model.NodeTemplate> nodes =
-                new LinkedHashMap<>();
+        Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
         nodes.put("acc", accT);
         when(rc.nodes()).thenReturn(nodes);
 
@@ -279,9 +280,9 @@ class ResourceMapperTest {
 
         List<Statement> stmts =
                 model.listStatements(
-                                (Resource) null,
+                                null,
                                 model.getProperty("http://www.w3.org/ns/dcat#accessURL"),
-                                (org.apache.jena.rdf.model.RDFNode) null)
+                                (RDFNode) null)
                         .toList();
 
         assertThat(stmts).hasSize(1);
@@ -306,8 +307,8 @@ class ResourceMapperTest {
         nodeMap.put("ener", "http://publications.europa.eu/resource/authority/data-theme/ENER");
         nodeMap.put("tech", "http://publications.europa.eu/resource/authority/data-theme/TECH");
 
-        io.gdcc.spi.export.dcat3.config.model.NodeTemplate themeT =
-                new io.gdcc.spi.export.dcat3.config.model.NodeTemplate(
+        NodeTemplate themeT =
+                new NodeTemplate(
                         "theme",
                         "iri",
                         null,
@@ -317,8 +318,7 @@ class ResourceMapperTest {
                         true,
                         nodeMap,
                         java.util.Collections.emptyMap());
-        Map<String, io.gdcc.spi.export.dcat3.config.model.NodeTemplate> nodes =
-                new LinkedHashMap<>();
+        Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
         nodes.put("theme", themeT);
         when(rc.nodes()).thenReturn(nodes);
 
@@ -336,9 +336,9 @@ class ResourceMapperTest {
 
         List<Statement> themeStmts =
                 model.listStatements(
-                                (Resource) null,
+                                null,
                                 model.getProperty("http://www.w3.org/ns/dcat#theme"),
-                                (org.apache.jena.rdf.model.RDFNode) null)
+                                (RDFNode) null)
                         .toList();
 
         assertThat(themeStmts).hasSize(2);
