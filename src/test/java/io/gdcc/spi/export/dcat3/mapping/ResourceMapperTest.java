@@ -145,4 +145,199 @@ class ResourceMapperTest {
         assertThat(idStmts.get(0).getObject().asResource().getURI())
                 .isEqualTo("http://example.org/id-iri");
     }
+
+
+    // --- NEW TESTS: iri.format & iri.map on ValueSource and NodeTemplate ---
+
+    @Test
+    @DisplayName("ValueSource as=iri supports inline JSONPath in format")
+    void valuesource_iri_format_inline_jsonpath() throws Exception {
+        Map<String, String> ns = new LinkedHashMap<>();
+        ns.put("dcat", "http://www.w3.org/ns/dcat#");
+        ns.put("dct",  "http://purl.org/dc/terms/");
+        Prefixes prefixes = new Prefixes(ns);
+
+        // subject
+        ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
+        when(rc.subject().iriConst()).thenReturn("http://example.org/dist/4");
+        when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
+        when(rc.scopeJson()).thenReturn(null);
+
+        // dcat:accessURL as IRI built from format and inline JSONPath
+        ValueSource vs = mock(ValueSource.class);
+        when(vs.predicate()).thenReturn("dcat:accessURL");
+        when(vs.as()).thenReturn("iri");
+        when(vs.json()).thenReturn(null);
+        when(vs.format()).thenReturn("http://localhost:8080/api/access/datafile/${$.id}");
+        when(vs.map()).thenReturn(java.util.Collections.emptyMap());
+        when(vs.jsonPaths()).thenReturn(java.util.Collections.emptyList());
+        when(vs.multi()).thenReturn(false);
+        Map<String, ValueSource> props = new LinkedHashMap<>();
+        props.put("accessURL", vs);
+        when(rc.props()).thenReturn(props);
+
+        JaywayJsonFinder finder = finderFor("{\"id\":\"4\"}");
+        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Distribution");
+        Model model = mapper.build(finder);
+
+        List<Statement> stmts = model.listStatements(
+            (Resource) null,
+            model.getProperty("http://www.w3.org/ns/dcat#accessURL"),
+            (org.apache.jena.rdf.model.RDFNode) null).toList();
+
+        assertThat(stmts).hasSize(1);
+        assertThat(stmts.get(0).getObject().isResource()).isTrue();
+        assertThat(stmts.get(0).getObject().asResource().getURI())
+            .isEqualTo("http://localhost:8080/api/access/datafile/4");
+    }
+
+    @Test
+    @DisplayName("ValueSource as=iri maps boolean/string via map.* to authority IRIs")
+    void valuesource_iri_map_boolean_to_authority() throws Exception {
+        Map<String, String> ns = new LinkedHashMap<>();
+        ns.put("dct", "http://purl.org/dc/terms/");
+        Prefixes prefixes = new Prefixes(ns);
+
+        ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
+        when(rc.subject().iriConst()).thenReturn("http://example.org/ds/1");
+        when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
+        when(rc.scopeJson()).thenReturn(null);
+
+        ValueSource vs = mock(ValueSource.class);
+        when(vs.predicate()).thenReturn("dct:accessRights");
+        when(vs.as()).thenReturn("iri");
+        when(vs.json()).thenReturn("$.restricted");
+        when(vs.multi()).thenReturn(false);
+        when(vs.format()).thenReturn(null);
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("true",  "http://publications.europa.eu/resource/authority/access-right/RESTRICTED");
+        map.put("false", "http://publications.europa.eu/resource/authority/access-right/PUBLIC");
+        when(vs.map()).thenReturn(map);
+        when(vs.jsonPaths()).thenReturn(java.util.Collections.emptyList());
+        Map<String, ValueSource> props = new LinkedHashMap<>();
+        props.put("accessRights", vs);
+        when(rc.props()).thenReturn(props);
+
+        JaywayJsonFinder finder = finderFor("{\"restricted\": false}");
+        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dct:Dataset");
+        Model model = mapper.build(finder);
+
+        List<Statement> stmts = model.listStatements(
+            (Resource) null,
+            model.getProperty("http://purl.org/dc/terms/accessRights"),
+            (org.apache.jena.rdf.model.RDFNode) null).toList();
+
+        assertThat(stmts).hasSize(1);
+        assertThat(stmts.get(0).getObject().isResource()).isTrue();
+        assertThat(stmts.get(0).getObject().asResource().getURI())
+            .isEqualTo("http://publications.europa.eu/resource/authority/access-right/PUBLIC");
+    }
+
+    @Test
+    @DisplayName("NodeTemplate as node-ref uses iri.format for object IRI")
+    void node_ref_uses_template_iri_format() throws Exception {
+        Map<String, String> ns = new LinkedHashMap<>();
+        ns.put("dcat", "http://www.w3.org/ns/dcat#");
+        ns.put("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        Prefixes prefixes = new Prefixes(ns);
+
+        ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
+        when(rc.subject().iriConst()).thenReturn("http://example.org/dist/4");
+        when(rc.scopeJson()).thenReturn(null);
+
+        // NodeTemplate 'acc' with iri.format
+        io.gdcc.spi.export.dcat3.config.model.NodeTemplate accT =
+            new io.gdcc.spi.export.dcat3.config.model.NodeTemplate(
+                "acc", "iri", null, "$.id", "http://localhost:8080/api/access/datafile/${value}",
+                "rdfs:Resource", false, java.util.Collections.emptyMap(), java.util.Collections.emptyMap()
+            );
+        Map<String, io.gdcc.spi.export.dcat3.config.model.NodeTemplate> nodes = new LinkedHashMap<>();
+        nodes.put("acc", accT);
+        when(rc.nodes()).thenReturn(nodes);
+
+        ValueSource vs = mock(ValueSource.class);
+        when(vs.predicate()).thenReturn("dcat:accessURL");
+        when(vs.as()).thenReturn("node-ref");
+        when(vs.nodeRef()).thenReturn("acc");
+        Map<String, ValueSource> props = new LinkedHashMap<>();
+        props.put("accessURL", vs);
+        when(rc.props()).thenReturn(props);
+
+        JaywayJsonFinder finder = finderFor("{\"id\":\"4\"}");
+        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Distribution");
+        Model model = mapper.build(finder);
+
+        List<Statement> stmts = model.listStatements(
+            (Resource) null,
+            model.getProperty("http://www.w3.org/ns/dcat#accessURL"),
+            (org.apache.jena.rdf.model.RDFNode) null).toList();
+
+        assertThat(stmts).hasSize(1);
+        assertThat(stmts.get(0).getObject().isResource()).isTrue();
+        assertThat(stmts.get(0).getObject().asResource().getURI())
+            .isEqualTo("http://localhost:8080/api/access/datafile/4");
+    }
+
+    @Test
+    @DisplayName("NodeTemplate multi=true + map.* emits multiple mapped concept IRIs with type")
+    void node_ref_multi_map_emits_multiple() throws Exception {
+        Map<String, String> ns = new LinkedHashMap<>();
+        ns.put("dcat", "http://www.w3.org/ns/dcat#");
+        ns.put("skos", "http://www.w3.org/2004/02/skos/core#");
+        Prefixes prefixes = new Prefixes(ns);
+
+        ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
+        when(rc.subject().iriConst()).thenReturn("http://example.org/ds/1");
+        when(rc.scopeJson()).thenReturn(null);
+
+        Map<String, String> nodeMap = new LinkedHashMap<>();
+        nodeMap.put("ener", "http://publications.europa.eu/resource/authority/data-theme/ENER");
+        nodeMap.put("tech", "http://publications.europa.eu/resource/authority/data-theme/TECH");
+
+        io.gdcc.spi.export.dcat3.config.model.NodeTemplate themeT =
+            new io.gdcc.spi.export.dcat3.config.model.NodeTemplate(
+                "theme", "iri", null, "$.themes[*]", null,
+                "skos:Concept", true, nodeMap, java.util.Collections.emptyMap()
+            );
+        Map<String, io.gdcc.spi.export.dcat3.config.model.NodeTemplate> nodes = new LinkedHashMap<>();
+        nodes.put("theme", themeT);
+        when(rc.nodes()).thenReturn(nodes);
+
+        ValueSource vs = mock(ValueSource.class);
+        when(vs.predicate()).thenReturn("dcat:theme");
+        when(vs.as()).thenReturn("node-ref");
+        when(vs.nodeRef()).thenReturn("theme");
+        Map<String, ValueSource> props = new LinkedHashMap<>();
+        props.put("theme", vs);
+        when(rc.props()).thenReturn(props);
+
+        JaywayJsonFinder finder = finderFor("{\"themes\":[\"ener\",\"tech\"]}");
+        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Dataset");
+        Model model = mapper.build(finder);
+
+        List<Statement> themeStmts = model.listStatements(
+            (Resource) null,
+            model.getProperty("http://www.w3.org/ns/dcat#theme"),
+            (org.apache.jena.rdf.model.RDFNode) null).toList();
+
+        assertThat(themeStmts).hasSize(2);
+
+        List<String> objUris = themeStmts.stream()
+                                         .map(s -> s.getObject().asResource().getURI()).toList();
+
+        assertThat(objUris).containsExactlyInAnyOrder(
+            "http://publications.europa.eu/resource/authority/data-theme/ENER",
+            "http://publications.europa.eu/resource/authority/data-theme/TECH"
+        );
+
+        // also ensure each emitted node carries rdf:type skos:Concept
+        for (Statement s : themeStmts) {
+            Resource obj = s.getObject().asResource();
+            boolean hasType = model.contains(obj,
+                                             model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+                                             model.getResource("http://www.w3.org/2004/02/skos/core#Concept"));
+            assertThat(hasType).isTrue();
+        }
+    }
+
 }

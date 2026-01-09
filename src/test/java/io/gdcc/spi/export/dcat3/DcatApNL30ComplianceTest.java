@@ -50,9 +50,7 @@ class DcatApNL30ComplianceTest {
 
         // -- prepare configuration (same location as in your AP_NL30 tests)
         URL dcatRootPropertiesUrl =
-                getClass()
-                        .getClassLoader()
-                        .getResource( "AP_NL30/mapping/dcat-root.properties" );
+                getClass().getClassLoader().getResource("AP_NL30/mapping/dcat-root.properties");
         assertThat(dcatRootPropertiesUrl).isNotNull();
         File dcatRootPropetiesFile = new File(dcatRootPropertiesUrl.toURI());
         System.setProperty(RootConfigLoader.SYS_PROP, dcatRootPropetiesFile.getAbsolutePath());
@@ -76,6 +74,7 @@ class DcatApNL30ComplianceTest {
         exporter.exportDataset(provider, out);
         byte[] bytes = out.toByteArray();
         assertThat(bytes).as("Exporter should write RDF bytes").isNotEmpty();
+        System.out.println(new String(bytes));
 
         // -- parse exported RDF/XML
         Model dataModel = readModel(bytes, Lang.RDFXML);
@@ -99,7 +98,5 @@ class DcatApNL30ComplianceTest {
 
         assertThat(report.conforms()).as(toValidationReport(report)).isTrue();
     }
-
-    // ---- helpers ----
 
 }

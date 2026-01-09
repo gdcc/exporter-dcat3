@@ -5,12 +5,11 @@ import static io.gdcc.spi.export.util.AssertionsUtil.assertValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
 import io.gdcc.spi.export.dcat3.config.model.NodeTemplate;
 import io.gdcc.spi.export.dcat3.config.model.ResourceConfig;
 import io.gdcc.spi.export.dcat3.config.model.ValueSource;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import org.junit.jupiter.api.Test;
 
 public class PropertiesMappingLoaderTest {
@@ -24,7 +23,7 @@ public class PropertiesMappingLoaderTest {
 
     @Test
     void loads_subject() throws Exception {
-        ResourceConfig resourceConfig = load( "AP_NL30/mapping/dcat-catalog.properties" );
+        ResourceConfig resourceConfig = load("AP_NL30/mapping/dcat-catalog.properties");
 
         assertThat(resourceConfig.subject().iriConst())
                 .isEqualTo("https://data.example.org/catalog/gdn-test");
@@ -34,7 +33,7 @@ public class PropertiesMappingLoaderTest {
 
     @Test
     void loads_literal_properties_with_lang_and_json_or_const() throws Exception {
-        ResourceConfig resourceConfig = load( "AP_NL30/mapping/dcat-catalog.properties" );
+        ResourceConfig resourceConfig = load("AP_NL30/mapping/dcat-catalog.properties");
 
         ValueSource titleEn = resourceConfig.props().get("title_en");
         assertValueSource(
@@ -63,7 +62,7 @@ public class PropertiesMappingLoaderTest {
 
     @Test
     void loads_node_ref_properties_and_node_templates() throws Exception {
-        ResourceConfig resourceConfig = load( "AP_NL30/mapping/dcat-catalog.properties" );
+        ResourceConfig resourceConfig = load("AP_NL30/mapping/dcat-catalog.properties");
 
         // contact node-ref property
         ValueSource cp = resourceConfig.props().get("contactPoint");
@@ -114,7 +113,7 @@ public class PropertiesMappingLoaderTest {
         // publisher node template
         NodeTemplate publisher = resourceConfig.nodes().get("publisher");
         assertNodeTemplate(publisher, "publisher", "bnode", null, "foaf:Agent");
-        assertThat(publisher.props()).hasSize(2 );
+        assertThat(publisher.props()).hasSize(2);
         assertValueSource(
                 publisher.props().get("name_nl"),
                 "literal",
@@ -146,7 +145,7 @@ public class PropertiesMappingLoaderTest {
             props.foo.bar = unknown
             """;
         ResourceConfig resourceConfig =
-                new ResourceConfigLoader().load(new ByteArrayInputStream( props.getBytes()));
+                new ResourceConfigLoader().load(new ByteArrayInputStream(props.getBytes()));
 
         // loader should have created ValueSource and set the known field only
         assertThat(resourceConfig.props()).containsKey("foo");
@@ -195,4 +194,65 @@ public class PropertiesMappingLoaderTest {
                         "Consider making PropertiesMappingLoader.load throw FileNotFoundException"
                                 + " when InputStream is null");
     }
+
+    @Test
+    void loads_node_template_iri_fields_and_map_and_multi() throws Exception {
+        String props = """
+        # rights node: boolean -> mapped IRI
+        nodes.rights.kind = iri
+        nodes.rights.type = dct:RightsStatement
+        nodes.rights.iri.json = $.restricted
+        nodes.rights.map.true  = http://publications.europa.eu/resource/authority/access-right/RESTRICTED
+        nodes.rights.map.false = http://publications.europa.eu/resource/authority/access-right/PUBLIC
+
+        # theme node: multi values -> mapped IRIs
+        nodes.theme.kind = iri
+        nodes.theme.type = skos:Concept
+        nodes.theme.multi = true
+        nodes.theme.iri.json = $.themes[*]
+        nodes.theme.map.ener = http://publications.europa.eu/resource/authority/data-theme/ENER
+        nodes.theme.map.tech = http://publications.europa.eu/resource/authority/data-theme/TECH
+
+        # accessURL node: IRI from format
+        nodes.acc.kind = iri
+        nodes.acc.type = rdfs:Resource
+        nodes.acc.iri.json = $.id
+        nodes.acc.iri.format = http://localhost:8080/api/access/datafile/${value}
+    """;
+
+        ResourceConfig cfg =
+            new ResourceConfigLoader().load(new java.io.ByteArrayInputStream(props.getBytes()));
+
+        // rights
+        NodeTemplate rights = cfg.nodes().get("rights");
+        assertThat(rights).isNotNull();
+        assertThat(rights.kind()).isEqualTo("iri");
+        assertThat(rights.type()).isEqualTo("dct:RightsStatement");
+        assertThat(rights.iriJson()).isEqualTo("$.restricted");
+        assertThat(rights.iriFormat()).isNull();
+        assertThat(rights.multi()).isFalse();
+        assertThat(rights.iriMap())
+            .containsEntry("true",  "http://publications.europa.eu/resource/authority/access-right/RESTRICTED")
+            .containsEntry("false", "http://publications.europa.eu/resource/authority/access-right/PUBLIC");
+
+        // theme
+        NodeTemplate theme = cfg.nodes().get("theme");
+        assertThat(theme).isNotNull();
+        assertThat(theme.kind()).isEqualTo("iri");
+        assertThat(theme.type()).isEqualTo("skos:Concept");
+        assertThat(theme.multi()).isTrue();
+        assertThat(theme.iriJson()).isEqualTo("$.themes[*]");
+        assertThat(theme.iriMap())
+            .containsEntry("ener", "http://publications.europa.eu/resource/authority/data-theme/ENER")
+            .containsEntry("tech", "http://publications.europa.eu/resource/authority/data-theme/TECH");
+
+        // accessURL
+        NodeTemplate acc = cfg.nodes().get("acc");
+        assertThat(acc).isNotNull();
+        assertThat(acc.kind()).isEqualTo("iri");
+        assertThat(acc.type()).isEqualTo("rdfs:Resource");
+        assertThat(acc.iriJson()).isEqualTo("$.id");
+        assertThat(acc.iriFormat()).isEqualTo("http://localhost:8080/api/access/datafile/${value}");
+    }
+
 }

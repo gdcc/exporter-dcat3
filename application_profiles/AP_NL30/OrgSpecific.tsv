@@ -1,0 +1,15 @@
+#metadataBlock	name	dataverseAlias	displayName	blockURI
+	GDNMetadata		Geological Survey metadata
+#datasetField	name	title	description	watermark	fieldType	displayOrder	displayFormat	advancedSearchField	allowControlledVocabulary	allowmultiples	facetable	displayoncreate	required	parent	metadatablock_id	termURI
+	GDNdomain	Domain	A type of dataset		text	0	#VALUE	FALSE	TRUE	FALSE	TRUE	TRUE	TRUE		GDNMetadata
+#controlledVocabulary	DatasetField	Value	identifier	displayOrder	termURI
+	GDNdomain	co2_storage	co2_storage	0	
+	GDNdomain	energy_transition	energy_transition	1	
+	GDNdomain	geology	geology	2	
+	GDNdomain	geothermal_energy	geothermal_energy	3	
+	GDNdomain	groundwater	groundwater	4	
+	GDNdomain	hydrogen_storage	hydrogen_storage	5	
+	GDNdomain	seismicity	seismicity	6	
+	GDNdomain	oil_gas	oil_gas	7	
+	GDNdomain	rocksalt	rocksalt	8	
+	GDNdomain	subsidence	subsidence	9	
