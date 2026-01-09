@@ -197,7 +197,8 @@ public class PropertiesMappingLoaderTest {
 
     @Test
     void loads_node_template_iri_fields_and_map_and_multi() throws Exception {
-        String props = """
+        String props =
+                """
         # rights node: boolean -> mapped IRI
         nodes.rights.kind = iri
         nodes.rights.type = dct:RightsStatement
@@ -221,7 +222,7 @@ public class PropertiesMappingLoaderTest {
     """;
 
         ResourceConfig cfg =
-            new ResourceConfigLoader().load(new java.io.ByteArrayInputStream(props.getBytes()));
+                new ResourceConfigLoader().load(new java.io.ByteArrayInputStream(props.getBytes()));
 
         // rights
         NodeTemplate rights = cfg.nodes().get("rights");
@@ -232,8 +233,12 @@ public class PropertiesMappingLoaderTest {
         assertThat(rights.iriFormat()).isNull();
         assertThat(rights.multi()).isFalse();
         assertThat(rights.iriMap())
-            .containsEntry("true",  "http://publications.europa.eu/resource/authority/access-right/RESTRICTED")
-            .containsEntry("false", "http://publications.europa.eu/resource/authority/access-right/PUBLIC");
+                .containsEntry(
+                        "true",
+                        "http://publications.europa.eu/resource/authority/access-right/RESTRICTED")
+                .containsEntry(
+                        "false",
+                        "http://publications.europa.eu/resource/authority/access-right/PUBLIC");
 
         // theme
         NodeTemplate theme = cfg.nodes().get("theme");
@@ -243,8 +248,10 @@ public class PropertiesMappingLoaderTest {
         assertThat(theme.multi()).isTrue();
         assertThat(theme.iriJson()).isEqualTo("$.themes[*]");
         assertThat(theme.iriMap())
-            .containsEntry("ener", "http://publications.europa.eu/resource/authority/data-theme/ENER")
-            .containsEntry("tech", "http://publications.europa.eu/resource/authority/data-theme/TECH");
+                .containsEntry(
+                        "ener", "http://publications.europa.eu/resource/authority/data-theme/ENER")
+                .containsEntry(
+                        "tech", "http://publications.europa.eu/resource/authority/data-theme/TECH");
 
         // accessURL
         NodeTemplate acc = cfg.nodes().get("acc");
@@ -254,5 +261,4 @@ public class PropertiesMappingLoaderTest {
         assertThat(acc.iriJson()).isEqualTo("$.id");
         assertThat(acc.iriFormat()).isEqualTo("http://localhost:8080/api/access/datafile/${value}");
     }
-
 }

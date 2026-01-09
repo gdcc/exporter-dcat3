@@ -98,5 +98,4 @@ class DcatApNL30ComplianceTest {
 
         assertThat(report.conforms()).as(toValidationReport(report)).isTrue();
     }
-
 }
