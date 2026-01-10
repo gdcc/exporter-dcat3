@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.gdcc.export</groupId>
+    <groupId>io.gdcc</groupId>
     <artifactId>parent</artifactId>
-    <version>2.0.0-M2</version>
+    <version>0.12.4</version>
   </parent>
 
   <artifactId>dcat-3</artifactId>
@@ -39,24 +39,13 @@
     <url>https://github.com/gdcc/exporter-dcat3</url>
   </scm>
 
-  <distributionManagement>
-    <repository>
-      <id>ossrh</id>
-      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <properties>
     <!-- general properties -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
 
     <!-- compile dependency versions -->
+    <dataverse.spi.version>2.0.0</dataverse.spi.version>
+    <jakarta.json-api.version>2.1.0</jakarta.json-api.version>
     <jena.version>5.6.0</jena.version>
     <jackson-dataformat-xml.version>2.20.1</jackson-dataformat-xml.version>
     <!-- Check for alignment with Jena -->
@@ -69,15 +58,28 @@
     <!-- test dependency versions -->
     <assertj-core.version>3.27.6</assertj-core.version>
     <jsonassert.version>1.5.1</jsonassert.version>
+    <slf4j-nop.version>2.0.13</slf4j-nop.version>
 
     <!-- plugin and dependency versions -->
-    <pomchecker-maven-plugin.version>1.7.0</pomchecker-maven-plugin.version>
     <spotless-maven-plugin.version>2.43.0</spotless-maven-plugin.version>
     <maven-shade-plugin.version>3.6.1</maven-shade-plugin.version>
     <mockito-junit-jupiter.version>5.14.2</mockito-junit-jupiter.version>
   </properties>
 
   <dependencies>
+
+    <!-- dataverse spi -->
+    <dependency>
+      <groupId>io.gdcc</groupId>
+      <artifactId>dataverse-spi</artifactId>
+      <version>${dataverse.spi.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.auto.service</groupId>
+      <artifactId>auto-service</artifactId>
+      <version>${google.auto.service.version}</version>
+    </dependency>
 
     <!-- jena and dependencies -->
     <dependency>
@@ -157,6 +159,14 @@
       <version>${jena.version}</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-nop</artifactId>
+      <version>${slf4j-nop.version}</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -173,28 +183,21 @@
     <plugins>
 
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
           <release>17</release>
-        </configuration>
-      </plugin>
+          <proc>full</proc>
+          <!-- making sure and explicit that the spi file is generated -->
+          <annotationProcessorPaths>
+            <path>
+              <groupId>com.google.auto.service</groupId>
+              <artifactId>auto-service</artifactId>
+              <version>${google.auto.service.version}</version>
+            </path>
+          </annotationProcessorPaths>
 
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.13</version>
-        <extensions>true</extensions>
-        <configuration>
-          <serverId>ossrh</serverId>
-          <nexusUrl>https://s01.oss.sonatype.org</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.kordamp.maven</groupId>
-        <artifactId>pomchecker-maven-plugin</artifactId>
-        <version>${pomchecker-maven-plugin.version}</version>
       </plugin>
 
       <plugin>
@@ -214,7 +217,6 @@
               <style>AOSP</style>
               <reflowLongStrings>true</reflowLongStrings>
             </googleJavaFormat>
-            <toggleOffOn></toggleOffOn>
           </java>
           <pom>
             <includes>
@@ -233,6 +235,7 @@
         <version>${maven-shade-plugin.version}</version>
         <executions>
           <execution>
+            <id>shade-at-package</id>
             <goals>
               <goal>shade</goal>
             </goals>
@@ -264,16 +267,19 @@
                 <!-- IMPORTANT: Do NOT relocate org.apache.thrift or eclipse microprofile config -->
               </relocations>
 
-              <!-- Merge service descriptors / MANIFEST -->
+              <!-- Merge services + prevent including your own module-info.class -->
               <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"></transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
               </transformers>
 
-              <!-- Clean up signatures that can cause classloading issues -->
+              <!-- Exclude JPMS descriptors from all shaded dependencies (incl. multi-release JARs) -->
               <filters>
                 <filter>
                   <artifact>*:*</artifact>
                   <excludes>
+                    <exclude>module-info.class</exclude>
+                    <exclude>META-INF/versions/**/module-info.class</exclude>
+                    <!-- Keep your earlier signature/resource cleanup -->
                     <exclude>META-INF/*.SF</exclude>
                     <exclude>META-INF/*.DSA</exclude>
                     <exclude>META-INF/*.RSA</exclude>
@@ -288,100 +294,34 @@
                 </filter>
               </filters>
 
-              <!-- Optional helpers -->
               <minimizeJar>false</minimizeJar>
-              <createDependencyReducedPom>true</createDependencyReducedPom>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
             </configuration>
           </execution>
         </executions>
       </plugin>
 
+      <!-- Expose @{argLine} from maven-dependency-plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals><goal>properties</goal></goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Run tests with Mockito as a startup Java agent -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <!-- Use the resolved mockito-core jar as the agent -->
+          <argLine>-javaagent:${org.mockito:mockito-core:jar} -Xshare:off</argLine>        </configuration>
+      </plugin>
+
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>release</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>3.2.4</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-                <phase>verify</phase>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.6.3</version>
-            <configuration>
-              <source>17</source>
-              <detectJavaApiLink>false</detectJavaApiLink>
-            </configuration>
-            <executions>
-              <execution>
-                <id>attach-javadocs</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
-            <version>3.3.0</version>
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>flatten-maven-plugin</artifactId>
-            <version>1.6.0</version>
-            <configuration>
-              <updatePomFile>true</updatePomFile>
-              <flattenMode>oss</flattenMode>
-              <pomElements>
-                <distributionManagement>remove</distributionManagement>
-                <repositories>remove</repositories>
-              </pomElements>
-            </configuration>
-            <executions>
-              <!-- enable flattening -->
-              <execution>
-                <id>flatten</id>
-                <goals>
-                  <goal>flatten</goal>
-                </goals>
-                <phase>process-resources</phase>
-              </execution>
-              <!-- ensure proper cleanup -->
-              <execution>
-                <id>flatten.clean</id>
-                <goals>
-                  <goal>clean</goal>
-                </goals>
-                <phase>clean</phase>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 
 </project>
