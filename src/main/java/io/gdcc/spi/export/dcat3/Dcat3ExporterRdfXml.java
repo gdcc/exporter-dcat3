@@ -28,4 +28,9 @@ public class Dcat3ExporterRdfXml extends Dcat3ExporterBase {
     protected String getJenaWriterName() {
         return "RDF/XML";
     }
+
+    @Override
+    protected String getConfigurationKey() {
+        return "rdfXml";
+    }
 }

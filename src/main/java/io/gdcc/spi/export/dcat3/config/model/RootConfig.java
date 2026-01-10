@@ -12,4 +12,5 @@ public record RootConfig(
         Map<String, String> prefixes,
         List<Element> elements,
         List<Relation> relations,
+        Map<String, FormatFlags> formats,
         Path baseDir) {}

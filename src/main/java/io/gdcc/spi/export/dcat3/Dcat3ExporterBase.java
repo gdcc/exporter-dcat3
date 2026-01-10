@@ -60,14 +60,16 @@ public abstract class Dcat3ExporterBase implements Exporter {
         }
     }
 
-    @Override
     public Boolean isHarvestable() {
-        return true;
+        return root.formats().containsKey(getConfigurationKey())
+                ? root.formats().get(getConfigurationKey()).harvestable()
+                : false;
     }
 
-    @Override
     public Boolean isAvailableToUsers() {
-        return true;
+        return root.formats().containsKey(getConfigurationKey())
+                ? root.formats().get(getConfigurationKey()).availableToUsers()
+                : false;
     }
 
     /** The MIME type advertised by this exporter. */
@@ -75,6 +77,9 @@ public abstract class Dcat3ExporterBase implements Exporter {
 
     /** The Jena writer name (e.g. "TURTLE", "JSON-LD", "RDF/XML"). */
     protected abstract String getJenaWriterName();
+
+    /** The key in the configuration * */
+    protected abstract String getConfigurationKey();
 
     @Override
     public String getMediaType() {

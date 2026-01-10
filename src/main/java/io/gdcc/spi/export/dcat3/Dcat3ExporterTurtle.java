@@ -28,4 +28,9 @@ public class Dcat3ExporterTurtle extends Dcat3ExporterBase {
     protected String getJenaWriterName() {
         return "TURTLE";
     }
+
+    @Override
+    protected String getConfigurationKey() {
+        return "turtle";
+    }
 }

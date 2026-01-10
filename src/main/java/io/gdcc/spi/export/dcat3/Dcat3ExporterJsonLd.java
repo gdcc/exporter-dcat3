@@ -28,4 +28,9 @@ public class Dcat3ExporterJsonLd extends Dcat3ExporterBase {
     protected String getJenaWriterName() {
         return "JSON-LD";
     }
+
+    @Override
+    protected String getConfigurationKey() {
+        return "jsonLd";
+    }
 }

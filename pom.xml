@@ -269,7 +269,7 @@
 
               <!-- Merge services + prevent including your own module-info.class -->
               <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"></transformer>
               </transformers>
 
               <!-- Exclude JPMS descriptors from all shaded dependencies (incl. multi-release JARs) -->
@@ -279,7 +279,6 @@
                   <excludes>
                     <exclude>module-info.class</exclude>
                     <exclude>META-INF/versions/**/module-info.class</exclude>
-                    <!-- Keep your earlier signature/resource cleanup -->
                     <exclude>META-INF/*.SF</exclude>
                     <exclude>META-INF/*.DSA</exclude>
                     <exclude>META-INF/*.RSA</exclude>
@@ -307,7 +306,9 @@
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
-            <goals><goal>properties</goal></goals>
+            <goals>
+              <goal>properties</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
@@ -318,7 +319,8 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <!-- Use the resolved mockito-core jar as the agent -->
-          <argLine>-javaagent:${org.mockito:mockito-core:jar} -Xshare:off</argLine>        </configuration>
+          <argLine>-javaagent:${org.mockito:mockito-core:jar} -Xshare:off</argLine>
+        </configuration>
       </plugin>
 
     </plugins>
