@@ -30,7 +30,7 @@ public class Dcat3ExporterRdfXml extends Dcat3ExporterBase {
     }
 
     @Override
-    protected String getConfigurationKey() {
-        return "rdfXml";
+    public Boolean isAvailableToUsers() {
+        return root.availableToUsers().rdfXml();
     }
 }

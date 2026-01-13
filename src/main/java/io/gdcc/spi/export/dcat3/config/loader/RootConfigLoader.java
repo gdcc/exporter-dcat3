@@ -2,8 +2,8 @@ package io.gdcc.spi.export.dcat3.config.loader;
 
 import static io.gdcc.spi.export.dcat3.config.loader.FileResolver.resolveFile;
 
+import io.gdcc.spi.export.dcat3.config.model.AvailableToUsers;
 import io.gdcc.spi.export.dcat3.config.model.Element;
-import io.gdcc.spi.export.dcat3.config.model.FormatFlags;
 import io.gdcc.spi.export.dcat3.config.model.Relation;
 import io.gdcc.spi.export.dcat3.config.model.RootConfig;
 import java.io.IOException;
@@ -25,9 +25,8 @@ public final class RootConfigLoader {
     private static final Pattern RELATION_PREDICATE_PATTERN =
             Pattern.compile("^relation\\.([^.]+)\\.predicate$");
 
-    // NEW: dcat.format.<format>.<flag>, where flag ∈ {availableToUsers, harvestable}
-    private static final Pattern FORMAT_FLAG_PATTERN =
-            Pattern.compile("^dcat\\.format\\.([^.]+)\\.(availableToUsers|harvestable)$");
+    private static final Pattern AVAILABLE_FLAG_PATTERN =
+            Pattern.compile("^dcat\\.format\\.([^.]+)\\.availableToUsers$");
 
     private RootConfigLoader() {}
 
@@ -98,48 +97,42 @@ public final class RootConfigLoader {
         }
 
         // NEW: dcat.format.<format>.<flag> -> defaults TRUE on absence
-        Map<String, FormatFlags> formats = parseFormats(properties);
+        AvailableToUsers formats = parseAvailableToUsers(properties);
 
         return new RootConfig(trace, prefixes, elements, relations, formats, baseDir);
     }
 
     /** Parse dcat.format.* flags, defaulting to TRUE when a flag is absent. */
-    private static Map<String, FormatFlags> parseFormats(Properties properties) {
-        Map<String, FormatFlags> result = new LinkedHashMap<>();
+    static AvailableToUsers parseAvailableToUsers(Properties properties) {
 
-        // First pass: discover all <format> names present in any dcat.format.* key
-        // and collect explicit values when present.
-        Map<String, Boolean> availableToUsers = new LinkedHashMap<>();
-        Map<String, Boolean> harvestable = new LinkedHashMap<>();
-
+        boolean rdfXmlAvailableToUsers = true;
+        boolean jsonLdAvailableToUsers = true;
+        boolean turtleAvailableToUsers = true;
         for (String key : properties.stringPropertyNames()) {
-            Matcher matcher = FORMAT_FLAG_PATTERN.matcher(key);
-            if (!matcher.matches()) continue;
+            Matcher matcher = AVAILABLE_FLAG_PATTERN.matcher(key);
+            if (!matcher.matches()) {
+                continue;
+            }
 
             String format = matcher.group(1);
-            String flag = matcher.group(2);
             String raw = properties.getProperty(key);
 
             boolean value = safeBoolean(raw, true); // parse robustly; default TRUE if missing
-            if ("availableToUsers".equals(flag)) {
-                availableToUsers.put(format, value);
-            } else {
-                harvestable.put(format, value);
+            format = format.toLowerCase();
+            switch (format) {
+                case "rdfxml":
+                    rdfXmlAvailableToUsers = value;
+                    break;
+                case "jsonld":
+                    jsonLdAvailableToUsers = value;
+                    break;
+                case "turtle":
+                    turtleAvailableToUsers = value;
+                    break;
             }
         }
-
-        // Second pass: assemble FormatFlags for each discovered format.
-        // Even if a format appears only in one flag, the other flag defaults to TRUE.
-        // Also: if NO keys exist for a format at all, we won’t invent formats.
-        // Formats are defined implicitly by the presence of any dcat.format.<format>.* key in the
-        // file.
-        for (String format : unionKeys(availableToUsers, harvestable)) {
-            boolean a = availableToUsers.getOrDefault(format, true);
-            boolean h = harvestable.getOrDefault(format, true);
-            result.put(format, new FormatFlags(a, h));
-        }
-
-        return result;
+        return new AvailableToUsers(
+                rdfXmlAvailableToUsers, jsonLdAvailableToUsers, turtleAvailableToUsers);
     }
 
     /**

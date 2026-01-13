@@ -4,7 +4,6 @@ import static io.gdcc.spi.export.dcat3.config.loader.FileResolver.resolveElement
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import io.gdcc.spi.export.dcat3.config.model.FormatFlags;
 import io.gdcc.spi.export.dcat3.config.model.ResourceConfig;
 import io.gdcc.spi.export.dcat3.config.model.RootConfig;
 import io.gdcc.spi.export.dcat3.config.model.ValueSource;
@@ -188,18 +187,14 @@ public class RootConfigLoaderTest {
                 rootFile,
                 """
             dcat.trace.enabled = false
-            # formats: mix van expliciet en impliciet, met trailing ';'
+            # formats: mix of explicit and implicit, met trailing ';'
             dcat.format.turtle.availableToUsers = true;
-            # harvestable voor turtle ontbreekt -> default TRUE
 
-            dcat.format.rdfXml.harvestable = true;
-            # availableToUsers voor rdfXml ontbreekt -> default TRUE
+            # availableToUsers for rdfXml missing -> default TRUE
 
-            # jsonLd heeft beide flags expliciet (met ';')
-            dcat.format.jsonLd.availableToUsers = true;
-            dcat.format.jsonLd.harvestable = true;
+            dcat.format.jsonLd.availableToUsers = false;
 
-            # minimaal 1 element is nodig om parse-pad gelijk te houden
+            # minimal 1 element required to keep parse-path gequal
             element.catalog.id = catalog
             element.catalog.type = dcat:Catalog
             element.catalog.file = dcat-catalog.properties
@@ -215,76 +210,12 @@ public class RootConfigLoaderTest {
         RootConfig rootConfig = RootConfigLoader.load();
 
         // Assert
-        assertThat(rootConfig.formats()).as("Format-section must be present").isNotNull();
-        assertThat(rootConfig.formats().keySet())
-                .containsExactlyInAnyOrder("turtle", "rdfXml", "jsonLd");
-
-        FormatFlags turtle = rootConfig.formats().get("turtle");
-        assertThat(turtle.availableToUsers()).isTrue(); // explicit 'true;'
-        assertThat(turtle.harvestable()).isTrue(); // missing -> TRUE default
-
-        FormatFlags rdfXml = rootConfig.formats().get("rdfXml");
-        assertThat(rdfXml.harvestable()).isTrue(); // explicit 'true;'
-        assertThat(rdfXml.availableToUsers()).isTrue(); // missing -> TRUE default
-
-        FormatFlags jsonLd = rootConfig.formats().get("jsonLd");
-        assertThat(jsonLd.availableToUsers()).isTrue(); // explicit 'true;'
-        assertThat(jsonLd.harvestable()).isTrue(); // missing 'true;'
-    }
-
-    @Test
-    void when_no_dcat_format_keys_formats_map_is_empty() throws Exception {
-        // Arrange
-        Path rootFile = temp.resolve("dcat-root-no-formats.properties");
-        Files.writeString(
-                rootFile,
-                """
-            dcat.trace.enabled = true
-            prefix.dcat = http://www.w3.org/ns/dcat#
-            element.catalog.id = catalog
-            element.catalog.type = dcat:Catalog
-            element.catalog.file = dcat-catalog.properties
-            """);
-        Files.writeString(
-                temp.resolve("dcat-catalog.properties"),
-                "subject.iri.const = https://example.org/cat2");
-        System.setProperty(RootConfigLoader.SYS_PROP, rootFile.toString());
-
-        // Act
-        RootConfig rootConfig = RootConfigLoader.load();
-
-        // Assert
-        assertThat(rootConfig.formats()).isNotNull();
-        assertThat(rootConfig.formats()).isEmpty(); // no dcat.format.* => empty map
-    }
-
-    @Test
-    void partial_definition_missing_flag_defaults_to_true() throws Exception {
-        // Arrange
-        Path rootFile = temp.resolve("dcat-root-partial.properties");
-        Files.writeString(
-                rootFile,
-                """
-            # Only 'availableToUsers' is defined; 'harvestable' is missing and must be TRUE
-            dcat.format.csv.availableToUsers = false
-            # This also tests that FALSE is correctly read, while the missing flag defaults to TRUE.
-            element.catalog.id = catalog
-            element.catalog.type = dcat:Catalog
-            element.catalog.file = dcat-catalog.properties
-            """);
-        Files.writeString(
-                temp.resolve("dcat-catalog.properties"),
-                "subject.iri.const = https://example.org/cat3");
-        System.setProperty(RootConfigLoader.SYS_PROP, rootFile.toString());
-
-        // Act
-        RootConfig rootConfig = RootConfigLoader.load();
-
-        // Assert
-        assertThat(rootConfig.formats().keySet()).containsExactly("csv");
-        FormatFlags csv = rootConfig.formats().get("csv");
-        assertThat(csv.availableToUsers()).isFalse(); // explicit false
-        assertThat(csv.harvestable()).isTrue(); // missing -> TRUE default
+        assertThat(rootConfig.availableToUsers())
+                .as("Available-to-users-section must be present")
+                .isNotNull();
+        assertThat(rootConfig.availableToUsers().turtle()).isTrue(); // explicit 'true;'
+        assertThat(rootConfig.availableToUsers().rdfXml()).isTrue(); // missing -> TRUE default
+        assertThat(rootConfig.availableToUsers().jsonLd()).isFalse(); // explicit 'false;'
     }
 
     // --- helpers ---

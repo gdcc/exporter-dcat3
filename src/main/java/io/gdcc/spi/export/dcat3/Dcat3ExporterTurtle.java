@@ -30,7 +30,7 @@ public class Dcat3ExporterTurtle extends Dcat3ExporterBase {
     }
 
     @Override
-    protected String getConfigurationKey() {
-        return "turtle";
+    public Boolean isAvailableToUsers() {
+        return root.availableToUsers().turtle();
     }
 }

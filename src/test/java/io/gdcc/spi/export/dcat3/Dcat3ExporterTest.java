@@ -55,7 +55,6 @@ class Dcat3ExporterTest {
         assertThat(exporter.getFormatName()).isEqualTo(expectedFormatName);
         assertThat(exporter.getDisplayName(Locale.ROOT)).isEqualTo(expectedDisplayName);
         assertThat(exporter.isAvailableToUsers()).isEqualTo(true);
-        assertThat(exporter.isHarvestable()).isEqualTo(true);
         assertThat(exporter.getMediaType()).isEqualTo(expectedMediaType);
 
         // -- perform export

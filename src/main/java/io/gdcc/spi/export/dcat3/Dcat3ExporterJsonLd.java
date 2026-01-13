@@ -30,7 +30,7 @@ public class Dcat3ExporterJsonLd extends Dcat3ExporterBase {
     }
 
     @Override
-    protected String getConfigurationKey() {
-        return "jsonLd";
+    public Boolean isAvailableToUsers() {
+        return root.availableToUsers().jsonLd();
     }
 }
