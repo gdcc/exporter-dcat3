@@ -30,6 +30,12 @@ public class Dcat3ExporterTurtle extends Dcat3ExporterBase {
     }
 
     @Override
+    public Boolean isHarvestable() {
+        // turtle cannot yet be harvestable
+        return false;
+    }
+
+    @Override
     protected String getConfigurationKey() {
         return "turtle";
     }

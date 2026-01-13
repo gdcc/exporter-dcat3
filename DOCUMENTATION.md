@@ -44,6 +44,32 @@ relation.dataset_has_distribution.predicate   = dcat:distribution
 relation.dataset_has_distribution.object      = distribution
 relation.dataset_has_distribution.cardinality = 0..n
 ```
+### trace option
+The trace option can be used to trace the internal data received from Dataverse so that proper JSON queries can be defined.
+
+### harvestable vs availableToUsers
+
+* This exporter provides DCAT serializations in **RDF/XML**, **Turtle**, and **JSON‑LD**. 
+* **Dataverse harvesters only support XML formats**, therefore only the RDF/XML variant is harvestable.
+* For **Turtle** and **JSON‑LD**, the harvestable property is ignored and effectively overridden to false, regardless of its value in dcat-root.properties.
+* The `availableToUsers` flag only controls visibility in the Dataverse UI: when set to true, the format will appear in the Metadata → Export menu for manual export by users.
+
+Example (effective behavior):
+```properties
+
+dcat.format.rdfXml.availableToUsers = true
+dcat.format.rdfXml.harvestable     = true
+
+dcat.format.turtle.availableToUsers = true
+dcat.format.turtle.harvestable      = false   # ignored/overridden
+
+dcat.format.jsonLd.availableToUsers = true
+dcat.format.jsonLd.harvestable      = false   # ignored/overridden
+
+```
+### relation
+
+The relations describe which entities are relevant in the application profile. Each of the entities can have a file describing that entity.
 
 ## 2. Resource config (e.g., `dcat-distribution.properties`)
 Controls how to build a **resource model** (subjects, properties, nodes).
