@@ -3,14 +3,13 @@
 #datasetField	name	title	description	watermark	fieldType	displayOrder	displayFormat	advancedSearchField	allowControlledVocabulary	allowmultiples	facetable	displayoncreate	required	parent	metadatablock_id	termURI
 	DCATaccessRights	Access rights	This property contains information indicating whether the dataset is publicly accessible, has access restrictions, or is not accessible.	public	text	3	#VALUE	FALSE	TRUE	FALSE	TRUE	TRUE	TRUE		DCATMetadata
 	DCATidentifier	Identifier	Identifier is used for the unique identification of the data.		text	1	#VALUE	TRUE	FALSE	FALSE	FALSE	TRUE	TRUE		DCATMetadata
-	DCATkeyword	Keyword	This property contains commonly used words or formalised phrases to describe a dataset that do not come from a controlled vocabulary.		text	6	#VALUE	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE		DCATMetadata
+	DCATkeyword	Keyword	This property contains commonly used words or formalised phrases to describe a dataset that do not come from a controlled vocabulary.		text	5	#VALUE	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE		DCATMetadata
 	DCATpublisher	Publisher	The organisation responsible for publishing the dataset.	Geological Survey of the Netherlands	text	2	#VALUE	TRUE	TRUE	FALSE	TRUE	TRUE	TRUE		DCATMetadata
 	DCATtheme	Theme	The category of the dataset.		text	4	#VALUE	TRUE	TRUE	TRUE	TRUE	TRUE	TRUE		DCATMetadata	http://publications.europa.eu/resource/authority/data-theme
-	DCATapplicableLegislation	Applicable legislation	This property contains the HvD legislation that mandates the creation or management of the dataset.		url	5	"<a href=""#VALUE"">#VALUE</a>"	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE		DCATMetadata
-	DCAThvdCompliant	HvD compliant	Indicates wheter or not the dataset is subject to the High-Value Datasets Implementation Regulation.		none	7		FALSE	FALSE	FALSE	FALSE	TRUE	FALSE		DCATMetadata
-	DCAThvdApplicableLegislation	HvD applicable legislation	This property contains the HvD legislation that mandates the creation or management of the dataset.	https://eur-lex.europa.eu/eli/reg_impl/2023/138/oj	url	8	"<a href=""#VALUE"">#VALUE</a>"	FALSE	TRUE	FALSE	TRUE	TRUE	TRUE	DCAThvdCompliant	DCATMetadata
-	DCAThvdCategory	HvD category	This property contains the HVD category to which this dataset belongs, if the dataset falls under the High-Value Datasets Implementing Regulation.		text	9	#VALUE	FALSE	TRUE	TRUE	TRUE	TRUE	TRUE	DCAThvdCompliant	DCATMetadata
-	DCATrights	Rights	A statement specifying the rights associated with distribution. This shall only include the remaining rights that are not covered by the licence or access rights.		text	10	#VALUE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE		DCATMetadata
+	DCAThvdCompliant	HvD compliant	Indicates wheter or not the dataset is subject to the High-Value Datasets Implementation Regulation.		none	6		FALSE	FALSE	FALSE	FALSE	TRUE	FALSE		DCATMetadata
+	DCATapplicableLegislation	HvD applicable legislation	This property contains the HvD legislation that mandates the creation or management of the dataset.	https://eur-lex.europa.eu/eli/reg_impl/2023/138/oj	url	7	"<a href=""#VALUE"">#VALUE</a>"	FALSE	TRUE	FALSE	TRUE	TRUE	TRUE	DCAThvdCompliant	DCATMetadata
+	DCAThvdCategory	HvD category	This property contains the HVD category to which this dataset belongs, if the dataset falls under the High-Value Datasets Implementing Regulation.		text	8	#VALUE	FALSE	TRUE	TRUE	TRUE	TRUE	TRUE	DCAThvdCompliant	DCATMetadata
+	DCATrights	Rights	A statement specifying the rights associated with distribution. This shall only include the remaining rights that are not covered by the licence or access rights.		text	9	#VALUE	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE		DCATMetadata
 #controlledVocabulary	DatasetField	Value	identifier	displayOrder	termURI
 	DCATaccessRights	public	public	0
 	DCATaccessRights	non_public	non_public	1
@@ -19,7 +18,7 @@
 	DCATtheme	ener	ener	0	http://publications.europa.eu/resource/authority/data-theme/ENER
 	DCATtheme	tech	tech	1	http://publications.europa.eu/resource/authority/data-theme/TECH
 	DCATtheme	envi	envi	2	http://publications.europa.eu/resource/authority/data-theme/ENVI
-	DCAThvdApplicableLegislation	eu_2023_138	eu_2023_138	0	https://eur-lex.europa.eu/eli/reg_impl/2023/138/oj
+	DCATapplicableLegislation	eu_2023_138	eu_2023_138	0	https://eur-lex.europa.eu/eli/reg_impl/2023/138/oj
 	DCAThvdCategory	geology	geology	0
 	DCAThvdCategory	mineral_resources	mineral_resources	1
 	DCAThvdCategory	soil	soil	2
