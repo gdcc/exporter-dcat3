@@ -99,7 +99,7 @@ application_profiles/
 > Configure it similar to the exporters' directory:
 >
 > ```xml
-> <jvm-options>-Ddataverse.dcat3.config=/path/to/dcat3-config</jvm-options>
+> <jvm-options>-Ddataverse.dcat3.config=/path/to/dcat3-config/dcat-root.properties</jvm-options>
 > ```
 >
 > In containers, you can inject the same as a Java option (e.g., via `PAYARA_JAVA_OPTS` or your runtime’s JVM opts mechanism). The exporter resolves files from this directory first and may fall back to classpath resources if not found.
