@@ -73,7 +73,6 @@ class DcatApNL30ComplianceTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         exporter.exportDataset(provider, out);
         byte[] bytes = out.toByteArray();
-        System.out.println( new String(bytes));
         assertThat(bytes).as("Exporter should write RDF bytes").isNotEmpty();
 
         // -- parse exported RDF/XML
