@@ -231,8 +231,8 @@
             "multiple" : false,
             "typeClass" : "compound",
             "value" : {
-              "DCAThvdApplicableLegislation" : {
-                "typeName" : "DCAThvdApplicableLegislation",
+              "DCATapplicableLegislation" : {
+                "typeName" : "DCATapplicableLegislation",
                 "multiple" : false,
                 "typeClass" : "controlledVocabulary",
                 "value" : "eu_2023_138"
@@ -337,7 +337,7 @@
     "@id" : "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/datasets/export?exporter=OAI_ORE&persistentId=https://doi.org/10.83300/GDN/XAIHYX",
     "ore:describes" : {
       "DCATMetadata:DCAThvdCompliant" : {
-        "DCATMetadata:DCAThvdApplicableLegislation" : "eu_2023_138",
+        "DCATMetadata:DCATapplicableLegislation" : "eu_2023_138",
         "DCATMetadata:DCAThvdCategory" : "mineral_resources"
       },
       "citation:datasetContact" : {

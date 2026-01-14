@@ -263,8 +263,8 @@
             "multiple": false,
             "typeClass": "compound",
             "value": {
-              "DCAThvdApplicableLegislation": {
-                "typeName": "DCAThvdApplicableLegislation",
+              "DCATapplicableLegislation": {
+                "typeName": "DCATapplicableLegislation",
                 "multiple": false,
                 "typeClass": "controlledVocabulary",
                 "value": "eu_2023_138"
