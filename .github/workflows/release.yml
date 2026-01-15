@@ -1,4 +1,4 @@
-name: Release to Maven Central Repository
+name: Manual Release to Maven Central Repository (calls release.yml)
 on:
   push:
     tags:
