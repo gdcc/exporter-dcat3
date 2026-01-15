@@ -25,16 +25,17 @@ class Dcat3ExporterTest {
     @ParameterizedTest(name = "{index} => {0}")
     @CsvSource({
         // formatKey, expectedFormatName,expectedDisplayName,expectedMediaType,jenaLang
-        "rdfxml,dcat3-rdfxml,DCAT-3 (RDF/XML),application/rdf+xml,RDFXML",
-        "turtle,dcat3-turtle,DCAT-3 (Turtle) ,text/turtle        ,TURTLE",
-        "jsonld,dcat3-jsonld,DCAT-3 (JSON-LD),application/ld+json,JSONLD"
+        "rdfxml,dcat3-rdfxml,DCAT-3 (RDF/XML),application/rdf+xml,RDFXML,true",
+        "turtle,dcat3-turtle,DCAT-3 (Turtle) ,text/turtle        ,TURTLE,false",
+        "jsonld,dcat3-jsonld,DCAT-3 (JSON-LD),application/ld+json,JSONLD,false"
     })
     void exportSet1_allFormats(
             String formatKey,
             String expectedFormatName,
             String expectedDisplayName,
             String expectedMediaType,
-            String jenaLangName)
+            String jenaLangName,
+            String harvestable)
             throws Exception {
 
         // -- prepare configuration (same as your original)
@@ -55,7 +56,7 @@ class Dcat3ExporterTest {
         assertThat(exporter.getFormatName()).isEqualTo(expectedFormatName);
         assertThat(exporter.getDisplayName(Locale.ROOT)).isEqualTo(expectedDisplayName);
         assertThat(exporter.isAvailableToUsers()).isEqualTo(true);
-        assertThat(exporter.isHarvestable()).isEqualTo(true);
+        assertThat(exporter.isHarvestable()).isEqualTo(Boolean.parseBoolean( harvestable ));
         assertThat(exporter.getMediaType()).isEqualTo(expectedMediaType);
 
         // -- perform export

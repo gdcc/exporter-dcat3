@@ -30,6 +30,12 @@ public class Dcat3ExporterJsonLd extends Dcat3ExporterBase {
     }
 
     @Override
+    public Boolean isHarvestable() {
+        // jsonLd cannot yet be harvestable
+        return false;
+    }
+
+    @Override
     protected String getConfigurationKey() {
         return "jsonLd";
     }

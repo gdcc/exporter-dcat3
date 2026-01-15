@@ -5,11 +5,13 @@ package io.gdcc.spi.export.dcat3;
 
 import com.google.auto.service.AutoService;
 import io.gdcc.spi.export.Exporter;
+import io.gdcc.spi.export.XMLExporter;
+
 import java.util.Locale;
 
 @AutoService(Exporter.class)
-public class Dcat3ExporterRdfXml extends Dcat3ExporterBase {
-    @Override
+public class Dcat3ExporterRdfXml extends Dcat3ExporterBase implements XMLExporter {
+@Override
     public String getFormatName() {
         return "dcat3-rdfxml";
     }
@@ -32,5 +34,22 @@ public class Dcat3ExporterRdfXml extends Dcat3ExporterBase {
     @Override
     protected String getConfigurationKey() {
         return "rdfXml";
+    }
+
+    @Override
+    public String getXMLNameSpace() {
+        return "http://www.w3.org/ns/dcat#";
+    }
+
+    @Override
+    public String getXMLSchemaLocation() {
+        // DCAT is an RDF/OWL vocabulary; there is no XSD to validate RDF/XML.
+        // Leave empty (or return null) to avoid implying an XML Schema.
+        return "";
+    }
+
+    @Override
+    public String getXMLSchemaVersion() {
+        return "3.0";
     }
 }
