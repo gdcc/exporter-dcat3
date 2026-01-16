@@ -187,7 +187,6 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
           <release>17</release>
-          <proc>full</proc>
           <!-- making sure and explicit that the spi file is generated -->
           <annotationProcessorPaths>
             <path>
