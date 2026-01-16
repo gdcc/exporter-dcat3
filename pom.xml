@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>dcat-3</artifactId>
-  <version>v0.8.1</version>
+  <version>v0.8.2-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>DCAT3 Exporter for Dataverse</name>
   <description>DCAT3 is the latest version of the Data Catalog Vocabulary, enhancing interoperability and discoverability of datasets by introducing features like versioning, dataset series, and
