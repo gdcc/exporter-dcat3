@@ -1,0 +1,722 @@
+{
+  "dcterms:modified": "2026-01-28",
+  "dcterms:creator": "Dataverse Geological Survey of the Netherlands",
+  "@type": "ore:ResourceMap",
+  "schema:additionalType": "Dataverse OREMap Format v1.0.1",
+  "dvcore:generatedBy": {
+    "@type": "schema:SoftwareApplication",
+    "schema:name": "Dataverse",
+    "schema:version": "6.6",
+    "schema:url": "https://github.com/iqss/dataverse"
+  },
+  "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/datasets/export?exporter=OAI_ORE&persistentId=https://doi.org/10.83300/GDN/YHNWLE",
+  "ore:describes": {
+    "citation:dsDescription": {
+      "citation:dsDescriptionValue": "Description for test dataset"
+    },
+    "author": {
+      "citation:authorName": "Geologische Dienst Nederland"
+    },
+    "citation:datasetContact": {
+      "citation:datasetContactName": "Geologische Dienst Nederland",
+      "citation:datasetContactEmail": "support@geologischedienst.nl"
+    },
+    "title": "Test Dataset New",
+    "DCATMetadata:DCATapplicableLegislation": "eu_2023_138",
+    "dateOfDeposit": "2026-01-27",
+    "subject": "Earth and Environmental Sciences",
+    "DCATMetadata:DCAThvdCategory": "soil",
+    "GDNMetadata:GDNtheme": [
+      "geology",
+      "ground_movement",
+      "ground_vibration"
+    ],
+    "citation:depositor": "Geologische Dienst Nederland",
+    "DCATtheme": "envi",
+    "DCATpublisher": "geo_survey_nl",
+    "DCATMetadata:DCATaccessRights": "public",
+    "@id": "https://doi.org/10.83300/GDN/YHNWLE",
+    "@type": [
+      "ore:Aggregation",
+      "schema:Dataset"
+    ],
+    "schema:version": "4.0",
+    "schema:name": "Test Dataset New",
+    "schema:dateModified": "2026-01-28 11:59:12.329",
+    "schema:datePublished": "2026-01-27",
+    "schema:creativeWorkStatus": "RELEASED",
+    "dvcore:termsOfUse": "https://acc-dataverse.gdnnet.nl/user-guide/",
+    "dvcore:fileTermsOfAccess": {
+      "dvcore:fileRequestAccess": false
+    },
+    "schema:includedInDataCatalog": "Dataverse Geological Survey of the Netherlands",
+    "schema:isPartOf": {
+      "schema:name": "Dataverse Geological Survey of the Netherlands",
+      "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/dataverse/gdn",
+      "schema:description": "Information concerning the exploration and production of energy and mineral resources from the deep subsurface."
+    },
+    "ore:aggregates": [
+      {
+        "schema:name": "aaron-burden-5AiWn2U10cw-unsplash.jpg",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=9",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/9",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/jpeg",
+        "dvcore:filesize": 741044,
+        "dvcore:storageIdentifier": "local://19c0477ca99-6b9ab474dc5e",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "840133f5e4258fc2f18bd3f1a3b699ad"
+        }
+      },
+      {
+        "schema:name": "bear-christmas-toy-teddy-bear-santa-hat-textile-1361323-pxhere.com.jpg",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=31",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/31",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/jpeg",
+        "dvcore:filesize": 5352563,
+        "dvcore:storageIdentifier": "local://19c0477d502-3bf7f2095ca0",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "b4eaf073a9db98468c25ffd77c190388"
+        }
+      },
+      {
+        "schema:name": "Christmas.jpg",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=21",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/21",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/jpeg",
+        "dvcore:filesize": 13314,
+        "dvcore:storageIdentifier": "local://19c0477d57d-73a0d63a5f8d",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "43cfbbb592abaa1a988af1883c66f27b"
+        }
+      },
+      {
+        "schema:name": "clue.txt",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=25",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/25",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "text/plain",
+        "dvcore:filesize": 140,
+        "dvcore:storageIdentifier": "local://19c0477d608-9b1ae01c5198",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "1626cdd33dbc63aafe083c3bcf75d1c2"
+        }
+      },
+      {
+        "schema:name": "clueforAsger.txt",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=8",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/8",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "text/plain",
+        "dvcore:filesize": 165,
+        "dvcore:storageIdentifier": "local://19c0477d673-e9415ae6c160",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "af6fd7b1f709a55f2a69ab160645ab41"
+        }
+      },
+      {
+        "schema:name": "CPU Utilization (1).xlsx",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=7",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/7?format=original",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "dvcore:filesize": 15441,
+        "dvcore:storageIdentifier": "local://19c002acffb-de92774ee07b",
+        "dvcore:currentIngestedName": "CPU Utilization (1).tab",
+        "dvcore:UNF": "UNF:6:0WEcnD0cAy+0OAxMv05cKg==",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "f40d06503f00c8df28bc3d9cd7f28f8e"
+        }
+      },
+      {
+        "schema:name": "day1.jpg",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=36",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/36",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/jpeg",
+        "dvcore:filesize": 85921,
+        "dvcore:storageIdentifier": "local://19c0477d7f3-bc6756a8d459",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "5eadcdbbc19af8e42f26d947de0b9fd7"
+        }
+      },
+      {
+        "schema:name": "day133.jpg",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=10",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/10",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/jpeg",
+        "dvcore:filesize": 200515,
+        "dvcore:storageIdentifier": "local://19c0477d999-bf4c361efac0",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "096c298ff7fd63918fa30bb6e8a279e0"
+        }
+      },
+      {
+        "schema:name": "day35.jpg",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=12",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/12",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/jpeg",
+        "dvcore:filesize": 99650,
+        "dvcore:storageIdentifier": "local://19c0477d863-3233ca124516",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "eb689f850ae3afc67d7bf36eeb854c9a"
+        }
+      },
+      {
+        "schema:name": "day76.jpg",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=15",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/15",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/jpeg",
+        "dvcore:filesize": 68264,
+        "dvcore:storageIdentifier": "local://19c0477d8dc-aa3fdc128b65",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "dc5d539c7fb51bc3aed309ccf20f88bc"
+        }
+      },
+      {
+        "schema:name": "DeiCDataverse_ChristmasTreasureHunt.pdf",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=32",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/32",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "application/pdf",
+        "dvcore:filesize": 1131195,
+        "dvcore:storageIdentifier": "local://19c0477da63-d37e3d1d9ea3",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "a7f74d944c0b2b70575484462d624516"
+        }
+      },
+      {
+        "schema:name": "DeiCDataverse_ChristmasTreasureHunt.pptx",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=40",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/40",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        "dvcore:filesize": 9074128,
+        "dvcore:storageIdentifier": "local://19c0477dcd4-12308fef9b28",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "11db9046673926fa0472df9b954871ad"
+        }
+      },
+      {
+        "schema:name": "edgar--XKiM9YFaYo-unsplash.jpg",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=24",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/24",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/jpeg",
+        "dvcore:filesize": 3021823,
+        "dvcore:storageIdentifier": "local://19c0477ddf7-ceef3ca69637",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "07247943e5f1d2d47abf7162019043ca"
+        }
+      },
+      {
+        "schema:name": "FAIR.png",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=34",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/34",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/png",
+        "dvcore:filesize": 149213,
+        "dvcore:storageIdentifier": "local://19c0477de78-86939f020e5d",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "8b4b4b5d6ec20151f4dc54916c3dac73"
+        }
+      },
+      {
+        "schema:name": "HighScore.txt",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=28",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/28",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "text/plain",
+        "dvcore:filesize": 40,
+        "dvcore:storageIdentifier": "local://19c0477df34-f9d42a7e822e",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "fd6d0e2f7fb9d028274b99989d1a3bc4"
+        }
+      },
+      {
+        "schema:name": "judith-prins-j1F-WyKgr28-unsplash.jpg",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=27",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/27",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/jpeg",
+        "dvcore:filesize": 1535540,
+        "dvcore:storageIdentifier": "local://19c0477e000-0e331d34b965",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "0de96b0f64ab2bd63cf12e43447f79da"
+        }
+      },
+      {
+        "schema:name": "karsten-winegeart-Fqr9Bq7Inz0-unsplash.jpg",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=22",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/22",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/jpeg",
+        "dvcore:filesize": 1703805,
+        "dvcore:storageIdentifier": "local://19c0477f533-815447d32390",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "610126940505d90be3e1b0ade326765c"
+        }
+      },
+      {
+        "schema:name": "karsten-winegeart-nCk-Pb0Lll8-unsplash.jpg",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=19",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/19",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/jpeg",
+        "dvcore:filesize": 1671336,
+        "dvcore:storageIdentifier": "local://19c04780616-076aca88667d",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "6c72c619f6a82f36f4db7ad8ecdac386"
+        }
+      },
+      {
+        "schema:name": "MANIFEST.TXT",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=37",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/37",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "text/plain",
+        "dvcore:filesize": 2282,
+        "dvcore:storageIdentifier": "local://19c04781660-6152d69952ae",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "e2ba19f9602606a23198dad1b8798eac"
+        }
+      },
+      {
+        "schema:name": "map.png",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=11",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/11",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/png",
+        "dvcore:filesize": 1287617,
+        "dvcore:storageIdentifier": "local://19c047816f9-3c4bbffac424",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "ba653176694d463929e9fb10640842fc"
+        }
+      },
+      {
+        "schema:name": "map1.png",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=13",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/13",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/png",
+        "dvcore:filesize": 701927,
+        "dvcore:storageIdentifier": "local://19c047817cd-7643df8e4da5",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "66a86cf9c48b5853843d7003e6ba05a1"
+        }
+      },
+      {
+        "schema:name": "map2.png",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=35",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/35",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/png",
+        "dvcore:filesize": 1163358,
+        "dvcore:storageIdentifier": "local://19c047818b7-89f84f4d98fc",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "79db9de3b0eeda0769ec2940de4ecb73"
+        }
+      },
+      {
+        "schema:name": "map3.png",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=14",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/14",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/png",
+        "dvcore:filesize": 237990,
+        "dvcore:storageIdentifier": "local://19c04781970-57c0a657f056",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "2f82c21ab937553f56350d59aab2ea1b"
+        }
+      },
+      {
+        "schema:name": "norman-tsui-KBKHXjhVQVM-unsplash.jpg",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=30",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/30",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/jpeg",
+        "dvcore:filesize": 1353147,
+        "dvcore:storageIdentifier": "local://19c04781a22-df6bc8575d70",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "870118d4de788c58fafd51631580784d"
+        }
+      },
+      {
+        "schema:name": "NorthPoleCatalogue_A-D.xlsx",
+        "dvcore:restricted": false,
+        "schema:version": 3,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=16",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/16?format=original",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "dvcore:filesize": 23810,
+        "dvcore:storageIdentifier": "local://19c04782294-59b1a783a655",
+        "dvcore:currentIngestedName": "NorthPoleCatalogue_A-D.tab",
+        "dvcore:UNF": "UNF:6:6labvu+6AUo+wZ0X/Pu0vg==",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "0c1f92a727d99d014dee0e88d279b715"
+        }
+      },
+      {
+        "schema:name": "NorthPoleCatalogue_E-G.xlsx",
+        "dvcore:restricted": false,
+        "schema:version": 3,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=39",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/39?format=original",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "dvcore:filesize": 23822,
+        "dvcore:storageIdentifier": "local://19c047822f9-16e0d64f8b0e",
+        "dvcore:currentIngestedName": "NorthPoleCatalogue_E-G.tab",
+        "dvcore:UNF": "UNF:6:31Ge3l4GRNow0qvmovbu+g==",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "ff84bf6fa4937cace54011a90eacc8c7"
+        }
+      },
+      {
+        "schema:name": "NorthPoleCatalogue_H-M.xlsx",
+        "dvcore:restricted": false,
+        "schema:version": 3,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=38",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/38?format=original",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "dvcore:filesize": 24596,
+        "dvcore:storageIdentifier": "local://19c04782363-2dd591570a58",
+        "dvcore:currentIngestedName": "NorthPoleCatalogue_H-M.tab",
+        "dvcore:UNF": "UNF:6:wPu19cYyLUTwTfaOF5P27Q==",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "14c638dec7e779519cfd73c4c1b540d9"
+        }
+      },
+      {
+        "schema:name": "NorthPoleCatalogue_N-S.xlsx",
+        "dvcore:restricted": false,
+        "schema:version": 3,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=20",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/20?format=original",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "dvcore:filesize": 20219,
+        "dvcore:storageIdentifier": "local://19c047823be-634b30b53aff",
+        "dvcore:currentIngestedName": "NorthPoleCatalogue_N-S.tab",
+        "dvcore:UNF": "UNF:6:R9lxhrPgB94+SDbSpUPT7w==",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "e3781ed4c2e1f90142f9d9463624aaf8"
+        }
+      },
+      {
+        "schema:name": "NorthPoleCatalogue_T-Z.xlsx",
+        "dvcore:restricted": false,
+        "schema:version": 3,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=41",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/41?format=original",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "dvcore:filesize": 35121,
+        "dvcore:storageIdentifier": "local://19c04782419-2ef179b324f1",
+        "dvcore:currentIngestedName": "NorthPoleCatalogue_T-Z.tab",
+        "dvcore:UNF": "UNF:6:IMDA+r1XF7s83TMReoSMWg==",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "bd84089f937533fcdaaa07fdaf9fe9c9"
+        }
+      },
+      {
+        "schema:name": "notes.txt",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=26",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/26",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "text/plain",
+        "dvcore:filesize": 163,
+        "dvcore:storageIdentifier": "local://19c04782478-cb650af6c800",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "2678252f8299108205c3e7b009d4e941"
+        }
+      },
+      {
+        "schema:name": "pop-events-group-7rhcat780Xw-unsplash.jpg",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=29",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/29",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/jpeg",
+        "dvcore:filesize": 1020017,
+        "dvcore:storageIdentifier": "local://19c047824ff-1990e56f859d",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "577f842a498a1452232a80fd2da3b6a7"
+        }
+      },
+      {
+        "schema:name": "ReadMe",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=18",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/18",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "text/plain; charset=US-ASCII",
+        "dvcore:filesize": 365,
+        "dvcore:storageIdentifier": "local://19c047836e4-26a76697d7cd",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "24ff1cea50385769ade0347e2a9a13e0"
+        }
+      },
+      {
+        "schema:name": "ReplicationData.xlsx",
+        "dvcore:restricted": false,
+        "schema:version": 3,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=17",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/17?format=original",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "dvcore:filesize": 11500,
+        "dvcore:storageIdentifier": "local://19c04783757-78b0e59a917b",
+        "dvcore:currentIngestedName": "ReplicationData.tab",
+        "dvcore:UNF": "UNF:6:7ZvdFASXmXjXuuInbrsBSg==",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "5198103e718fca33d74ee622e19ff87d"
+        }
+      },
+      {
+        "schema:name": "Santa.jpg",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=23",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/23",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "image/jpeg",
+        "dvcore:filesize": 80846,
+        "dvcore:storageIdentifier": "local://19c047837b7-358f99d597da",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "04276660724aa1ba117eed7d6b7af5b1"
+        }
+      },
+      {
+        "schema:name": "SantasTreasure.pptx",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 6,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=33",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/33",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        "dvcore:filesize": 8482290,
+        "dvcore:storageIdentifier": "local://19c04783a9a-f4ff51baaed4",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "0dae6733fc35c9277d13cca95f5f398b"
+        }
+      }
+    ],
+    "schema:hasPart": [
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=9",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=31",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=21",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=25",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=8",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=7",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=36",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=10",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=12",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=15",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=32",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=40",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=24",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=34",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=28",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=27",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=22",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=19",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=37",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=11",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=13",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=35",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=14",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=30",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=16",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=39",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=38",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=20",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=41",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=26",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=29",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=18",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=17",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=23",
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=33"
+    ]
+  },
+  "@context": {
+    "DCATMetadata": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/schema/DCATMetadata#",
+    "DCATpublisher": "DCATrights",
+    "DCATtheme": "http://publications.europa.eu/resource/authority/data-theme",
+    "GDNMetadata": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/schema/GDNMetadata#",
+    "author": "http://purl.org/dc/terms/creator",
+    "citation": "https://dataverse.org/schema/citation/",
+    "dateOfDeposit": "http://purl.org/dc/terms/dateSubmitted",
+    "dcterms": "http://purl.org/dc/terms/",
+    "dvcore": "https://dataverse.org/schema/core#",
+    "ore": "http://www.openarchives.org/ore/terms/",
+    "schema": "http://schema.org/",
+    "subject": "http://purl.org/dc/terms/subject",
+    "title": "http://purl.org/dc/terms/title"
+  }
+}

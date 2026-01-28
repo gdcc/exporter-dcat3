@@ -10,6 +10,7 @@ import io.gdcc.spi.export.Exporter;
 import io.gdcc.spi.export.dcat3.config.loader.RootConfigLoader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Locale;
 import org.apache.jena.rdf.model.Model;
@@ -17,6 +18,7 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.shacl.ShaclValidator;
 import org.apache.jena.shacl.ValidationReport;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -56,7 +58,7 @@ class Dcat3ExporterTest {
         assertThat(exporter.getFormatName()).isEqualTo(expectedFormatName);
         assertThat(exporter.getDisplayName(Locale.ROOT)).isEqualTo(expectedDisplayName);
         assertThat(exporter.isAvailableToUsers()).isEqualTo(true);
-        assertThat(exporter.isHarvestable()).isEqualTo(Boolean.parseBoolean( harvestable ));
+        assertThat(exporter.isHarvestable()).isEqualTo(Boolean.parseBoolean(harvestable));
         assertThat(exporter.getMediaType()).isEqualTo(expectedMediaType);
 
         // -- perform export
@@ -83,6 +85,34 @@ class Dcat3ExporterTest {
         ValidationReport report =
                 ShaclValidator.get().validate(shapes.getGraph(), dataModel.getGraph());
         assertThat(report.conforms()).as(toValidationReport(report)).isTrue();
+    }
+
+    @Test
+    void reproducerIssue10() throws URISyntaxException {
+
+        // -- prepare configuration (same as your original)
+        URL dcatRootPropertiesUrl =
+                getClass().getClassLoader().getResource("lightweight/mapping/dcat-root.properties");
+        assertThat(dcatRootPropertiesUrl).isNotNull();
+        File dcatRootPropetiesFile = new File(dcatRootPropertiesUrl.toURI());
+        System.setProperty(RootConfigLoader.SYS_PROP, dcatRootPropetiesFile.getAbsolutePath());
+
+        // -- prepare export data provider (same as your original)
+        ExportDataProvider provider =
+                getExportDataProvider("src/test/resources/input/export_issue_10");
+
+        // -- prepare exporter for the requested format
+        Exporter exporter = createExporter("rdfxml");
+
+        // -- perform export
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try {
+            exporter.exportDataset(provider, out);
+        } catch (Throwable t) {
+            // ignore
+        }
+        String result = out.toString();
+        assertThat(result.trim()).endsWith( "</rdf:RDF>" );
     }
 
     /** Simple factory mapping the csv 'formatKey' to an exporter instance. */

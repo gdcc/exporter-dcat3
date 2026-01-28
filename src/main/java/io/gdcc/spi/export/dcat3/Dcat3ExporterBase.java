@@ -5,6 +5,17 @@ package io.gdcc.spi.export.dcat3;
 
 import static io.gdcc.spi.export.dcat3.config.loader.FileResolver.resolveElementFile;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,20 +35,12 @@ import io.gdcc.spi.export.dcat3.config.validate.Validators;
 import io.gdcc.spi.export.dcat3.mapping.JaywayJsonFinder;
 import io.gdcc.spi.export.dcat3.mapping.Prefixes;
 import io.gdcc.spi.export.dcat3.mapping.ResourceMapper;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.shared.JenaException;
 import org.apache.jena.vocabulary.RDF;
 
 /**
@@ -187,11 +190,14 @@ public abstract class Dcat3ExporterBase implements Exporter {
                 }
             }
 
-            // Serialize in the subclass-selected format
-            model.write(outputStream, getJenaWriterName());
-        } catch (Throwable t) {
-            logger.warning(t.getMessage());
-            throw new ExportException("DCAT export failed", t);
+            // make writing atomic, make sure no half written output stream leaves this code.
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream( 64 * 1024);
+            model.write(buffer, getJenaWriterName());
+            buffer.writeTo(outputStream);
+        }
+        catch ( JenaException | IOException e) {
+            logger.warning(e.getMessage());
+            throw new ExportException("DCAT export failed", e);
         }
     }
 }

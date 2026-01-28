@@ -1,0 +1,153 @@
+{
+  "schemaLocation": "http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.5/metadata.xsd",
+  "identifier": {
+    "identifierType": "DOI",
+    "": "10.83300/GDN/YHNWLE"
+  },
+  "creators": {
+    "creator": {
+      "creatorName": {
+        "nameType": "Personal",
+        "": "Geologische Dienst Nederland"
+      }
+    }
+  },
+  "titles": {
+    "title": "Test Dataset New"
+  },
+  "publisher": "Dataverse Geological Survey of the Netherlands",
+  "publicationYear": "2026",
+  "subjects": {
+    "subject": "Earth and Environmental Sciences"
+  },
+  "contributors": {
+    "contributor": {
+      "contributorType": "ContactPerson",
+      "contributorName": {
+        "nameType": "Personal",
+        "": "Geologische Dienst Nederland"
+      }
+    }
+  },
+  "dates": {
+    "date": [
+      {
+        "dateType": "Submitted",
+        "": "2026-01-27"
+      },
+      {
+        "dateType": "Available",
+        "": "2026-01-27"
+      },
+      {
+        "dateType": "Updated",
+        "": "2026-01-28"
+      }
+    ]
+  },
+  "resourceType": {
+    "resourceTypeGeneral": "Dataset"
+  },
+  "sizes": {
+    "size": [
+      "311",
+      "242014",
+      "311",
+      "9503",
+      "165",
+      "741044",
+      "200515",
+      "1287617",
+      "99650",
+      "701927",
+      "237990",
+      "68264",
+      "11164",
+      "3245",
+      "365",
+      "1671336",
+      "8439",
+      "13314",
+      "1703805",
+      "80846",
+      "3021823",
+      "140",
+      "163",
+      "1535540",
+      "40",
+      "1020017",
+      "1353147",
+      "5352563",
+      "1131195",
+      "8482290",
+      "149213",
+      "1163358",
+      "85921",
+      "2282",
+      "11652",
+      "11248",
+      "9074128",
+      "19483"
+    ]
+  },
+  "formats": {
+    "format": [
+      "application/x-research-info-systems",
+      "application/pdf",
+      "application/x-research-info-systems",
+      "text/tab-separated-values",
+      "text/plain",
+      "image/jpeg",
+      "image/jpeg",
+      "image/png",
+      "image/jpeg",
+      "image/png",
+      "image/png",
+      "image/jpeg",
+      "text/tab-separated-values",
+      "text/tab-separated-values",
+      "text/plain; charset=US-ASCII",
+      "image/jpeg",
+      "text/tab-separated-values",
+      "image/jpeg",
+      "image/jpeg",
+      "image/jpeg",
+      "image/jpeg",
+      "text/plain",
+      "text/plain",
+      "image/jpeg",
+      "text/plain",
+      "image/jpeg",
+      "image/jpeg",
+      "image/jpeg",
+      "application/pdf",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "image/png",
+      "image/png",
+      "image/jpeg",
+      "text/plain",
+      "text/tab-separated-values",
+      "text/tab-separated-values",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "text/tab-separated-values"
+    ]
+  },
+  "version": "4.0",
+  "rightsList": {
+    "rights": [
+      {
+        "rightsURI": "info:eu-repo/semantics/openAccess"
+      },
+      {
+        "rightsURI": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/datasets/:persistentId/versions/4.0/customlicense?persistentId=doi:10.83300/GDN/YHNWLE",
+        "": "Custom terms specific to this dataset"
+      }
+    ]
+  },
+  "descriptions": {
+    "description": {
+      "descriptionType": "Abstract",
+      "": "Description for test dataset"
+    }
+  }
+}
