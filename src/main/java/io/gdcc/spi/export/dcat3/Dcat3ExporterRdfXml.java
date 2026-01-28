@@ -6,12 +6,11 @@ package io.gdcc.spi.export.dcat3;
 import com.google.auto.service.AutoService;
 import io.gdcc.spi.export.Exporter;
 import io.gdcc.spi.export.XMLExporter;
-
 import java.util.Locale;
 
 @AutoService(Exporter.class)
 public class Dcat3ExporterRdfXml extends Dcat3ExporterBase implements XMLExporter {
-@Override
+    @Override
     public String getFormatName() {
         return "dcat3-rdfxml";
     }

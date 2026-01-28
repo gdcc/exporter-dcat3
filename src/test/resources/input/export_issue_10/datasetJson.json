@@ -1,0 +1,1084 @@
+{
+  "id": 2,
+  "identifier": "GDN/YHNWLE",
+  "persistentUrl": "https://doi.org/10.83300/GDN/YHNWLE",
+  "protocol": "doi",
+  "authority": "10.83300",
+  "separator": "/",
+  "publisher": "Dataverse Geological Survey of the Netherlands",
+  "publicationDate": "2026-01-27",
+  "storageIdentifier": "local://10.83300/GDN/YHNWLE",
+  "datasetType": "dataset",
+  "datasetVersion": {
+    "id": 6,
+    "datasetId": 2,
+    "datasetPersistentId": "doi:10.83300/GDN/YHNWLE",
+    "storageIdentifier": "local://10.83300/GDN/YHNWLE",
+    "versionNumber": 4,
+    "versionMinorNumber": 0,
+    "versionState": "RELEASED",
+    "latestVersionPublishingState": "RELEASED",
+    "UNF": "UNF:6:Z6BhoXir8myqe6GJtb9fgA==",
+    "lastUpdateTime": "2026-01-28T11:59:12Z",
+    "releaseTime": "2026-01-28T11:59:12Z",
+    "createTime": "2026-01-28T11:58:47Z",
+    "publicationDate": "2026-01-27",
+    "citationDate": "2026-01-27",
+    "termsOfUse": "https://acc-dataverse.gdnnet.nl/user-guide/",
+    "fileAccessRequest": false,
+    "metadataBlocks": {
+      "citation": {
+        "displayName": "Citation Metadata",
+        "name": "citation",
+        "fields": [
+          {
+            "typeName": "title",
+            "multiple": false,
+            "typeClass": "primitive",
+            "value": "Test Dataset New"
+          },
+          {
+            "typeName": "author",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "authorName": {
+                  "typeName": "authorName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Geologische Dienst Nederland"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "datasetContact",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "datasetContactName": {
+                  "typeName": "datasetContactName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Geologische Dienst Nederland"
+                },
+                "datasetContactEmail": {
+                  "typeName": "datasetContactEmail",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "support@geologischedienst.nl"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "dsDescription",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "dsDescriptionValue": {
+                  "typeName": "dsDescriptionValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Description for test dataset"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "subject",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "Earth and Environmental Sciences"
+            ]
+          },
+          {
+            "typeName": "depositor",
+            "multiple": false,
+            "typeClass": "primitive",
+            "value": "Geologische Dienst Nederland"
+          },
+          {
+            "typeName": "dateOfDeposit",
+            "multiple": false,
+            "typeClass": "primitive",
+            "value": "2026-01-27"
+          }
+        ]
+      },
+      "DCATMetadata": {
+        "displayName": "DCAT AP-NL 3.0 Metadata",
+        "name": "DCATMetadata",
+        "fields": [
+          {
+            "typeName": "DCATpublisher",
+            "multiple": false,
+            "typeClass": "controlledVocabulary",
+            "value": "geo_survey_nl"
+          },
+          {
+            "typeName": "DCATaccessRights",
+            "multiple": false,
+            "typeClass": "controlledVocabulary",
+            "value": "public"
+          },
+          {
+            "typeName": "DCATtheme",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "envi"
+            ]
+          },
+          {
+            "typeName": "DCATapplicableLegislation",
+            "multiple": false,
+            "typeClass": "controlledVocabulary",
+            "value": "eu_2023_138"
+          },
+          {
+            "typeName": "DCAThvdCategory",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "soil"
+            ]
+          }
+        ]
+      },
+      "GDNMetadata": {
+        "displayName": "Geological Survey Metadata",
+        "name": "GDNMetadata",
+        "fields": [
+          {
+            "typeName": "GDNtheme",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "geology",
+              "ground_movement",
+              "ground_vibration"
+            ]
+          }
+        ]
+      }
+    },
+    "files": [
+      {
+        "label": "aaron-burden-5AiWn2U10cw-unsplash.jpg",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 9,
+          "persistentId": "",
+          "filename": "aaron-burden-5AiWn2U10cw-unsplash.jpg",
+          "contentType": "image/jpeg",
+          "friendlyType": "JPEG Image",
+          "filesize": 741044,
+          "storageIdentifier": "local://19c0477ca99-6b9ab474dc5e",
+          "rootDataFileId": -1,
+          "md5": "840133f5e4258fc2f18bd3f1a3b699ad",
+          "checksum": {
+            "type": "MD5",
+            "value": "840133f5e4258fc2f18bd3f1a3b699ad"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "bear-christmas-toy-teddy-bear-santa-hat-textile-1361323-pxhere.com.jpg",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 31,
+          "persistentId": "",
+          "filename": "bear-christmas-toy-teddy-bear-santa-hat-textile-1361323-pxhere.com.jpg",
+          "contentType": "image/jpeg",
+          "friendlyType": "JPEG Image",
+          "filesize": 5352563,
+          "storageIdentifier": "local://19c0477d502-3bf7f2095ca0",
+          "rootDataFileId": -1,
+          "md5": "b4eaf073a9db98468c25ffd77c190388",
+          "checksum": {
+            "type": "MD5",
+            "value": "b4eaf073a9db98468c25ffd77c190388"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "Christmas.jpg",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 21,
+          "persistentId": "",
+          "filename": "Christmas.jpg",
+          "contentType": "image/jpeg",
+          "friendlyType": "JPEG Image",
+          "filesize": 13314,
+          "storageIdentifier": "local://19c0477d57d-73a0d63a5f8d",
+          "rootDataFileId": -1,
+          "md5": "43cfbbb592abaa1a988af1883c66f27b",
+          "checksum": {
+            "type": "MD5",
+            "value": "43cfbbb592abaa1a988af1883c66f27b"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "clue.txt",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 25,
+          "persistentId": "",
+          "filename": "clue.txt",
+          "contentType": "text/plain",
+          "friendlyType": "Plain Text",
+          "filesize": 140,
+          "storageIdentifier": "local://19c0477d608-9b1ae01c5198",
+          "rootDataFileId": -1,
+          "md5": "1626cdd33dbc63aafe083c3bcf75d1c2",
+          "checksum": {
+            "type": "MD5",
+            "value": "1626cdd33dbc63aafe083c3bcf75d1c2"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "clueforAsger.txt",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 8,
+          "persistentId": "",
+          "filename": "clueforAsger.txt",
+          "contentType": "text/plain",
+          "friendlyType": "Plain Text",
+          "filesize": 165,
+          "storageIdentifier": "local://19c0477d673-e9415ae6c160",
+          "rootDataFileId": -1,
+          "md5": "af6fd7b1f709a55f2a69ab160645ab41",
+          "checksum": {
+            "type": "MD5",
+            "value": "af6fd7b1f709a55f2a69ab160645ab41"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "CPU Utilization (1).tab",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 7,
+          "persistentId": "",
+          "filename": "CPU Utilization (1).tab",
+          "contentType": "text/tab-separated-values",
+          "friendlyType": "Tab-Delimited",
+          "filesize": 9503,
+          "storageIdentifier": "local://19c002acffb-de92774ee07b",
+          "originalFileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "originalFormatLabel": "MS Excel Spreadsheet",
+          "originalFileSize": 15441,
+          "originalFileName": "CPU Utilization (1).xlsx",
+          "UNF": "UNF:6:0WEcnD0cAy+0OAxMv05cKg==",
+          "rootDataFileId": -1,
+          "md5": "f40d06503f00c8df28bc3d9cd7f28f8e",
+          "checksum": {
+            "type": "MD5",
+            "value": "f40d06503f00c8df28bc3d9cd7f28f8e"
+          },
+          "tabularData": true,
+          "creationDate": "2026-01-27",
+          "publicationDate": "2026-01-27",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "day1.jpg",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 36,
+          "persistentId": "",
+          "filename": "day1.jpg",
+          "contentType": "image/jpeg",
+          "friendlyType": "JPEG Image",
+          "filesize": 85921,
+          "storageIdentifier": "local://19c0477d7f3-bc6756a8d459",
+          "rootDataFileId": -1,
+          "md5": "5eadcdbbc19af8e42f26d947de0b9fd7",
+          "checksum": {
+            "type": "MD5",
+            "value": "5eadcdbbc19af8e42f26d947de0b9fd7"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "day133.jpg",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 10,
+          "persistentId": "",
+          "filename": "day133.jpg",
+          "contentType": "image/jpeg",
+          "friendlyType": "JPEG Image",
+          "filesize": 200515,
+          "storageIdentifier": "local://19c0477d999-bf4c361efac0",
+          "rootDataFileId": -1,
+          "md5": "096c298ff7fd63918fa30bb6e8a279e0",
+          "checksum": {
+            "type": "MD5",
+            "value": "096c298ff7fd63918fa30bb6e8a279e0"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "day35.jpg",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 12,
+          "persistentId": "",
+          "filename": "day35.jpg",
+          "contentType": "image/jpeg",
+          "friendlyType": "JPEG Image",
+          "filesize": 99650,
+          "storageIdentifier": "local://19c0477d863-3233ca124516",
+          "rootDataFileId": -1,
+          "md5": "eb689f850ae3afc67d7bf36eeb854c9a",
+          "checksum": {
+            "type": "MD5",
+            "value": "eb689f850ae3afc67d7bf36eeb854c9a"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "day76.jpg",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 15,
+          "persistentId": "",
+          "filename": "day76.jpg",
+          "contentType": "image/jpeg",
+          "friendlyType": "JPEG Image",
+          "filesize": 68264,
+          "storageIdentifier": "local://19c0477d8dc-aa3fdc128b65",
+          "rootDataFileId": -1,
+          "md5": "dc5d539c7fb51bc3aed309ccf20f88bc",
+          "checksum": {
+            "type": "MD5",
+            "value": "dc5d539c7fb51bc3aed309ccf20f88bc"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "DeiCDataverse_ChristmasTreasureHunt.pdf",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 32,
+          "persistentId": "",
+          "filename": "DeiCDataverse_ChristmasTreasureHunt.pdf",
+          "contentType": "application/pdf",
+          "friendlyType": "Adobe PDF",
+          "filesize": 1131195,
+          "storageIdentifier": "local://19c0477da63-d37e3d1d9ea3",
+          "rootDataFileId": -1,
+          "md5": "a7f74d944c0b2b70575484462d624516",
+          "checksum": {
+            "type": "MD5",
+            "value": "a7f74d944c0b2b70575484462d624516"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "DeiCDataverse_ChristmasTreasureHunt.pptx",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 40,
+          "persistentId": "",
+          "filename": "DeiCDataverse_ChristmasTreasureHunt.pptx",
+          "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "friendlyType": "MS Powerpoint",
+          "filesize": 9074128,
+          "storageIdentifier": "local://19c0477dcd4-12308fef9b28",
+          "rootDataFileId": -1,
+          "md5": "11db9046673926fa0472df9b954871ad",
+          "checksum": {
+            "type": "MD5",
+            "value": "11db9046673926fa0472df9b954871ad"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "edgar--XKiM9YFaYo-unsplash.jpg",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 24,
+          "persistentId": "",
+          "filename": "edgar--XKiM9YFaYo-unsplash.jpg",
+          "contentType": "image/jpeg",
+          "friendlyType": "JPEG Image",
+          "filesize": 3021823,
+          "storageIdentifier": "local://19c0477ddf7-ceef3ca69637",
+          "rootDataFileId": -1,
+          "md5": "07247943e5f1d2d47abf7162019043ca",
+          "checksum": {
+            "type": "MD5",
+            "value": "07247943e5f1d2d47abf7162019043ca"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "FAIR.png",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 34,
+          "persistentId": "",
+          "filename": "FAIR.png",
+          "contentType": "image/png",
+          "friendlyType": "PNG Image",
+          "filesize": 149213,
+          "storageIdentifier": "local://19c0477de78-86939f020e5d",
+          "rootDataFileId": -1,
+          "md5": "8b4b4b5d6ec20151f4dc54916c3dac73",
+          "checksum": {
+            "type": "MD5",
+            "value": "8b4b4b5d6ec20151f4dc54916c3dac73"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "HighScore.txt",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 28,
+          "persistentId": "",
+          "filename": "HighScore.txt",
+          "contentType": "text/plain",
+          "friendlyType": "Plain Text",
+          "filesize": 40,
+          "storageIdentifier": "local://19c0477df34-f9d42a7e822e",
+          "rootDataFileId": -1,
+          "md5": "fd6d0e2f7fb9d028274b99989d1a3bc4",
+          "checksum": {
+            "type": "MD5",
+            "value": "fd6d0e2f7fb9d028274b99989d1a3bc4"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "judith-prins-j1F-WyKgr28-unsplash.jpg",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 27,
+          "persistentId": "",
+          "filename": "judith-prins-j1F-WyKgr28-unsplash.jpg",
+          "contentType": "image/jpeg",
+          "friendlyType": "JPEG Image",
+          "filesize": 1535540,
+          "storageIdentifier": "local://19c0477e000-0e331d34b965",
+          "rootDataFileId": -1,
+          "md5": "0de96b0f64ab2bd63cf12e43447f79da",
+          "checksum": {
+            "type": "MD5",
+            "value": "0de96b0f64ab2bd63cf12e43447f79da"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "karsten-winegeart-Fqr9Bq7Inz0-unsplash.jpg",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 22,
+          "persistentId": "",
+          "filename": "karsten-winegeart-Fqr9Bq7Inz0-unsplash.jpg",
+          "contentType": "image/jpeg",
+          "friendlyType": "JPEG Image",
+          "filesize": 1703805,
+          "storageIdentifier": "local://19c0477f533-815447d32390",
+          "rootDataFileId": -1,
+          "md5": "610126940505d90be3e1b0ade326765c",
+          "checksum": {
+            "type": "MD5",
+            "value": "610126940505d90be3e1b0ade326765c"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "karsten-winegeart-nCk-Pb0Lll8-unsplash.jpg",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 19,
+          "persistentId": "",
+          "filename": "karsten-winegeart-nCk-Pb0Lll8-unsplash.jpg",
+          "contentType": "image/jpeg",
+          "friendlyType": "JPEG Image",
+          "filesize": 1671336,
+          "storageIdentifier": "local://19c04780616-076aca88667d",
+          "rootDataFileId": -1,
+          "md5": "6c72c619f6a82f36f4db7ad8ecdac386",
+          "checksum": {
+            "type": "MD5",
+            "value": "6c72c619f6a82f36f4db7ad8ecdac386"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "MANIFEST.TXT",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 37,
+          "persistentId": "",
+          "filename": "MANIFEST.TXT",
+          "contentType": "text/plain",
+          "friendlyType": "Plain Text",
+          "filesize": 2282,
+          "storageIdentifier": "local://19c04781660-6152d69952ae",
+          "rootDataFileId": -1,
+          "md5": "e2ba19f9602606a23198dad1b8798eac",
+          "checksum": {
+            "type": "MD5",
+            "value": "e2ba19f9602606a23198dad1b8798eac"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "map.png",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 11,
+          "persistentId": "",
+          "filename": "map.png",
+          "contentType": "image/png",
+          "friendlyType": "PNG Image",
+          "filesize": 1287617,
+          "storageIdentifier": "local://19c047816f9-3c4bbffac424",
+          "rootDataFileId": -1,
+          "md5": "ba653176694d463929e9fb10640842fc",
+          "checksum": {
+            "type": "MD5",
+            "value": "ba653176694d463929e9fb10640842fc"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "map1.png",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 13,
+          "persistentId": "",
+          "filename": "map1.png",
+          "contentType": "image/png",
+          "friendlyType": "PNG Image",
+          "filesize": 701927,
+          "storageIdentifier": "local://19c047817cd-7643df8e4da5",
+          "rootDataFileId": -1,
+          "md5": "66a86cf9c48b5853843d7003e6ba05a1",
+          "checksum": {
+            "type": "MD5",
+            "value": "66a86cf9c48b5853843d7003e6ba05a1"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "map2.png",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 35,
+          "persistentId": "",
+          "filename": "map2.png",
+          "contentType": "image/png",
+          "friendlyType": "PNG Image",
+          "filesize": 1163358,
+          "storageIdentifier": "local://19c047818b7-89f84f4d98fc",
+          "rootDataFileId": -1,
+          "md5": "79db9de3b0eeda0769ec2940de4ecb73",
+          "checksum": {
+            "type": "MD5",
+            "value": "79db9de3b0eeda0769ec2940de4ecb73"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "map3.png",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 14,
+          "persistentId": "",
+          "filename": "map3.png",
+          "contentType": "image/png",
+          "friendlyType": "PNG Image",
+          "filesize": 237990,
+          "storageIdentifier": "local://19c04781970-57c0a657f056",
+          "rootDataFileId": -1,
+          "md5": "2f82c21ab937553f56350d59aab2ea1b",
+          "checksum": {
+            "type": "MD5",
+            "value": "2f82c21ab937553f56350d59aab2ea1b"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "norman-tsui-KBKHXjhVQVM-unsplash.jpg",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 30,
+          "persistentId": "",
+          "filename": "norman-tsui-KBKHXjhVQVM-unsplash.jpg",
+          "contentType": "image/jpeg",
+          "friendlyType": "JPEG Image",
+          "filesize": 1353147,
+          "storageIdentifier": "local://19c04781a22-df6bc8575d70",
+          "rootDataFileId": -1,
+          "md5": "870118d4de788c58fafd51631580784d",
+          "checksum": {
+            "type": "MD5",
+            "value": "870118d4de788c58fafd51631580784d"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "NorthPoleCatalogue_A-D.tab",
+        "restricted": false,
+        "version": 3,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 16,
+          "persistentId": "",
+          "filename": "NorthPoleCatalogue_A-D.tab",
+          "contentType": "text/tab-separated-values",
+          "friendlyType": "Tab-Delimited",
+          "filesize": 11164,
+          "storageIdentifier": "local://19c04782294-59b1a783a655",
+          "originalFileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "originalFormatLabel": "MS Excel Spreadsheet",
+          "originalFileSize": 23810,
+          "originalFileName": "NorthPoleCatalogue_A-D.xlsx",
+          "UNF": "UNF:6:6labvu+6AUo+wZ0X/Pu0vg==",
+          "rootDataFileId": -1,
+          "md5": "0c1f92a727d99d014dee0e88d279b715",
+          "checksum": {
+            "type": "MD5",
+            "value": "0c1f92a727d99d014dee0e88d279b715"
+          },
+          "tabularData": true,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "NorthPoleCatalogue_E-G.tab",
+        "restricted": false,
+        "version": 3,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 39,
+          "persistentId": "",
+          "filename": "NorthPoleCatalogue_E-G.tab",
+          "contentType": "text/tab-separated-values",
+          "friendlyType": "Tab-Delimited",
+          "filesize": 11248,
+          "storageIdentifier": "local://19c047822f9-16e0d64f8b0e",
+          "originalFileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "originalFormatLabel": "MS Excel Spreadsheet",
+          "originalFileSize": 23822,
+          "originalFileName": "NorthPoleCatalogue_E-G.xlsx",
+          "UNF": "UNF:6:31Ge3l4GRNow0qvmovbu+g==",
+          "rootDataFileId": -1,
+          "md5": "ff84bf6fa4937cace54011a90eacc8c7",
+          "checksum": {
+            "type": "MD5",
+            "value": "ff84bf6fa4937cace54011a90eacc8c7"
+          },
+          "tabularData": true,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "NorthPoleCatalogue_H-M.tab",
+        "restricted": false,
+        "version": 3,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 38,
+          "persistentId": "",
+          "filename": "NorthPoleCatalogue_H-M.tab",
+          "contentType": "text/tab-separated-values",
+          "friendlyType": "Tab-Delimited",
+          "filesize": 11652,
+          "storageIdentifier": "local://19c04782363-2dd591570a58",
+          "originalFileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "originalFormatLabel": "MS Excel Spreadsheet",
+          "originalFileSize": 24596,
+          "originalFileName": "NorthPoleCatalogue_H-M.xlsx",
+          "UNF": "UNF:6:wPu19cYyLUTwTfaOF5P27Q==",
+          "rootDataFileId": -1,
+          "md5": "14c638dec7e779519cfd73c4c1b540d9",
+          "checksum": {
+            "type": "MD5",
+            "value": "14c638dec7e779519cfd73c4c1b540d9"
+          },
+          "tabularData": true,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "NorthPoleCatalogue_N-S.tab",
+        "restricted": false,
+        "version": 3,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 20,
+          "persistentId": "",
+          "filename": "NorthPoleCatalogue_N-S.tab",
+          "contentType": "text/tab-separated-values",
+          "friendlyType": "Tab-Delimited",
+          "filesize": 8439,
+          "storageIdentifier": "local://19c047823be-634b30b53aff",
+          "originalFileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "originalFormatLabel": "MS Excel Spreadsheet",
+          "originalFileSize": 20219,
+          "originalFileName": "NorthPoleCatalogue_N-S.xlsx",
+          "UNF": "UNF:6:R9lxhrPgB94+SDbSpUPT7w==",
+          "rootDataFileId": -1,
+          "md5": "e3781ed4c2e1f90142f9d9463624aaf8",
+          "checksum": {
+            "type": "MD5",
+            "value": "e3781ed4c2e1f90142f9d9463624aaf8"
+          },
+          "tabularData": true,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "NorthPoleCatalogue_T-Z.tab",
+        "restricted": false,
+        "version": 3,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 41,
+          "persistentId": "",
+          "filename": "NorthPoleCatalogue_T-Z.tab",
+          "contentType": "text/tab-separated-values",
+          "friendlyType": "Tab-Delimited",
+          "filesize": 19483,
+          "storageIdentifier": "local://19c04782419-2ef179b324f1",
+          "originalFileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "originalFormatLabel": "MS Excel Spreadsheet",
+          "originalFileSize": 35121,
+          "originalFileName": "NorthPoleCatalogue_T-Z.xlsx",
+          "UNF": "UNF:6:IMDA+r1XF7s83TMReoSMWg==",
+          "rootDataFileId": -1,
+          "md5": "bd84089f937533fcdaaa07fdaf9fe9c9",
+          "checksum": {
+            "type": "MD5",
+            "value": "bd84089f937533fcdaaa07fdaf9fe9c9"
+          },
+          "tabularData": true,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "notes.txt",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 26,
+          "persistentId": "",
+          "filename": "notes.txt",
+          "contentType": "text/plain",
+          "friendlyType": "Plain Text",
+          "filesize": 163,
+          "storageIdentifier": "local://19c04782478-cb650af6c800",
+          "rootDataFileId": -1,
+          "md5": "2678252f8299108205c3e7b009d4e941",
+          "checksum": {
+            "type": "MD5",
+            "value": "2678252f8299108205c3e7b009d4e941"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "pop-events-group-7rhcat780Xw-unsplash.jpg",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 29,
+          "persistentId": "",
+          "filename": "pop-events-group-7rhcat780Xw-unsplash.jpg",
+          "contentType": "image/jpeg",
+          "friendlyType": "JPEG Image",
+          "filesize": 1020017,
+          "storageIdentifier": "local://19c047824ff-1990e56f859d",
+          "rootDataFileId": -1,
+          "md5": "577f842a498a1452232a80fd2da3b6a7",
+          "checksum": {
+            "type": "MD5",
+            "value": "577f842a498a1452232a80fd2da3b6a7"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "ReadMe",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 18,
+          "persistentId": "",
+          "filename": "ReadMe",
+          "contentType": "text/plain; charset=US-ASCII",
+          "friendlyType": "Plain Text",
+          "filesize": 365,
+          "storageIdentifier": "local://19c047836e4-26a76697d7cd",
+          "rootDataFileId": -1,
+          "md5": "24ff1cea50385769ade0347e2a9a13e0",
+          "checksum": {
+            "type": "MD5",
+            "value": "24ff1cea50385769ade0347e2a9a13e0"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "ReplicationData.tab",
+        "restricted": false,
+        "version": 3,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 17,
+          "persistentId": "",
+          "filename": "ReplicationData.tab",
+          "contentType": "text/tab-separated-values",
+          "friendlyType": "Tab-Delimited",
+          "filesize": 3245,
+          "storageIdentifier": "local://19c04783757-78b0e59a917b",
+          "originalFileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "originalFormatLabel": "MS Excel Spreadsheet",
+          "originalFileSize": 11500,
+          "originalFileName": "ReplicationData.xlsx",
+          "UNF": "UNF:6:7ZvdFASXmXjXuuInbrsBSg==",
+          "rootDataFileId": -1,
+          "md5": "5198103e718fca33d74ee622e19ff87d",
+          "checksum": {
+            "type": "MD5",
+            "value": "5198103e718fca33d74ee622e19ff87d"
+          },
+          "tabularData": true,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "Santa.jpg",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 23,
+          "persistentId": "",
+          "filename": "Santa.jpg",
+          "contentType": "image/jpeg",
+          "friendlyType": "JPEG Image",
+          "filesize": 80846,
+          "storageIdentifier": "local://19c047837b7-358f99d597da",
+          "rootDataFileId": -1,
+          "md5": "04276660724aa1ba117eed7d6b7af5b1",
+          "checksum": {
+            "type": "MD5",
+            "value": "04276660724aa1ba117eed7d6b7af5b1"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      },
+      {
+        "label": "SantasTreasure.pptx",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 6,
+        "dataFile": {
+          "id": 33,
+          "persistentId": "",
+          "filename": "SantasTreasure.pptx",
+          "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "friendlyType": "MS Powerpoint",
+          "filesize": 8482290,
+          "storageIdentifier": "local://19c04783a9a-f4ff51baaed4",
+          "rootDataFileId": -1,
+          "md5": "0dae6733fc35c9277d13cca95f5f398b",
+          "checksum": {
+            "type": "MD5",
+            "value": "0dae6733fc35c9277d13cca95f5f398b"
+          },
+          "tabularData": false,
+          "creationDate": "2026-01-28",
+          "publicationDate": "2026-01-28",
+          "fileAccessRequest": false
+        }
+      }
+    ],
+    "citation": "Geologische Dienst Nederland, 2026, \"Test Dataset New\", https://doi.org/10.83300/GDN/YHNWLE, Dataverse Geological Survey of the Netherlands, V4, UNF:6:Z6BhoXir8myqe6GJtb9fgA== [fileUNF]"
+  }
+}

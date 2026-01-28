@@ -1,0 +1,287 @@
+{
+  "@context": "http://schema.org",
+  "@type": "Dataset",
+  "@id": "https://doi.org/10.83300/GDN/YHNWLE",
+  "identifier": "https://doi.org/10.83300/GDN/YHNWLE",
+  "name": "Test Dataset New",
+  "creator": [
+    {
+      "@type": "Person",
+      "name": "Geologische Dienst Nederland"
+    }
+  ],
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Geologische Dienst Nederland"
+    }
+  ],
+  "datePublished": "2026-01-27",
+  "dateModified": "2026-01-28",
+  "version": "4",
+  "description": "Description for test dataset",
+  "keywords": [
+    "Earth and Environmental Sciences"
+  ],
+  "license": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/datasets/:persistentId/versions/4.0/customlicense?persistentId=doi:10.83300/GDN/YHNWLE",
+  "includedInDataCatalog": {
+    "@type": "DataCatalog",
+    "name": "Dataverse Geological Survey of the Netherlands",
+    "url": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Dataverse Geological Survey of the Netherlands"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Dataverse Geological Survey of the Netherlands"
+  },
+  "distribution": [
+    {
+      "@type": "DataDownload",
+      "name": "aaron-burden-5AiWn2U10cw-unsplash.jpg",
+      "encodingFormat": "image/jpeg",
+      "contentSize": 741044,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/9"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "bear-christmas-toy-teddy-bear-santa-hat-textile-1361323-pxhere.com.jpg",
+      "encodingFormat": "image/jpeg",
+      "contentSize": 5352563,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/31"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Christmas.jpg",
+      "encodingFormat": "image/jpeg",
+      "contentSize": 13314,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/21"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "clue.txt",
+      "encodingFormat": "text/plain",
+      "contentSize": 140,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/25"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "clueforAsger.txt",
+      "encodingFormat": "text/plain",
+      "contentSize": 165,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/8"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "CPU Utilization (1).tab",
+      "encodingFormat": "text/tab-separated-values",
+      "contentSize": 9503,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/7"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "day1.jpg",
+      "encodingFormat": "image/jpeg",
+      "contentSize": 85921,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/36"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "day133.jpg",
+      "encodingFormat": "image/jpeg",
+      "contentSize": 200515,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/10"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "day35.jpg",
+      "encodingFormat": "image/jpeg",
+      "contentSize": 99650,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/12"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "day76.jpg",
+      "encodingFormat": "image/jpeg",
+      "contentSize": 68264,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/15"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "DeiCDataverse_ChristmasTreasureHunt.pdf",
+      "encodingFormat": "application/pdf",
+      "contentSize": 1131195,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/32"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "DeiCDataverse_ChristmasTreasureHunt.pptx",
+      "encodingFormat": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "contentSize": 9074128,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/40"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "edgar--XKiM9YFaYo-unsplash.jpg",
+      "encodingFormat": "image/jpeg",
+      "contentSize": 3021823,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/24"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "FAIR.png",
+      "encodingFormat": "image/png",
+      "contentSize": 149213,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/34"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "HighScore.txt",
+      "encodingFormat": "text/plain",
+      "contentSize": 40,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/28"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "judith-prins-j1F-WyKgr28-unsplash.jpg",
+      "encodingFormat": "image/jpeg",
+      "contentSize": 1535540,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/27"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "karsten-winegeart-Fqr9Bq7Inz0-unsplash.jpg",
+      "encodingFormat": "image/jpeg",
+      "contentSize": 1703805,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/22"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "karsten-winegeart-nCk-Pb0Lll8-unsplash.jpg",
+      "encodingFormat": "image/jpeg",
+      "contentSize": 1671336,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/19"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "MANIFEST.TXT",
+      "encodingFormat": "text/plain",
+      "contentSize": 2282,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/37"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "map.png",
+      "encodingFormat": "image/png",
+      "contentSize": 1287617,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/11"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "map1.png",
+      "encodingFormat": "image/png",
+      "contentSize": 701927,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/13"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "map2.png",
+      "encodingFormat": "image/png",
+      "contentSize": 1163358,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/35"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "map3.png",
+      "encodingFormat": "image/png",
+      "contentSize": 237990,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/14"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "norman-tsui-KBKHXjhVQVM-unsplash.jpg",
+      "encodingFormat": "image/jpeg",
+      "contentSize": 1353147,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/30"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "NorthPoleCatalogue_A-D.tab",
+      "encodingFormat": "text/tab-separated-values",
+      "contentSize": 11164,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/16"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "NorthPoleCatalogue_E-G.tab",
+      "encodingFormat": "text/tab-separated-values",
+      "contentSize": 11248,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/39"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "NorthPoleCatalogue_H-M.tab",
+      "encodingFormat": "text/tab-separated-values",
+      "contentSize": 11652,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/38"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "NorthPoleCatalogue_N-S.tab",
+      "encodingFormat": "text/tab-separated-values",
+      "contentSize": 8439,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/20"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "NorthPoleCatalogue_T-Z.tab",
+      "encodingFormat": "text/tab-separated-values",
+      "contentSize": 19483,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/41"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "notes.txt",
+      "encodingFormat": "text/plain",
+      "contentSize": 163,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/26"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "pop-events-group-7rhcat780Xw-unsplash.jpg",
+      "encodingFormat": "image/jpeg",
+      "contentSize": 1020017,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/29"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "ReadMe",
+      "encodingFormat": "text/plain; charset=US-ASCII",
+      "contentSize": 365,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/18"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "ReplicationData.tab",
+      "encodingFormat": "text/tab-separated-values",
+      "contentSize": 3245,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/17"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Santa.jpg",
+      "encodingFormat": "image/jpeg",
+      "contentSize": 80846,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/23"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "SantasTreasure.pptx",
+      "encodingFormat": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "contentSize": 8482290,
+      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/33"
+    }
+  ]
+}

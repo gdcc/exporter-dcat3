@@ -112,7 +112,11 @@ public class ResourceMapper {
         };
     }
 
-    // inside ResourceMapper
+    /**
+     * Build node references for a property defined as "node-ref" in the config. This version
+     * normalizes ${value} when used inside iriFormat, so that values like "text/plain;
+     * charset=US-ASCII" never end up inside IRIs.
+     */
     private List<RDFNode> buildNodeRefs(Model model, JaywayJsonFinder finder, ValueSource vs) {
         NodeTemplate nodeTemplate = resourceConfig.nodes().get(vs.nodeRef());
         if (nodeTemplate == null) {
@@ -145,13 +149,16 @@ public class ResourceMapper {
                 if (nodeTemplate.iriConst() != null && !nodeTemplate.iriConst().isBlank()) {
                     iri = nodeTemplate.iriConst();
                 } else {
+                    // Normalize the base candidate early (trims, strips parameters for media types)
                     String base = baseRaw == null ? null : baseRaw.trim();
 
-                    // 2) node-level map (normalize key to lower-case)
+                    // 2) node-level map (normalize lookup key; also strip parameters like ";
+                    // charset=...")
                     if (base != null
                             && nodeTemplate.iriMap() != null
                             && !nodeTemplate.iriMap().isEmpty()) {
-                        String key = base.toLowerCase();
+                        String key = stripParameters( base).toLowerCase();
+                        // Try normalized key first, then the original (for backward compatibility)
                         iri =
                                 nodeTemplate
                                         .iriMap()
@@ -162,10 +169,9 @@ public class ResourceMapper {
                     if ((iri == null || iri.isBlank())
                             && nodeTemplate.iriFormat() != null
                             && !nodeTemplate.iriFormat().isBlank()) {
+                        String normalizedBase = normalizeMediaTypeBase(base);
                         String formatted =
-                                nodeTemplate
-                                        .iriFormat()
-                                        .replace("${value}", base == null ? "" : base);
+                                nodeTemplate.iriFormat().replace("${value}", normalizedBase);
                         formatted = resolveInlineJsonPlaceholders(formatted, finder);
                         iri = formatted;
                     }
@@ -204,7 +210,39 @@ public class ResourceMapper {
 
             out.add(resource);
         }
+
         return out;
+    }
+
+    /**
+     * Strip parameters from a content-type-like value (e.g., "text/plain; charset=US-ASCII" ->
+     * "text/plain").
+     */
+    private static String stripParameters(String s) {
+        if (s == null) {
+            return null;
+        }
+        String t = s.trim();
+        int i = t.indexOf(';');
+        return (i >= 0) ? t.substring(0, i).trim() : t;
+    }
+
+    /**
+     * Normalize a media-type-like base to a safe "type/subtype" token (lowercase, no
+     * params/whitespace). This is especially useful when interpolating ${value} into IRIs such as
+     * the IANA media-types registry path.
+     */
+    private static String normalizeMediaTypeBase(String base) {
+        if (base == null) {
+            return "";
+        }
+        String contentType = stripParameters( base); // remove "; charset=..." etc.
+        contentType = contentType == null ? "" : contentType.trim().toLowerCase();
+        String[] parts = contentType.split("/");
+        if (parts.length == 2 && !parts[0].isBlank() && !parts[1].isBlank()) {
+            return parts[0] + "/" + parts[1];
+        }
+        return contentType; // fallback: return trimmed lowercased token without params
     }
 
     private List<String> valuesFromSource(JaywayJsonFinder finder, ValueSource valueSource) {
@@ -264,7 +302,8 @@ public class ResourceMapper {
                     List<String> values = listScopedOrRoot(finder, valueSource.json());
                     base = values.isEmpty() ? "" : values.get(0);
                 }
-                formatted = formatted.replace("${value}", base == null ? "" : base);
+                String normalizedBase = normalizeMediaTypeBase(base);
+                formatted = formatted.replace("${value}", normalizedBase);
             }
 
             // Indexed ${1}, ${2}, ... from vs.jsonPaths
@@ -338,4 +377,6 @@ public class ResourceMapper {
         // quick absolute IRI check (scheme ":" ...)
         return s != null && s.matches("^[a-zA-Z][a-zA-Z0-9+.-]*:.*");
     }
+
+
 }

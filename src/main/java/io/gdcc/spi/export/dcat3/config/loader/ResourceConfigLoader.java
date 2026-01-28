@@ -1,9 +1,6 @@
 package io.gdcc.spi.export.dcat3.config.loader;
 
-import io.gdcc.spi.export.dcat3.config.model.NodeTemplate;
-import io.gdcc.spi.export.dcat3.config.model.ResourceConfig;
-import io.gdcc.spi.export.dcat3.config.model.Subject;
-import io.gdcc.spi.export.dcat3.config.model.ValueSource;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -12,6 +9,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import io.gdcc.spi.export.dcat3.config.model.NodeTemplate;
+import io.gdcc.spi.export.dcat3.config.model.ResourceConfig;
+import io.gdcc.spi.export.dcat3.config.model.Subject;
+import io.gdcc.spi.export.dcat3.config.model.ValueSource;
 
 /**
  * ResourceConfigLoader: parses .properties-based resource mapping configuration.
@@ -27,7 +29,7 @@ public class ResourceConfigLoader {
     private static final Pattern NODE_PROPERTY_PATTERN =
             Pattern.compile("^props\\.([^.]+)\\.(.+)$");
 
-    public ResourceConfig load(InputStream in) throws Exception {
+    public ResourceConfig load(InputStream in) throws IOException {
         Properties property = new Properties();
         property.load(in);
 
