@@ -26,7 +26,7 @@ public class PropertiesMappingLoaderTest {
         ResourceConfig resourceConfig = load("AP_NL30/mapping/dcat-catalog.properties");
 
         assertThat(resourceConfig.subject().iriConst())
-                .isEqualTo("https://data.example.org/catalog/gdn-test");
+                .isEqualTo("https://dataverse.geologischedienst.nl");
         assertThat(resourceConfig.subject().iriJson()).isNull();
         assertThat(resourceConfig.subject().iriTemplate()).isNull();
     }
@@ -114,7 +114,7 @@ public class PropertiesMappingLoaderTest {
         NodeTemplate publisher = resourceConfig.nodes().get("publisher");
         assertNodeTemplate(
                 publisher, "publisher", "iri", "https://ror.org/01bnjb948", "foaf:Agent");
-        assertThat(publisher.props()).hasSize(2);
+        assertThat(publisher.props()).hasSize(3);
         assertValueSource(
                 publisher.props().get("name_nl"),
                 "literal",

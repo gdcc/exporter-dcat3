@@ -1,6 +1,6 @@
 {
-  "dcterms:modified": "2026-01-09",
-  "dcterms:creator": "Dataverse Geological Survey of the Netherlands",
+  "dcterms:modified": "2026-03-13",
+  "dcterms:creator": "Geological Survey of the Netherlands Dataverse",
   "@type": "ore:ResourceMap",
   "schema:additionalType": "Dataverse OREMap Format v1.0.1",
   "dvcore:generatedBy": {
@@ -9,122 +9,141 @@
     "schema:version": "6.6",
     "schema:url": "https://github.com/iqss/dataverse"
   },
-  "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/datasets/export?exporter=OAI_ORE&persistentId=https://doi.org/10.83300/GDN/XAIHYX",
+  "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/datasets/export?exporter=OAI_ORE&persistentId=https://doi.org/10.83300/GDN/SQOPAL",
   "ore:describes": {
-    "DCATMetadata:DCAThvdCompliant": {
-      "DCATMetadata:DCATapplicableLegislation": "eu_2023_138",
-      "DCATMetadata:DCAThvdCategory": "mineral_resources"
+    "author": {
+      "citation:authorName": "Author of Dataset",
+      "citation:authorAffiliation": "TNO Geological Survey of the Netherlands"
+    },
+    "citation:keyword": [
+      {
+        "citation:keywordValue": "Keyword-1"
+      },
+      {
+        "citation:keywordValue": "Keyword-2"
+      }
+    ],
+    "citation:dsDescription": {
+      "citation:dsDescriptionValue": "Description of Dataset"
     },
     "citation:datasetContact": {
-      "citation:datasetContactName": "PoC",
-      "citation:datasetContactAffiliation": "PoC Affiliation",
-      "citation:datasetContactEmail": "poc@mailinator.com"
+      "citation:datasetContactName": "Geological Survey of the Netherlands Servicedesk",
+      "citation:datasetContactAffiliation": "TNO Geological Survey of the Netherlands",
+      "citation:datasetContactEmail": "support@geologischedienst.nl"
     },
-    "author": {
-      "citation:authorName": "Author",
-      "citation:authorAffiliation": "Author Affiliation",
-      "authorIdentifierScheme": "ISNI",
-      "authorIdentifier": "AuthorID"
-    },
-    "citation:dsDescription": {
-      "citation:dsDescriptionValue": "Test description",
-      "citation:dsDescriptionDate": "2026-01-09"
-    },
-    "subject": "Earth and Environmental Sciences",
-    "DCATtheme": "ener",
-    "GDNMetadata:GDNdomain": "seismicity",
-    "citation:depositor": "Admin, Dataverse",
-    "title": "Test Dataset",
     "DCATMetadata:DCATaccessRights": "public",
-    "dateOfDeposit": "2026-01-09",
-    "DCATMetadata:DCATidentifier": "DCAT identifier",
-    "DCATMetadata:DCATpublisher": "geo_survey_nl",
-    "DCATMetadata:DCATrights": "My rights",
-    "geospatial:geographicCoverage": {
-      "geospatial:country": "Netherlands",
-      "geospatial:state": "Utrecht",
-      "geospatial:city": "Utrecht",
-      "geospatial:otherGeographicCoverage": "Zeist"
-    },
+    "title": "Title of Dataset",
+    "DCATpublisher": "geo-survey-nl",
+    "citation:depositor": "TNO Geological Survey of the Netherlands",
+    "dateOfDeposit": "2026-03-13",
+    "subject": "Earth and Environmental Sciences",
+    "GDNMetadata:GDNtheme": [
+      "future-proof-land-use",
+      "geo-energy"
+    ],
+    "DCATMetadata:DCATapplicableLegislation": "hvd",
+    "DCATeuTheme": "envi",
+    "DCATMetadata:DCAThvdCategory": [
+      "energy-resources",
+      "environmental-monitoring-facilities"
+    ],
     "geospatial:geographicBoundingBox": {
       "geospatial:westLongitude": "5.190",
       "geospatial:eastLongitude": "5.280",
       "geospatial:northLatitude": "52.110",
       "geospatial:southLatitude": "52.050"
     },
-    "geospatial:geographicUnit": "village",
-    "@id": "https://doi.org/10.83300/GDN/XAIHYX",
+    "citation:producer": {
+      "citation:producerName": "Producer"
+    },
+    "@id": "https://doi.org/10.83300/GDN/SQOPAL",
     "@type": [
       "ore:Aggregation",
       "schema:Dataset"
     ],
     "schema:version": "1.0",
-    "schema:name": "Test Dataset",
-    "schema:dateModified": "2026-01-09 12:04:55.338",
-    "schema:datePublished": "2026-01-09",
+    "schema:name": "Title of Dataset",
+    "schema:dateModified": "2026-03-13 11:23:36.428",
+    "schema:datePublished": "2026-03-13",
     "schema:creativeWorkStatus": "RELEASED",
     "schema:license": "http://creativecommons.org/publicdomain/zero/1.0",
     "dvcore:fileTermsOfAccess": {
       "dvcore:fileRequestAccess": true
     },
-    "schema:includedInDataCatalog": "Dataverse Geological Survey of the Netherlands",
+    "schema:includedInDataCatalog": "Geological Survey of the Netherlands Dataverse",
     "schema:isPartOf": {
-      "schema:name": "Dataverse Geological Survey of the Netherlands",
+      "schema:name": "Geological Survey of the Netherlands Dataverse",
       "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/dataverse/gdn",
-      "schema:description": "Information concerning the exploration and production of energy and mineral resources from the deep subsurface."
+      "schema:description": "The Dataverse of the Geological Survey of the Netherlands comprises public datasets pertaining to the Dutch subsurface."
     },
     "ore:aggregates": [
       {
-        "schema:description": "csv file",
-        "schema:name": "CPU Utilization (1).xlsx",
+        "schema:description": "File-1 description",
+        "schema:name": "GoldenGateBridge.pptx",
         "dvcore:restricted": false,
-        "schema:version": 3,
+        "schema:version": 1,
         "dvcore:datasetVersionId": 1,
-        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=3",
-        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/3?format=original",
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=5",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/5",
         "@type": "ore:AggregatedResource",
-        "schema:fileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "dvcore:filesize": 15441,
-        "dvcore:storageIdentifier": "local://19ba2a0b3b9-e0f9bb35858c",
-        "dvcore:currentIngestedName": "CPU Utilization (1).tab",
-        "dvcore:UNF": "UNF:6:0WEcnD0cAy+0OAxMv05cKg==",
+        "schema:fileFormat": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        "dvcore:filesize": 152652,
+        "dvcore:storageIdentifier": "local://19ce6ee770a-19f735da29f8",
         "dvcore:rootDataFileId": -1,
         "dvcore:checksum": {
           "@type": "MD5",
-          "@value": "f40d06503f00c8df28bc3d9cd7f28f8e"
+          "@value": "69c03f9cba8a5d4ab8494030f7a2784d"
         }
       },
       {
-        "schema:description": "Text file",
-        "schema:name": "nexus.log",
+        "schema:description": "File-2 description",
+        "schema:name": "OpenShift AI Operating Model 1.pdf",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 1,
+        "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=3",
+        "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/3",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "application/pdf",
+        "dvcore:filesize": 2803974,
+        "dvcore:storageIdentifier": "local://19ce6ee8763-3411a7905250",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "ce0daa3264758a67d54d3f37fcb05d73"
+        }
+      },
+      {
+        "schema:description": "File-3 description",
+        "schema:name": "Untitled Diagram-1770810733190.drawig.xyz",
         "dvcore:restricted": false,
         "schema:version": 1,
         "dvcore:datasetVersionId": 1,
         "@id": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=4",
         "schema:sameAs": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/4",
         "@type": "ore:AggregatedResource",
-        "schema:fileFormat": "text/plain",
-        "dvcore:filesize": 4957401,
-        "dvcore:storageIdentifier": "local://19ba2a06ee0-0099284a872f",
+        "schema:fileFormat": "image/png",
+        "dvcore:filesize": 116080,
+        "dvcore:storageIdentifier": "local://19ce6ee88f0-ef71b0811b6f",
         "dvcore:rootDataFileId": -1,
         "dvcore:checksum": {
           "@type": "MD5",
-          "@value": "eec9c71c5044295bf5c769a37997503c"
+          "@value": "38b02f179f291b85b949b6d8832f356c"
         }
       }
     ],
     "schema:hasPart": [
+      "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=5",
       "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=3",
       "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/file.xhtml?fileId=4"
     ]
   },
   "@context": {
     "DCATMetadata": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/schema/DCATMetadata#",
-    "DCATtheme": "http://publications.europa.eu/resource/authority/data-theme",
+    "DCATeuTheme": "http://publications.europa.eu/resource/authority/data-theme",
+    "DCATpublisher": "DCATrights",
     "GDNMetadata": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/schema/GDNMetadata#",
     "author": "http://purl.org/dc/terms/creator",
-    "authorIdentifier": "http://purl.org/spar/datacite/AgentIdentifier",
-    "authorIdentifierScheme": "http://purl.org/spar/datacite/AgentIdentifierScheme",
     "citation": "https://dataverse.org/schema/citation/",
     "dateOfDeposit": "http://purl.org/dc/terms/dateSubmitted",
     "dcterms": "http://purl.org/dc/terms/",
@@ -136,4 +155,3 @@
     "title": "http://purl.org/dc/terms/title"
   }
 }
-  
