@@ -60,41 +60,41 @@ class ResourceMapperTest {
 
         Map<String, ValueSource> props = new LinkedHashMap<String, ValueSource>();
         props.put("title", vsTitle);
+
         when(rc.props()).thenReturn(props);
         when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
         when(rc.scopeJson()).thenReturn(null);
 
         JaywayJsonFinder finder = finderFor("{\"dataset\":{\"title\":\"Demo\"}}");
-        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Dataset");
 
+        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Dataset");
         Model model = mapper.build(finder);
+
         assertThat(model).isNotNull();
 
         // Verify RDF.type triple
         List<Statement> typeStmts =
-                model.listStatements(
-                                null,
-                                model.getProperty(
-                                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
-                                model.getResource("http://www.w3.org/ns/dcat#Dataset"))
-                        .toList();
+            model.listStatements(
+                     null,
+                     model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+                     model.getResource("http://www.w3.org/ns/dcat#Dataset"))
+                 .toList();
         assertThat(typeStmts).hasSize(1);
 
         // Verify title literal with language
         List<Statement> titleStmts =
-                model.listStatements(
-                                null,
-                                model.getProperty("http://purl.org/dc/terms/title"),
-                                (RDFNode) null)
-                        .toList();
+            model.listStatements(
+                     null,
+                     model.getProperty("http://purl.org/dc/terms/title"),
+                     (RDFNode) null)
+                 .toList();
         assertThat(titleStmts).hasSize(1);
         assertThat(titleStmts.get(0).getObject().asLiteral().getLanguage()).isEqualTo("en");
         assertThat(titleStmts.get(0).getObject().asLiteral().getString()).isEqualTo("Demo");
     }
 
     @Test
-    @DisplayName(
-            "build() maps IRI object from JSON path with as='iri' and default (single) selection")
+    @DisplayName("build() maps IRI object from JSON path with as='iri' and default (single) selection")
     void build_maps_iri_from_json() throws Exception {
         // Real Prefixes
         Map<String, String> ns = new LinkedHashMap<String, String>();
@@ -124,28 +124,30 @@ class ResourceMapperTest {
 
         Map<String, ValueSource> props = new LinkedHashMap<String, ValueSource>();
         props.put("identifier", vsId);
+
         when(rc.props()).thenReturn(props);
         when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
         when(rc.scopeJson()).thenReturn(null);
 
         JaywayJsonFinder finder =
-                finderFor("{\"dataset\":{\"identifier\":\"http://example.org/id-iri\"}}");
-        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Dataset");
+            finderFor("{\"dataset\":{\"identifier\":\"http://example.org/id-iri\"}}");
 
+        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Dataset");
         Model model = mapper.build(finder);
+
         assertThat(model).isNotNull();
 
         // Verify identifier as IRI object
         List<Statement> idStmts =
-                model.listStatements(
-                                null,
-                                model.getProperty("http://purl.org/dc/terms/identifier"),
-                                (RDFNode) null)
-                        .toList();
+            model.listStatements(
+                     null,
+                     model.getProperty("http://purl.org/dc/terms/identifier"),
+                     (RDFNode) null)
+                 .toList();
+
         assertThat(idStmts).hasSize(1);
         assertThat(idStmts.get(0).getObject().isResource()).isTrue();
-        assertThat(idStmts.get(0).getObject().asResource().getURI())
-                .isEqualTo("http://example.org/id-iri");
+        assertThat(idStmts.get(0).getObject().asResource().getURI()).isEqualTo("http://example.org/id-iri");
     }
 
     // --- NEW TESTS: iri.format & iri.map on ValueSource and NodeTemplate ---
@@ -173,25 +175,27 @@ class ResourceMapperTest {
         when(vs.map()).thenReturn(java.util.Collections.emptyMap());
         when(vs.jsonPaths()).thenReturn(java.util.Collections.emptyList());
         when(vs.multi()).thenReturn(false);
+
         Map<String, ValueSource> props = new LinkedHashMap<>();
         props.put("accessURL", vs);
         when(rc.props()).thenReturn(props);
 
         JaywayJsonFinder finder = finderFor("{\"id\":\"4\"}");
+
         ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Distribution");
         Model model = mapper.build(finder);
 
         List<Statement> stmts =
-                model.listStatements(
-                                null,
-                                model.getProperty("http://www.w3.org/ns/dcat#accessURL"),
-                                (RDFNode) null)
-                        .toList();
+            model.listStatements(
+                     null,
+                     model.getProperty("http://www.w3.org/ns/dcat#accessURL"),
+                     (RDFNode) null)
+                 .toList();
 
         assertThat(stmts).hasSize(1);
         assertThat(stmts.get(0).getObject().isResource()).isTrue();
         assertThat(stmts.get(0).getObject().asResource().getURI())
-                .isEqualTo("http://localhost:8080/api/access/datafile/4");
+            .isEqualTo("http://localhost:8080/api/access/datafile/4");
     }
 
     @Test
@@ -212,30 +216,33 @@ class ResourceMapperTest {
         when(vs.json()).thenReturn("$.restricted");
         when(vs.multi()).thenReturn(false);
         when(vs.format()).thenReturn(null);
+
         Map<String, String> map = new LinkedHashMap<>();
         map.put("true", "http://publications.europa.eu/resource/authority/access-right/RESTRICTED");
         map.put("false", "http://publications.europa.eu/resource/authority/access-right/PUBLIC");
         when(vs.map()).thenReturn(map);
         when(vs.jsonPaths()).thenReturn(java.util.Collections.emptyList());
+
         Map<String, ValueSource> props = new LinkedHashMap<>();
         props.put("accessRights", vs);
         when(rc.props()).thenReturn(props);
 
         JaywayJsonFinder finder = finderFor("{\"restricted\": false}");
+
         ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dct:Dataset");
         Model model = mapper.build(finder);
 
         List<Statement> stmts =
-                model.listStatements(
-                                null,
-                                model.getProperty("http://purl.org/dc/terms/accessRights"),
-                                (RDFNode) null)
-                        .toList();
+            model.listStatements(
+                     null,
+                     model.getProperty("http://purl.org/dc/terms/accessRights"),
+                     (RDFNode) null)
+                 .toList();
 
         assertThat(stmts).hasSize(1);
         assertThat(stmts.get(0).getObject().isResource()).isTrue();
         assertThat(stmts.get(0).getObject().asResource().getURI())
-                .isEqualTo("http://publications.europa.eu/resource/authority/access-right/PUBLIC");
+            .isEqualTo("http://publications.europa.eu/resource/authority/access-right/PUBLIC");
     }
 
     @Test
@@ -252,16 +259,17 @@ class ResourceMapperTest {
 
         // NodeTemplate 'acc' with iri.format
         NodeTemplate accT =
-                new NodeTemplate(
-                        "acc",
-                        "iri",
-                        null,
-                        "$.id",
-                        "http://localhost:8080/api/access/datafile/${value}",
-                        "rdfs:Resource",
-                        false,
-                        java.util.Collections.emptyMap(),
-                        java.util.Collections.emptyMap());
+            new NodeTemplate(
+                "acc",
+                "iri",
+                null,
+                "$.id",
+                "http://localhost:8080/api/access/datafile/${value}",
+                "rdfs:Resource",
+                false,
+                java.util.Collections.emptyMap(),
+                java.util.Collections.emptyMap());
+
         Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
         nodes.put("acc", accT);
         when(rc.nodes()).thenReturn(nodes);
@@ -270,25 +278,27 @@ class ResourceMapperTest {
         when(vs.predicate()).thenReturn("dcat:accessURL");
         when(vs.as()).thenReturn("node-ref");
         when(vs.nodeRef()).thenReturn("acc");
+
         Map<String, ValueSource> props = new LinkedHashMap<>();
         props.put("accessURL", vs);
         when(rc.props()).thenReturn(props);
 
         JaywayJsonFinder finder = finderFor("{\"id\":\"4\"}");
+
         ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Distribution");
         Model model = mapper.build(finder);
 
         List<Statement> stmts =
-                model.listStatements(
-                                null,
-                                model.getProperty("http://www.w3.org/ns/dcat#accessURL"),
-                                (RDFNode) null)
-                        .toList();
+            model.listStatements(
+                     null,
+                     model.getProperty("http://www.w3.org/ns/dcat#accessURL"),
+                     (RDFNode) null)
+                 .toList();
 
         assertThat(stmts).hasSize(1);
         assertThat(stmts.get(0).getObject().isResource()).isTrue();
         assertThat(stmts.get(0).getObject().asResource().getURI())
-                .isEqualTo("http://localhost:8080/api/access/datafile/4");
+            .isEqualTo("http://localhost:8080/api/access/datafile/4");
     }
 
     @Test
@@ -308,16 +318,17 @@ class ResourceMapperTest {
         nodeMap.put("tech", "http://publications.europa.eu/resource/authority/data-theme/TECH");
 
         NodeTemplate themeT =
-                new NodeTemplate(
-                        "theme",
-                        "iri",
-                        null,
-                        "$.themes[*]",
-                        null,
-                        "skos:Concept",
-                        true,
-                        nodeMap,
-                        java.util.Collections.emptyMap());
+            new NodeTemplate(
+                "theme",
+                "iri",
+                null,
+                "$.themes[*]",
+                null,
+                "skos:Concept",
+                true,
+                nodeMap,
+                java.util.Collections.emptyMap());
+
         Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
         nodes.put("theme", themeT);
         when(rc.nodes()).thenReturn(nodes);
@@ -326,40 +337,102 @@ class ResourceMapperTest {
         when(vs.predicate()).thenReturn("dcat:theme");
         when(vs.as()).thenReturn("node-ref");
         when(vs.nodeRef()).thenReturn("theme");
+
         Map<String, ValueSource> props = new LinkedHashMap<>();
         props.put("theme", vs);
         when(rc.props()).thenReturn(props);
 
         JaywayJsonFinder finder = finderFor("{\"themes\":[\"ener\",\"tech\"]}");
+
         ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Dataset");
         Model model = mapper.build(finder);
 
         List<Statement> themeStmts =
-                model.listStatements(
-                                null,
-                                model.getProperty("http://www.w3.org/ns/dcat#theme"),
-                                (RDFNode) null)
-                        .toList();
+            model.listStatements(
+                     null,
+                     model.getProperty("http://www.w3.org/ns/dcat#theme"),
+                     (RDFNode) null)
+                 .toList();
 
         assertThat(themeStmts).hasSize(2);
 
         List<String> objUris =
-                themeStmts.stream().map(s -> s.getObject().asResource().getURI()).toList();
+            themeStmts.stream().map(s -> s.getObject().asResource().getURI()).toList();
 
         assertThat(objUris)
-                .containsExactlyInAnyOrder(
-                        "http://publications.europa.eu/resource/authority/data-theme/ENER",
-                        "http://publications.europa.eu/resource/authority/data-theme/TECH");
+            .containsExactlyInAnyOrder(
+                "http://publications.europa.eu/resource/authority/data-theme/ENER",
+                "http://publications.europa.eu/resource/authority/data-theme/TECH");
 
         // also ensure each emitted node carries rdf:type skos:Concept
         for (Statement s : themeStmts) {
             Resource obj = s.getObject().asResource();
             boolean hasType =
-                    model.contains(
-                            obj,
-                            model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
-                            model.getResource("http://www.w3.org/2004/02/skos/core#Concept"));
+                model.contains(
+                    obj,
+                    model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+                    model.getResource("http://www.w3.org/2004/02/skos/core#Concept"));
             assertThat(hasType).isTrue();
         }
+    }
+
+    // --- NEW: subject IRI formatting uses same engine & supports inline JSON placeholders ---
+
+    @Test
+    @DisplayName("Subject iriFormat supports inline JSONPath placeholders consistently")
+    void subject_iri_format_supports_inline_jsonpath() throws Exception {
+        Map<String, String> ns = new LinkedHashMap<>();
+        ns.put("dcat", "http://www.w3.org/ns/dcat#");
+        Prefixes prefixes = new Prefixes(ns);
+
+        ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
+
+        when(rc.subject().iriConst()).thenReturn(null);
+        when(rc.subject().iriTemplate()).thenReturn(null);
+        when(rc.subject().iriJson()).thenReturn("$.id");
+        when(rc.subject().iriFormat()).thenReturn("${$$.env.apiBaseUrl}access/datafile/${value}");
+
+        when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
+        when(rc.props()).thenReturn(java.util.Collections.emptyMap());
+        when(rc.scopeJson()).thenReturn(null);
+
+        JaywayJsonFinder finder =
+            finderFor("{\"env\":{\"apiBaseUrl\":\"https://acc.example/api/\"},\"id\":\"6\"}");
+
+        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Distribution");
+        Model model = mapper.build(finder);
+
+        // single subject
+        Resource subject = model.listSubjects().next();
+        assertThat(subject.getURI()).isEqualTo("https://acc.example/api/access/datafile/6");
+    }
+
+    @Test
+    @DisplayName("Subject supports indexed ${1}/${2} from subject.iri.jsonPaths")
+    void subject_supports_indexed_placeholders() throws Exception {
+        Map<String, String> ns = new LinkedHashMap<>();
+        ns.put("dcat", "http://www.w3.org/ns/dcat#");
+        Prefixes prefixes = new Prefixes(ns);
+
+        ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
+
+        when(rc.subject().iriConst()).thenReturn(null);
+        when(rc.subject().iriTemplate()).thenReturn(null);
+        when(rc.subject().iriJson()).thenReturn(null);
+        when(rc.subject().iriJsonPaths()).thenReturn(List.of("$$.env.apiBaseUrl", "$.id"));
+        when(rc.subject().iriFormat()).thenReturn("${1}access/datafile/${2}");
+
+        when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
+        when(rc.props()).thenReturn(java.util.Collections.emptyMap());
+        when(rc.scopeJson()).thenReturn(null);
+
+        JaywayJsonFinder finder =
+            finderFor("{\"env\":{\"apiBaseUrl\":\"https://acc.example/api/\"},\"id\":\"6\"}");
+
+        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Distribution");
+        Model model = mapper.build(finder);
+
+        Resource subject = model.listSubjects().next();
+        assertThat(subject.getURI()).isEqualTo("https://acc.example/api/access/datafile/6");
     }
 }
