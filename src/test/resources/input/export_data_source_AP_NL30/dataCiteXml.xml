@@ -1,51 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resource xmlns="http://datacite.org/schema/kernel-4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.5/metadata.xsd">
-    <identifier identifierType="DOI">10.83300/GDN/XAIHYX</identifier>
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns="http://datacite.org/schema/kernel-4"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.5/metadata.xsd">
+
+    <identifier identifierType="DOI">10.83300/GDN/SQOPAL</identifier>
+
     <creators>
         <creator>
-            <creatorName nameType="Personal">Author</creatorName>
-            <affiliation>Author Affiliation</affiliation>
+            <creatorName nameType="Personal">Author of Dataset</creatorName>
+            <affiliation>TNO Geological Survey of the Netherlands</affiliation>
         </creator>
     </creators>
+
     <titles>
-        <title>Test Dataset</title>
+        <title>Title of Dataset</title>
     </titles>
-    <publisher>Dataverse Geological Survey of the Netherlands</publisher>
+
+    <publisher>Geological Survey of the Netherlands Dataverse</publisher>
+
     <publicationYear>2026</publicationYear>
+
     <subjects>
         <subject>Earth and Environmental Sciences</subject>
+        <subject>Keyword-1</subject>
+        <subject>Keyword-2</subject>
     </subjects>
+
     <contributors>
+        <contributor contributorType="Producer">
+            <contributorName nameType="Personal">Producer</contributorName>
+        </contributor>
+
         <contributor contributorType="ContactPerson">
-            <contributorName nameType="Personal">PoC</contributorName>
-            <affiliation>PoC Affiliation</affiliation>
+            <contributorName nameType="Personal">Geological Survey of the Netherlands Servicedesk</contributorName>
+            <givenName>the</givenName>
+            <familyName>ogical Survey of the Netherlands Servicedesk</familyName>
+            <affiliation>TNO Geological Survey of the Netherlands</affiliation>
         </contributor>
     </contributors>
+
     <dates>
-        <date dateType="Submitted">2026-01-09</date>
-        <date dateType="Available">2026-01-09</date>
+        <date dateType="Submitted">2026-03-13</date>
+        <date dateType="Available">2026-03-13</date>
     </dates>
-    <resourceType resourceTypeGeneral="Dataset">Dataset</resourceType>
+
+    <resourceType resourceTypeGeneral="Dataset"/>
+
     <sizes>
-        <size>9503</size>
-        <size>4957401</size>
+        <size>2803974</size>
+        <size>116080</size>
+        <size>152652</size>
     </sizes>
+
     <formats>
-        <format>text/tab-separated-values</format>
-        <format>text/plain</format>
+        <format>application/pdf</format>
+        <format>image/png</format>
+        <format>application/vnd.openxmlformats-officedocument.presentationml.presentation</format>
     </formats>
+
     <version>1.0</version>
+
     <rightsList>
         <rights rightsURI="info:eu-repo/semantics/openAccess"/>
-        <rights rightsURI="http://creativecommons.org/publicdomain/zero/1.0" rightsIdentifier="CC0-1.0" rightsIdentifierScheme="SPDX" schemeURI="https://spdx.org/licenses/" xml:lang="en">Creative Commons CC0 1.0 Universal Public Domain Dedication.</rights>
+        <rights rightsURI="http://creativecommons.org/publicdomain/zero/1.0"
+                rightsIdentifier="CC0-1.0"
+                rightsIdentifierScheme="SPDX"
+                schemeURI="https://spdx.org/licenses/"
+                xml:lang="en">Creative Commons CC0 1.0 Universal Public Domain Dedication.</rights>
     </rightsList>
+
     <descriptions>
-        <description descriptionType="Abstract">Test description</description>
+        <description descriptionType="Abstract">Description of Dataset</description>
     </descriptions>
+
     <geoLocations>
-        <geoLocation>
-            <geoLocationPlace>Netherlands, Utrecht,, Utrecht,, Zeist,</geoLocationPlace>
-        </geoLocation>
         <geoLocation>
             <geoLocationBox>
                 <westBoundLongitude>5.190</westBoundLongitude>
@@ -55,4 +83,5 @@
             </geoLocationBox>
         </geoLocation>
     </geoLocations>
+
 </resource>

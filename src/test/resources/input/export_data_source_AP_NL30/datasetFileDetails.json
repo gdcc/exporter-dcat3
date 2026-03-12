@@ -1,108 +1,69 @@
 [
   {
-    "id": 3,
-    "persistentId": "",
-    "filename": "CPU Utilization (1).tab",
-    "contentType": "text/tab-separated-values",
-    "friendlyType": "Tab-Delimited",
-    "filesize": 9503,
-    "description": "csv file",
-    "storageIdentifier": "local://19ba2a0b3b9-e0f9bb35858c",
-    "originalFileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "originalFormatLabel": "MS Excel Spreadsheet",
-    "originalFileSize": 15441,
-    "originalFileName": "CPU Utilization (1).xlsx",
-    "UNF": "UNF:6:0WEcnD0cAy+0OAxMv05cKg==",
-    "rootDataFileId": -1,
-    "md5": "f40d06503f00c8df28bc3d9cd7f28f8e",
-    "checksum": {
-      "type": "MD5",
-      "value": "f40d06503f00c8df28bc3d9cd7f28f8e"
-    },
-    "tabularData": true,
-    "creationDate": "2026-01-09",
-    "publicationDate": "2026-01-09",
-    "fileAccessRequest": true,
-    "restricted": false,
-    "fileMetadataId": 2,
-    "dataTables": [
-      {
-        "varQuantity": 3,
-        "caseQuantity": 239,
-        "UNF": "UNF:6:0WEcnD0cAy+0OAxMv05cKg==",
-        "dataVariables": [
-          {
-            "id": 3,
-            "name": "Environment",
-            "label": "Environment",
-            "weighted": false,
-            "variableIntervalType": "discrete",
-            "variableFormatType": "CHARACTER",
-            "isOrderedCategorical": false,
-            "fileOrder": 0,
-            "UNF": "UNF:6:8TyzIrCVDdjMNmNswpZ+tQ==",
-            "variableMetadata": []
-          },
-          {
-            "id": 2,
-            "name": "Application",
-            "label": "Application",
-            "weighted": false,
-            "variableIntervalType": "discrete",
-            "variableFormatType": "CHARACTER",
-            "isOrderedCategorical": false,
-            "fileOrder": 1,
-            "UNF": "UNF:6:oPxINGf0flMZ9+c4rBkJWw==",
-            "variableMetadata": []
-          },
-          {
-            "id": 1,
-            "name": "CPURequest",
-            "label": "CPURequest",
-            "weighted": false,
-            "variableIntervalType": "contin",
-            "variableFormatType": "NUMERIC",
-            "isOrderedCategorical": false,
-            "fileOrder": 2,
-            "UNF": "UNF:6:dFs5oQx+rK7lrJI3EjL0RA==",
-            "variableMetadata": [],
-            "summaryStatistics": {
-              "min": "25.0",
-              "vald": "238.0",
-              "mode": ".",
-              "mean": "157.56302521008377",
-              "max": "18750.0",
-              "invd": "1.0",
-              "medn": "50.0",
-              "stdev": "1222.9566382538005"
-            }
-          }
-        ]
-      }
-    ],
-    "varGroups": []
+  "id" : 5,
+  "persistentId" : "",
+  "filename" : "GoldenGateBridge.pptx",
+  "contentType" : "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  "friendlyType" : "MS Powerpoint",
+  "filesize" : 152652,
+  "description" : "File-1 description",
+  "storageIdentifier" : "local://19ce6ee770a-19f735da29f8",
+  "rootDataFileId" : -1,
+  "md5" : "69c03f9cba8a5d4ab8494030f7a2784d",
+  "checksum" : {
+    "type" : "MD5",
+    "value" : "69c03f9cba8a5d4ab8494030f7a2784d"
   },
-  {
-    "id": 4,
-    "persistentId": "",
-    "filename": "nexus.log",
-    "contentType": "text/plain",
-    "friendlyType": "Plain Text",
-    "filesize": 4957401,
-    "description": "Text file",
-    "storageIdentifier": "local://19ba2a06ee0-0099284a872f",
-    "rootDataFileId": -1,
-    "md5": "eec9c71c5044295bf5c769a37997503c",
-    "checksum": {
-      "type": "MD5",
-      "value": "eec9c71c5044295bf5c769a37997503c"
-    },
-    "tabularData": false,
-    "creationDate": "2026-01-09",
-    "publicationDate": "2026-01-09",
-    "fileAccessRequest": true,
-    "restricted": false,
-    "fileMetadataId": 1,
-    "varGroups": []
-  }
+  "tabularData" : false,
+  "creationDate" : "2026-03-13",
+  "publicationDate" : "2026-03-13",
+  "fileAccessRequest" : true,
+  "restricted" : false,
+  "fileMetadataId" : 2,
+  "varGroups" : [ ]
+}, {
+  "id" : 3,
+  "persistentId" : "",
+  "filename" : "OpenShift AI Operating Model 1.pdf",
+  "contentType" : "application/pdf",
+  "friendlyType" : "Adobe PDF",
+  "filesize" : 2803974,
+  "description" : "File-2 description",
+  "storageIdentifier" : "local://19ce6ee8763-3411a7905250",
+  "rootDataFileId" : -1,
+  "md5" : "ce0daa3264758a67d54d3f37fcb05d73",
+  "checksum" : {
+    "type" : "MD5",
+    "value" : "ce0daa3264758a67d54d3f37fcb05d73"
+  },
+  "tabularData" : false,
+  "creationDate" : "2026-03-13",
+  "publicationDate" : "2026-03-13",
+  "fileAccessRequest" : true,
+  "restricted" : false,
+  "fileMetadataId" : 3,
+  "varGroups" : [ ]
+}, {
+  "id" : 4,
+  "persistentId" : "",
+  "filename" : "Untitled Diagram-1770810733190.drawig.xyz",
+  "contentType" : "image/png",
+  "friendlyType" : "PNG Image",
+  "filesize" : 116080,
+  "description" : "File-3 description",
+  "storageIdentifier" : "local://19ce6ee88f0-ef71b0811b6f",
+  "rootDataFileId" : -1,
+  "md5" : "38b02f179f291b85b949b6d8832f356c",
+  "checksum" : {
+    "type" : "MD5",
+    "value" : "38b02f179f291b85b949b6d8832f356c"
+  },
+  "tabularData" : false,
+  "creationDate" : "2026-03-13",
+  "publicationDate" : "2026-03-13",
+  "fileAccessRequest" : true,
+  "restricted" : false,
+  "fileMetadataId" : 1,
+  "varGroups" : [ ]
+}
 ]

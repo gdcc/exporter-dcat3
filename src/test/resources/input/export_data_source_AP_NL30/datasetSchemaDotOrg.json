@@ -1,69 +1,64 @@
 {
-  "@context": "http://schema.org",
-  "@type": "Dataset",
-  "@id": "https://doi.org/10.83300/GDN/XAIHYX",
-  "identifier": "https://doi.org/10.83300/GDN/XAIHYX",
-  "name": "Test Dataset",
-  "creator": [
-    {
-      "@type": "Person",
-      "affiliation": {
-        "@type": "Organization",
-        "name": "Author Affiliation"
-      },
-      "name": "Author"
-    }
-  ],
-  "author": [
-    {
-      "@type": "Person",
-      "affiliation": {
-        "@type": "Organization",
-        "name": "Author Affiliation"
-      },
-      "name": "Author"
-    }
-  ],
-  "datePublished": "2026-01-09",
-  "dateModified": "2026-01-09",
-  "version": "1",
-  "description": "Test description",
-  "keywords": [
-    "Earth and Environmental Sciences"
-  ],
-  "license": "http://creativecommons.org/publicdomain/zero/1.0",
-  "includedInDataCatalog": {
-    "@type": "DataCatalog",
-    "name": "Dataverse Geological Survey of the Netherlands",
-    "url": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Dataverse Geological Survey of the Netherlands"
-  },
-  "provider": {
-    "@type": "Organization",
-    "name": "Dataverse Geological Survey of the Netherlands"
-  },
-  "spatialCoverage": [
-    "Utrecht, Utrecht, Netherlands, Zeist"
-  ],
-  "distribution": [
-    {
-      "@type": "DataDownload",
-      "name": "CPU Utilization (1).tab",
-      "encodingFormat": "text/tab-separated-values",
-      "contentSize": 9503,
-      "description": "csv file",
-      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/3"
+  "@context" : "http://schema.org",
+  "@type" : "Dataset",
+  "@id" : "https://doi.org/10.83300/GDN/SQOPAL",
+  "identifier" : "https://doi.org/10.83300/GDN/SQOPAL",
+  "name" : "Title of Dataset",
+  "creator" : [ {
+    "@type" : "Person",
+    "affiliation" : {
+      "@type" : "Organization",
+      "name" : "TNO Geological Survey of the Netherlands"
     },
-    {
-      "@type": "DataDownload",
-      "name": "nexus.log",
-      "encodingFormat": "text/plain",
-      "contentSize": 4957401,
-      "description": "Text file",
-      "contentUrl": "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/4"
-    }
-  ]
+    "name" : "Author of Dataset"
+  } ],
+  "author" : [ {
+    "@type" : "Person",
+    "affiliation" : {
+      "@type" : "Organization",
+      "name" : "TNO Geological Survey of the Netherlands"
+    },
+    "name" : "Author of Dataset"
+  } ],
+  "datePublished" : "2026-03-13",
+  "dateModified" : "2026-03-13",
+  "version" : "1",
+  "description" : "Description of Dataset",
+  "keywords" : [ "Earth and Environmental Sciences", "Keyword-1", "Keyword-2" ],
+  "license" : "http://creativecommons.org/publicdomain/zero/1.0",
+  "includedInDataCatalog" : {
+    "@type" : "DataCatalog",
+    "name" : "Geological Survey of the Netherlands Dataverse",
+    "url" : "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan"
+  },
+  "publisher" : {
+    "@type" : "Organization",
+    "name" : "Geological Survey of the Netherlands Dataverse"
+  },
+  "provider" : {
+    "@type" : "Organization",
+    "name" : "Geological Survey of the Netherlands Dataverse"
+  },
+  "distribution" : [ {
+    "@type" : "DataDownload",
+    "name" : "GoldenGateBridge.pptx",
+    "encodingFormat" : "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "contentSize" : 152652,
+    "description" : "File-1 description",
+    "contentUrl" : "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/5"
+  }, {
+    "@type" : "DataDownload",
+    "name" : "OpenShift AI Operating Model 1.pdf",
+    "encodingFormat" : "application/pdf",
+    "contentSize" : 2803974,
+    "description" : "File-2 description",
+    "contentUrl" : "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/3"
+  }, {
+    "@type" : "DataDownload",
+    "name" : "Untitled Diagram-1770810733190.drawig.xyz",
+    "encodingFormat" : "image/png",
+    "contentSize" : 116080,
+    "description" : "File-3 description",
+    "contentUrl" : "https://dataverse-devops-tst.apps.geo-dev.gdnnet.lan/api/access/datafile/4"
+  } ]
 }
