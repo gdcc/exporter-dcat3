@@ -15,9 +15,10 @@ class ExportDataTest {
             System.setProperty("dataverse.siteUrl", "https://acc-dataverse.gdnnet.nl");
 
             ExportDataProvider exportDataProvider =
-                getExportDataProvider("src/test/resources/input/export_data_source_lightweight");
+                    getExportDataProvider("src/test/resources/input/export_data_source_lightweight");
 
-            ExportData result = ExportData.builder().provider(exportDataProvider).build();
+            ExportData result =
+                    ExportData.builder().provider(exportDataProvider).build();
 
             assertThat(result).isNotNull();
             assertThat(result.datasetJson()).isNotNull();
@@ -42,9 +43,10 @@ class ExportDataTest {
             System.setProperty("dataverse.siteUrl", "http://localhost:8080");
 
             ExportDataProvider exportDataProvider =
-                getExportDataProvider("src/test/resources/input/export_data_source_AP_NL30");
+                    getExportDataProvider("src/test/resources/input/export_data_source_AP_NL30");
 
-            ExportData result = ExportData.builder().provider(exportDataProvider).build();
+            ExportData result =
+                    ExportData.builder().provider(exportDataProvider).build();
 
             assertThat(result).isNotNull();
             assertThat(result.datasetJson()).isNotNull();

@@ -13,28 +13,21 @@ public final class SubjectValidator implements Validator<Subject> {
         List<ValidationMessage> out = new ArrayList<>();
 
         if (subject == null) {
-            out.add(
-                new ValidationMessage(
-                    Severity.ERROR,
-                    "DCATRSC-000",
-                    "resource.subject",
-                    "Subject is null",
-                    null));
+            out.add(new ValidationMessage(Severity.ERROR, "DCATRSC-000", "resource.subject", "Subject is null", null));
             return out;
         }
 
-        boolean hasJsonPaths = subject.iriJsonPaths() != null && !subject.iriJsonPaths().isEmpty();
+        boolean hasJsonPaths =
+                subject.iriJsonPaths() != null && !subject.iriJsonPaths().isEmpty();
 
         // If no way to mint IRI is provided, warn
-        boolean hasSource =
-            hasText(subject.iriConst())
+        boolean hasSource = hasText(subject.iriConst())
                 || hasText(subject.iriTemplate())
                 || hasText(subject.iriJson())
                 || hasJsonPaths;
 
         if (!hasSource) {
-            out.add(
-                new ValidationMessage(
+            out.add(new ValidationMessage(
                     Severity.WARNING,
                     "DCATRSC-001",
                     "resource.subject",
@@ -44,14 +37,10 @@ public final class SubjectValidator implements Validator<Subject> {
 
         // If format is provided, check that template or json exists (or jsonPaths)
         if (hasText(subject.iriFormat())) {
-            boolean ok =
-                hasText(subject.iriTemplate())
-                    || hasText(subject.iriJson())
-                    || hasJsonPaths;
+            boolean ok = hasText(subject.iriTemplate()) || hasText(subject.iriJson()) || hasJsonPaths;
 
             if (!ok) {
-                out.add(
-                    new ValidationMessage(
+                out.add(new ValidationMessage(
                         Severity.ERROR,
                         "DCATRSC-002",
                         "resource.subject.iriFormat",

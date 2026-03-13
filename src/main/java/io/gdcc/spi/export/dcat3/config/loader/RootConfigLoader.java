@@ -22,8 +22,7 @@ import java.util.regex.Pattern;
 public final class RootConfigLoader {
     public static final String SYS_PROP = "dataverse.dcat3.config";
     private static final Pattern ELEMENT_ID_PATTERN = Pattern.compile("^element\\.([^.]+)\\.id$");
-    private static final Pattern RELATION_PREDICATE_PATTERN =
-            Pattern.compile("^relation\\.([^.]+)\\.predicate$");
+    private static final Pattern RELATION_PREDICATE_PATTERN = Pattern.compile("^relation\\.([^.]+)\\.predicate$");
 
     // NEW: dcat.format.<format>.<flag>, where flag ∈ {availableToUsers, harvestable}
     private static final Pattern FORMAT_FLAG_PATTERN =
@@ -42,9 +41,7 @@ public final class RootConfigLoader {
         String rootProperty = System.getProperty(SYS_PROP);
         if (rootProperty == null || rootProperty.trim().isEmpty()) {
             throw new IllegalArgumentException(
-                    "System property '"
-                            + SYS_PROP
-                            + "' not set; please provide a path to dcat-root.properties");
+                    "System property '" + SYS_PROP + "' not set; please provide a path to dcat-root.properties");
         }
 
         FileResolver.ResolvedFile resolved = resolveFile(null, rootProperty);
@@ -149,7 +146,8 @@ public final class RootConfigLoader {
     private static boolean safeBoolean(String raw, boolean defaultValue) {
         if (raw == null) return defaultValue;
         String cleaned = raw.trim();
-        if (cleaned.endsWith(";")) cleaned = cleaned.substring(0, cleaned.length() - 1).trim();
+        if (cleaned.endsWith(";"))
+            cleaned = cleaned.substring(0, cleaned.length() - 1).trim();
         return Boolean.parseBoolean(cleaned);
     }
 

@@ -70,7 +70,8 @@ class ValidationUtilTest {
     @ParameterizedTest(name = "isNullOrEmpty(Collection) => {0}")
     @CsvSource({"true", "false"})
     void isNullOrEmpty_collection(boolean empty) {
-        assertThat(ValidationUtil.isNullOrEmpty(empty ? List.of() : List.of("x"))).isEqualTo(empty);
+        assertThat(ValidationUtil.isNullOrEmpty(empty ? List.of() : List.of("x")))
+                .isEqualTo(empty);
         assertThat(ValidationUtil.isNullOrEmpty((List<?>) null)).isTrue();
     }
 

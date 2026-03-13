@@ -39,12 +39,7 @@ class CurieIriUtilsTest {
     }
 
     @ParameterizedTest(name = "curieHasKnownPrefix('{0}') in {1} => {2}")
-    @CsvSource({
-        "dcat:Dataset, dcat, true",
-        "dct:title, dct, true",
-        "ex:Thing, dcat, false",
-        "ex:Thing, ex, true"
-    })
+    @CsvSource({"dcat:Dataset, dcat, true", "dct:title, dct, true", "ex:Thing, dcat, false", "ex:Thing, ex, true"})
     @DisplayName("Known prefix detection in CURIEs")
     void curieHasKnownPrefix_cases(String curie, String known, boolean expected) {
         Map<String, String> prefixes = Map.of(known, "http://example.org/" + known + "#");

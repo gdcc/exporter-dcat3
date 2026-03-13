@@ -41,15 +41,13 @@ class Dcat3ExporterTest {
             throws Exception {
 
         // -- prepare configuration (same as your original)
-        URL dcatRootPropertiesUrl =
-                getClass().getClassLoader().getResource("lightweight/mapping/dcat-root.properties");
+        URL dcatRootPropertiesUrl = getClass().getClassLoader().getResource("lightweight/mapping/dcat-root.properties");
         assertThat(dcatRootPropertiesUrl).isNotNull();
         File dcatRootPropetiesFile = new File(dcatRootPropertiesUrl.toURI());
         System.setProperty(RootConfigLoader.SYS_PROP, dcatRootPropetiesFile.getAbsolutePath());
 
         // -- prepare export data provider (same as your original)
-        ExportDataProvider provider =
-                getExportDataProvider("src/test/resources/input/export_data_source_lightweight");
+        ExportDataProvider provider = getExportDataProvider("src/test/resources/input/export_data_source_lightweight");
 
         // -- prepare exporter for the requested format
         Exporter exporter = createExporter(formatKey);
@@ -76,14 +74,11 @@ class Dcat3ExporterTest {
         // -- SHACL validation (same as your original)
         Model shapes = ModelFactory.createDefaultModel();
         shapes.read(
-                getClass()
-                        .getClassLoader()
-                        .getResourceAsStream("input/validation_lightweight/shacl.ttl"),
+                getClass().getClassLoader().getResourceAsStream("input/validation_lightweight/shacl.ttl"),
                 null,
                 "TURTLE");
 
-        ValidationReport report =
-                ShaclValidator.get().validate(shapes.getGraph(), dataModel.getGraph());
+        ValidationReport report = ShaclValidator.get().validate(shapes.getGraph(), dataModel.getGraph());
         assertThat(report.conforms()).as(toValidationReport(report)).isTrue();
     }
 
@@ -91,15 +86,13 @@ class Dcat3ExporterTest {
     void reproducerIssue10() throws URISyntaxException {
 
         // -- prepare configuration (same as your original)
-        URL dcatRootPropertiesUrl =
-                getClass().getClassLoader().getResource("lightweight/mapping/dcat-root.properties");
+        URL dcatRootPropertiesUrl = getClass().getClassLoader().getResource("lightweight/mapping/dcat-root.properties");
         assertThat(dcatRootPropertiesUrl).isNotNull();
         File dcatRootPropetiesFile = new File(dcatRootPropertiesUrl.toURI());
         System.setProperty(RootConfigLoader.SYS_PROP, dcatRootPropetiesFile.getAbsolutePath());
 
         // -- prepare export data provider (same as your original)
-        ExportDataProvider provider =
-                getExportDataProvider("src/test/resources/input/export_issue_10");
+        ExportDataProvider provider = getExportDataProvider("src/test/resources/input/export_issue_10");
 
         // -- prepare exporter for the requested format
         Exporter exporter = createExporter("rdfxml");
@@ -112,7 +105,7 @@ class Dcat3ExporterTest {
             // ignore
         }
         String result = out.toString();
-        assertThat(result.trim()).endsWith( "</rdf:RDF>" );
+        assertThat(result.trim()).endsWith("</rdf:RDF>");
     }
 
     /** Simple factory mapping the csv 'formatKey' to an exporter instance. */

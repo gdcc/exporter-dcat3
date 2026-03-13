@@ -17,7 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class ResourceConfigValidatorTest {
 
-    @Mock ResourceConfig rc;
+    @Mock
+    ResourceConfig rc;
 
     @Test
     @DisplayName("ResourceConfigValidator handles null ResourceConfig")
@@ -32,10 +33,8 @@ class ResourceConfigValidatorTest {
     void resourceConfig_props() {
         ValueSource valueSource = mock(ValueSource.class);
         when(valueSource.constValue()).thenReturn("(A");
-        ResourceConfigValidator validator =
-                new ResourceConfigValidator(Map.of("ex", "http://example.org/"));
-        when(rc.subject())
-                .thenReturn(null); // SubjectValidator is invoked but we'll ignore its output here
+        ResourceConfigValidator validator = new ResourceConfigValidator(Map.of("ex", "http://example.org/"));
+        when(rc.subject()).thenReturn(null); // SubjectValidator is invoked but we'll ignore its output here
         when(rc.props()).thenReturn(Map.of("ex:title", valueSource));
         when(rc.nodes()).thenReturn(Map.of());
 

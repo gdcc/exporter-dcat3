@@ -21,20 +21,18 @@ import java.util.logging.Logger;
  * listRoot(): values from original document root
  */
 public class JaywayJsonFinder {
-    private static final Logger logger =
-            Logger.getLogger(JaywayJsonFinder.class.getCanonicalName());
+    private static final Logger logger = Logger.getLogger(JaywayJsonFinder.class.getCanonicalName());
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private final ReadContext ctx; // current scope
     private final ReadContext originalRootCtx; // original document root
 
     private static ReadContext createCtx(JsonNode root) {
-        Configuration config =
-                Configuration.builder()
-                        .jsonProvider(new JacksonJsonProvider())
-                        .mappingProvider(new JacksonMappingProvider())
-                        .options(Option.ALWAYS_RETURN_LIST, Option.SUPPRESS_EXCEPTIONS)
-                        .build();
+        Configuration config = Configuration.builder()
+                .jsonProvider(new JacksonJsonProvider())
+                .mappingProvider(new JacksonMappingProvider())
+                .options(Option.ALWAYS_RETURN_LIST, Option.SUPPRESS_EXCEPTIONS)
+                .build();
         return JsonPath.using(config).parse(root.toString());
     }
 

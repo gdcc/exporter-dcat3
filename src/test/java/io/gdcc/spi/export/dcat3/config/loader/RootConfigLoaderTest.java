@@ -16,7 +16,8 @@ import org.junit.jupiter.api.io.TempDir;
 
 public class RootConfigLoaderTest {
 
-    @TempDir Path temp;
+    @TempDir
+    Path temp;
 
     @Test
     void loads_root_config_and_resolves_element_relative_to_root_dir() throws Exception {
@@ -67,16 +68,17 @@ public class RootConfigLoaderTest {
         assertThat(rootConfig.baseDir()).isEqualTo(temp);
 
         // Act: resolve the element file via the loader
-        try (InputStream in =
-                resolveElementFile(rootConfig.baseDir(), rootConfig.elements().get(0).file())) {
-            assertThat(in).as("Element file should be resolvable from root baseDir").isNotNull();
+        try (InputStream in = resolveElementFile(
+                rootConfig.baseDir(), rootConfig.elements().get(0).file())) {
+            assertThat(in)
+                    .as("Element file should be resolvable from root baseDir")
+                    .isNotNull();
 
             // Parse with PropertiesMappingLoader to ensure the file is valid
             ResourceConfig cfg = new ResourceConfigLoader().load(in);
 
             // Assert: a couple of fields to prove it parsed correctly
-            assertThat(cfg.subject().iriConst())
-                    .isEqualTo("https://data.example.org/catalog/gdn-test");
+            assertThat(cfg.subject().iriConst()).isEqualTo("https://data.example.org/catalog/gdn-test");
             ValueSource titleEn = cfg.props().get("title_en");
             assertThat(titleEn).isNotNull();
             assertThat(titleEn.predicate()).isEqualTo("dct:title");
@@ -119,8 +121,7 @@ public class RootConfigLoaderTest {
         // test the user.home branch instead.
         // We keep this test lightweight and focus on parser behavior.
 
-        System.setProperty(
-                RootConfigLoader.SYS_PROP, rootFile.toString()); // absolute path → already covered
+        System.setProperty(RootConfigLoader.SYS_PROP, rootFile.toString()); // absolute path → already covered
         RootConfig rc = RootConfigLoader.load();
         assertThat(rc.elements()).hasSize(1);
     }
@@ -135,8 +136,7 @@ public class RootConfigLoaderTest {
         Path rootAtHome = homeDir.resolve("dcat-root-home.properties");
         Path elementAtHome = homeDir.resolve("dcat-catalog-home.properties");
 
-        Files.writeString(
-                elementAtHome, "subject.iri.const = https://example.org/catalog/user-home");
+        Files.writeString(elementAtHome, "subject.iri.const = https://example.org/catalog/user-home");
         Files.writeString(
                 rootAtHome,
                 """
@@ -157,12 +157,10 @@ public class RootConfigLoaderTest {
         assertThat(rootConfig.elements()).hasSize(1);
 
         // Resolve element from user.home
-        try (InputStream in =
-                resolveElementFile(rootConfig.baseDir(), "dcat-catalog-home.properties")) {
+        try (InputStream in = resolveElementFile(rootConfig.baseDir(), "dcat-catalog-home.properties")) {
             assertThat(in).isNotNull();
             ResourceConfig resourceConfig = new ResourceConfigLoader().load(in);
-            assertThat(resourceConfig.subject().iriConst())
-                    .isEqualTo("https://example.org/catalog/user-home");
+            assertThat(resourceConfig.subject().iriConst()).isEqualTo("https://example.org/catalog/user-home");
         } finally {
             // Clean up files we wrote under user.home
             Files.deleteIfExists(rootAtHome);
@@ -205,9 +203,7 @@ public class RootConfigLoaderTest {
             element.catalog.file = dcat-catalog.properties
             """);
         // dummy element file
-        Files.writeString(
-                temp.resolve("dcat-catalog.properties"),
-                "subject.iri.const = https://example.org/cat");
+        Files.writeString(temp.resolve("dcat-catalog.properties"), "subject.iri.const = https://example.org/cat");
 
         System.setProperty(RootConfigLoader.SYS_PROP, rootFile.toString());
 
@@ -216,8 +212,7 @@ public class RootConfigLoaderTest {
 
         // Assert
         assertThat(rootConfig.formats()).as("Format-section must be present").isNotNull();
-        assertThat(rootConfig.formats().keySet())
-                .containsExactlyInAnyOrder("turtle", "rdfXml", "jsonLd");
+        assertThat(rootConfig.formats().keySet()).containsExactlyInAnyOrder("turtle", "rdfXml", "jsonLd");
 
         FormatFlags turtle = rootConfig.formats().get("turtle");
         assertThat(turtle.availableToUsers()).isTrue(); // explicit 'true;'
@@ -245,9 +240,7 @@ public class RootConfigLoaderTest {
             element.catalog.type = dcat:Catalog
             element.catalog.file = dcat-catalog.properties
             """);
-        Files.writeString(
-                temp.resolve("dcat-catalog.properties"),
-                "subject.iri.const = https://example.org/cat2");
+        Files.writeString(temp.resolve("dcat-catalog.properties"), "subject.iri.const = https://example.org/cat2");
         System.setProperty(RootConfigLoader.SYS_PROP, rootFile.toString());
 
         // Act
@@ -272,9 +265,7 @@ public class RootConfigLoaderTest {
             element.catalog.type = dcat:Catalog
             element.catalog.file = dcat-catalog.properties
             """);
-        Files.writeString(
-                temp.resolve("dcat-catalog.properties"),
-                "subject.iri.const = https://example.org/cat3");
+        Files.writeString(temp.resolve("dcat-catalog.properties"), "subject.iri.const = https://example.org/cat3");
         System.setProperty(RootConfigLoader.SYS_PROP, rootFile.toString());
 
         // Act
@@ -292,7 +283,11 @@ public class RootConfigLoaderTest {
     private static void assumeHomeAvailable(String home) {
         // Basic guard so CI without a writable HOME won't break this test.
         // If HOME is null or not writable, skip with a clear message.
-        assertThat(home).as("System property 'user.home' must be set for this test").isNotNull();
-        assertThat(Files.isDirectory(Path.of(home))).as("'user.home' must be a directory").isTrue();
+        assertThat(home)
+                .as("System property 'user.home' must be set for this test")
+                .isNotNull();
+        assertThat(Files.isDirectory(Path.of(home)))
+                .as("'user.home' must be a directory")
+                .isTrue();
     }
 }

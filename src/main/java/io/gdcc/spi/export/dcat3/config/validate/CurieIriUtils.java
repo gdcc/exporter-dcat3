@@ -14,9 +14,7 @@ public final class CurieIriUtils {
             // Minimal check: require a non-empty address after "mailto:"
             return trimmed.length() > "mailto:".length();
         }
-        return trimmed.startsWith("http://")
-                || trimmed.startsWith("https://")
-                || trimmed.startsWith("urn:");
+        return trimmed.startsWith("http://") || trimmed.startsWith("https://") || trimmed.startsWith("urn:");
     }
 
     public static boolean isCurie(String value) {

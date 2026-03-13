@@ -57,8 +57,7 @@ public class FileResolver {
         }
 
         // 4) classpath (baseDir = null)
-        InputStream classPath =
-                Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
+        InputStream classPath = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
         if (classPath != null) {
             return new ResolvedFile(classPath, null);
         }

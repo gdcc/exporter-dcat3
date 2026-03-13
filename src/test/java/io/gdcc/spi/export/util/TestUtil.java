@@ -71,8 +71,7 @@ public class TestUtil {
             @Override
             public String getDataCiteXml() {
                 try {
-                    return Files.readString(
-                            Paths.get(resourceDir + "/dataCiteXml.xml"), StandardCharsets.UTF_8);
+                    return Files.readString(Paths.get(resourceDir + "/dataCiteXml.xml"), StandardCharsets.UTF_8);
                 } catch (IOException ex) {
                     return null;
                 }
@@ -89,19 +88,17 @@ public class TestUtil {
     /** Fetch and combine multiple SHACL shape files (Turtle). */
     public static Model fetchShapesModel(List<String> urls) throws Exception {
         Model shapes = ModelFactory.createDefaultModel();
-        HttpClient client =
-                HttpClient.newBuilder()
-                        .followRedirects(HttpClient.Redirect.NORMAL)
-                        .connectTimeout(Duration.ofSeconds(10))
-                        .build();
+        HttpClient client = HttpClient.newBuilder()
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .connectTimeout(Duration.ofSeconds(10))
+                .build();
 
         for (String u : urls) {
-            HttpRequest req =
-                    HttpRequest.newBuilder(URI.create(u))
-                            .timeout(Duration.ofSeconds(20))
-                            .header("Accept", "text/turtle,application/x-turtle;q=0.9,*/*;q=0.1")
-                            .GET()
-                            .build();
+            HttpRequest req = HttpRequest.newBuilder(URI.create(u))
+                    .timeout(Duration.ofSeconds(20))
+                    .header("Accept", "text/turtle,application/x-turtle;q=0.9,*/*;q=0.1")
+                    .GET()
+                    .build();
             HttpResponse<byte[]> resp = client.send(req, HttpResponse.BodyHandlers.ofByteArray());
             if (resp.statusCode() >= 200 && resp.statusCode() < 300) {
                 try (var in = new ByteArrayInputStream(resp.body())) {
@@ -119,12 +116,10 @@ public class TestUtil {
     public static boolean looksOnline() {
         try {
             HttpClient client = HttpClient.newHttpClient();
-            HttpRequest req =
-                    HttpRequest.newBuilder(
-                                    URI.create("https://semiceu.github.io/DCAT-AP/releases/3.0.0/"))
-                            .timeout(Duration.ofSeconds(5))
-                            .GET()
-                            .build();
+            HttpRequest req = HttpRequest.newBuilder(URI.create("https://semiceu.github.io/DCAT-AP/releases/3.0.0/"))
+                    .timeout(Duration.ofSeconds(5))
+                    .GET()
+                    .build();
             HttpResponse<Void> resp = client.send(req, HttpResponse.BodyHandlers.discarding());
             return resp.statusCode() >= 200 && resp.statusCode() < 500;
         } catch (Exception e) {
@@ -134,21 +129,18 @@ public class TestUtil {
 
     public static String toValidationReport(ValidationReport report) {
         var sb = new StringBuilder("DCAT/DCAT-AP-NL 3.0 SHACL validation report\n");
-        report.getEntries()
-                .forEach(
-                        entry ->
-                                sb.append(" - focusNode: ")
-                                        .append(entry.focusNode())
-                                        .append('\n')
-                                        .append("   path: ")
-                                        .append(entry.resultPath())
-                                        .append('\n')
-                                        .append("   message: ")
-                                        .append(entry.message())
-                                        .append('\n')
-                                        .append("   severity: ")
-                                        .append(entry.severity())
-                                        .append('\n'));
+        report.getEntries().forEach(entry -> sb.append(" - focusNode: ")
+                .append(entry.focusNode())
+                .append('\n')
+                .append("   path: ")
+                .append(entry.resultPath())
+                .append('\n')
+                .append("   message: ")
+                .append(entry.message())
+                .append('\n')
+                .append("   severity: ")
+                .append(entry.severity())
+                .append('\n'));
         return sb.toString();
     }
 }

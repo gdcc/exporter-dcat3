@@ -73,21 +73,17 @@ class ResourceMapperTest {
         assertThat(model).isNotNull();
 
         // Verify RDF.type triple
-        List<Statement> typeStmts =
-            model.listStatements(
-                     null,
-                     model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
-                     model.getResource("http://www.w3.org/ns/dcat#Dataset"))
-                 .toList();
+        List<Statement> typeStmts = model.listStatements(
+                        null,
+                        model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+                        model.getResource("http://www.w3.org/ns/dcat#Dataset"))
+                .toList();
         assertThat(typeStmts).hasSize(1);
 
         // Verify title literal with language
-        List<Statement> titleStmts =
-            model.listStatements(
-                     null,
-                     model.getProperty("http://purl.org/dc/terms/title"),
-                     (RDFNode) null)
-                 .toList();
+        List<Statement> titleStmts = model.listStatements(
+                        null, model.getProperty("http://purl.org/dc/terms/title"), (RDFNode) null)
+                .toList();
         assertThat(titleStmts).hasSize(1);
         assertThat(titleStmts.get(0).getObject().asLiteral().getLanguage()).isEqualTo("en");
         assertThat(titleStmts.get(0).getObject().asLiteral().getString()).isEqualTo("Demo");
@@ -129,8 +125,7 @@ class ResourceMapperTest {
         when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
         when(rc.scopeJson()).thenReturn(null);
 
-        JaywayJsonFinder finder =
-            finderFor("{\"dataset\":{\"identifier\":\"http://example.org/id-iri\"}}");
+        JaywayJsonFinder finder = finderFor("{\"dataset\":{\"identifier\":\"http://example.org/id-iri\"}}");
 
         ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Dataset");
         Model model = mapper.build(finder);
@@ -138,12 +133,9 @@ class ResourceMapperTest {
         assertThat(model).isNotNull();
 
         // Verify identifier as IRI object
-        List<Statement> idStmts =
-            model.listStatements(
-                     null,
-                     model.getProperty("http://purl.org/dc/terms/identifier"),
-                     (RDFNode) null)
-                 .toList();
+        List<Statement> idStmts = model.listStatements(
+                        null, model.getProperty("http://purl.org/dc/terms/identifier"), (RDFNode) null)
+                .toList();
 
         assertThat(idStmts).hasSize(1);
         assertThat(idStmts.get(0).getObject().isResource()).isTrue();
@@ -185,17 +177,14 @@ class ResourceMapperTest {
         ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Distribution");
         Model model = mapper.build(finder);
 
-        List<Statement> stmts =
-            model.listStatements(
-                     null,
-                     model.getProperty("http://www.w3.org/ns/dcat#accessURL"),
-                     (RDFNode) null)
-                 .toList();
+        List<Statement> stmts = model.listStatements(
+                        null, model.getProperty("http://www.w3.org/ns/dcat#accessURL"), (RDFNode) null)
+                .toList();
 
         assertThat(stmts).hasSize(1);
         assertThat(stmts.get(0).getObject().isResource()).isTrue();
         assertThat(stmts.get(0).getObject().asResource().getURI())
-            .isEqualTo("http://localhost:8080/api/access/datafile/4");
+                .isEqualTo("http://localhost:8080/api/access/datafile/4");
     }
 
     @Test
@@ -232,17 +221,14 @@ class ResourceMapperTest {
         ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dct:Dataset");
         Model model = mapper.build(finder);
 
-        List<Statement> stmts =
-            model.listStatements(
-                     null,
-                     model.getProperty("http://purl.org/dc/terms/accessRights"),
-                     (RDFNode) null)
-                 .toList();
+        List<Statement> stmts = model.listStatements(
+                        null, model.getProperty("http://purl.org/dc/terms/accessRights"), (RDFNode) null)
+                .toList();
 
         assertThat(stmts).hasSize(1);
         assertThat(stmts.get(0).getObject().isResource()).isTrue();
         assertThat(stmts.get(0).getObject().asResource().getURI())
-            .isEqualTo("http://publications.europa.eu/resource/authority/access-right/PUBLIC");
+                .isEqualTo("http://publications.europa.eu/resource/authority/access-right/PUBLIC");
     }
 
     @Test
@@ -258,8 +244,7 @@ class ResourceMapperTest {
         when(rc.scopeJson()).thenReturn(null);
 
         // NodeTemplate 'acc' with iri.format
-        NodeTemplate accT =
-            new NodeTemplate(
+        NodeTemplate accT = new NodeTemplate(
                 "acc",
                 "iri",
                 null,
@@ -288,17 +273,14 @@ class ResourceMapperTest {
         ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Distribution");
         Model model = mapper.build(finder);
 
-        List<Statement> stmts =
-            model.listStatements(
-                     null,
-                     model.getProperty("http://www.w3.org/ns/dcat#accessURL"),
-                     (RDFNode) null)
-                 .toList();
+        List<Statement> stmts = model.listStatements(
+                        null, model.getProperty("http://www.w3.org/ns/dcat#accessURL"), (RDFNode) null)
+                .toList();
 
         assertThat(stmts).hasSize(1);
         assertThat(stmts.get(0).getObject().isResource()).isTrue();
         assertThat(stmts.get(0).getObject().asResource().getURI())
-            .isEqualTo("http://localhost:8080/api/access/datafile/4");
+                .isEqualTo("http://localhost:8080/api/access/datafile/4");
     }
 
     @Test
@@ -317,8 +299,7 @@ class ResourceMapperTest {
         nodeMap.put("ener", "http://publications.europa.eu/resource/authority/data-theme/ENER");
         nodeMap.put("tech", "http://publications.europa.eu/resource/authority/data-theme/TECH");
 
-        NodeTemplate themeT =
-            new NodeTemplate(
+        NodeTemplate themeT = new NodeTemplate(
                 "theme",
                 "iri",
                 null,
@@ -347,28 +328,25 @@ class ResourceMapperTest {
         ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Dataset");
         Model model = mapper.build(finder);
 
-        List<Statement> themeStmts =
-            model.listStatements(
-                     null,
-                     model.getProperty("http://www.w3.org/ns/dcat#theme"),
-                     (RDFNode) null)
-                 .toList();
+        List<Statement> themeStmts = model.listStatements(
+                        null, model.getProperty("http://www.w3.org/ns/dcat#theme"), (RDFNode) null)
+                .toList();
 
         assertThat(themeStmts).hasSize(2);
 
-        List<String> objUris =
-            themeStmts.stream().map(s -> s.getObject().asResource().getURI()).toList();
+        List<String> objUris = themeStmts.stream()
+                .map(s -> s.getObject().asResource().getURI())
+                .toList();
 
         assertThat(objUris)
-            .containsExactlyInAnyOrder(
-                "http://publications.europa.eu/resource/authority/data-theme/ENER",
-                "http://publications.europa.eu/resource/authority/data-theme/TECH");
+                .containsExactlyInAnyOrder(
+                        "http://publications.europa.eu/resource/authority/data-theme/ENER",
+                        "http://publications.europa.eu/resource/authority/data-theme/TECH");
 
         // also ensure each emitted node carries rdf:type skos:Concept
         for (Statement s : themeStmts) {
             Resource obj = s.getObject().asResource();
-            boolean hasType =
-                model.contains(
+            boolean hasType = model.contains(
                     obj,
                     model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
                     model.getResource("http://www.w3.org/2004/02/skos/core#Concept"));
@@ -396,8 +374,7 @@ class ResourceMapperTest {
         when(rc.props()).thenReturn(java.util.Collections.emptyMap());
         when(rc.scopeJson()).thenReturn(null);
 
-        JaywayJsonFinder finder =
-            finderFor("{\"env\":{\"apiBaseUrl\":\"https://acc.example/api/\"},\"id\":\"6\"}");
+        JaywayJsonFinder finder = finderFor("{\"env\":{\"apiBaseUrl\":\"https://acc.example/api/\"},\"id\":\"6\"}");
 
         ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Distribution");
         Model model = mapper.build(finder);
@@ -426,8 +403,7 @@ class ResourceMapperTest {
         when(rc.props()).thenReturn(java.util.Collections.emptyMap());
         when(rc.scopeJson()).thenReturn(null);
 
-        JaywayJsonFinder finder =
-            finderFor("{\"env\":{\"apiBaseUrl\":\"https://acc.example/api/\"},\"id\":\"6\"}");
+        JaywayJsonFinder finder = finderFor("{\"env\":{\"apiBaseUrl\":\"https://acc.example/api/\"},\"id\":\"6\"}");
 
         ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Distribution");
         Model model = mapper.build(finder);

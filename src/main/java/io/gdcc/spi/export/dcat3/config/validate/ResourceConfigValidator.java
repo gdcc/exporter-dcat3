@@ -20,13 +20,7 @@ public final class ResourceConfigValidator implements Validator<ResourceConfig> 
     public List<ValidationMessage> validate(ResourceConfig resourceConfig) {
         List<ValidationMessage> out = new ArrayList<>();
         if (resourceConfig == null) {
-            out.add(
-                    new ValidationMessage(
-                            Severity.ERROR,
-                            "DCATRSC-300",
-                            "resource",
-                            "ResourceConfig is null",
-                            null));
+            out.add(new ValidationMessage(Severity.ERROR, "DCATRSC-300", "resource", "ResourceConfig is null", null));
             return out;
         }
 
@@ -36,9 +30,7 @@ public final class ResourceConfigValidator implements Validator<ResourceConfig> 
         // props: validate only when present and non-empty
         if (!isNullOrEmpty(resourceConfig.props())) {
             for (Map.Entry<String, ValueSource> e : resourceConfig.props().entrySet()) {
-                out.addAll(
-                        new ValueSourceValidator(prefixes, "props[" + e.getKey() + "]")
-                                .validate(e.getValue()));
+                out.addAll(new ValueSourceValidator(prefixes, "props[" + e.getKey() + "]").validate(e.getValue()));
             }
         }
 

@@ -5,17 +5,6 @@ package io.gdcc.spi.export.dcat3;
 
 import static io.gdcc.spi.export.dcat3.config.loader.FileResolver.resolveElementFile;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,6 +24,16 @@ import io.gdcc.spi.export.dcat3.config.validate.Validators;
 import io.gdcc.spi.export.dcat3.mapping.JaywayJsonFinder;
 import io.gdcc.spi.export.dcat3.mapping.Prefixes;
 import io.gdcc.spi.export.dcat3.mapping.ResourceMapper;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
@@ -50,8 +49,7 @@ import org.apache.jena.vocabulary.RDF;
  * Each concrete subclass decides its own media type and serialization format.
  */
 public abstract class Dcat3ExporterBase implements Exporter {
-    private static final Logger logger =
-            Logger.getLogger(Dcat3ExporterBase.class.getCanonicalName());
+    private static final Logger logger = Logger.getLogger(Dcat3ExporterBase.class.getCanonicalName());
 
     protected RootConfig root;
 
@@ -90,15 +88,12 @@ public abstract class Dcat3ExporterBase implements Exporter {
     }
 
     @Override
-    public void exportDataset(ExportDataProvider dataProvider, OutputStream outputStream)
-            throws ExportException {
+    public void exportDataset(ExportDataProvider dataProvider, OutputStream outputStream) throws ExportException {
         try {
             // --- Root-level validation before any export work ---
             ValidationReport rootReport = Validators.validateRoot(root);
             for (ValidationMessage message : rootReport.messages()) {
-                logger.log(
-                        message.severity() == Severity.ERROR ? Level.SEVERE : Level.WARNING,
-                        message.toString());
+                logger.log(message.severity() == Severity.ERROR ? Level.SEVERE : Level.WARNING, message.toString());
             }
             if (rootReport.hasErrors()) {
                 throw new ExportException("DCAT export aborted: invalid root configuration");
@@ -108,8 +103,7 @@ public abstract class Dcat3ExporterBase implements Exporter {
             ObjectMapper mapper = new ObjectMapper();
             if (root.trace()) {
                 try {
-                    String json =
-                            mapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportData);
+                    String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportData);
                     logger.info(json);
                 } catch (JsonProcessingException e) {
                     logger.warning(e.getMessage());
@@ -140,8 +134,7 @@ public abstract class Dcat3ExporterBase implements Exporter {
                     // Collect all subjects by rdf:type
                     String typeIri = prefixes.expand(element.typeCurieOrIri());
                     ResIterator it =
-                            elementModel.listResourcesWithProperty(
-                                    RDF.type, elementModel.createResource(typeIri));
+                            elementModel.listResourcesWithProperty(RDF.type, elementModel.createResource(typeIri));
                     List<Resource> subjectList = new ArrayList<>();
                     while (it.hasNext()) {
                         subjectList.add(it.next());
@@ -157,13 +150,10 @@ public abstract class Dcat3ExporterBase implements Exporter {
             // --- Cross-validation of root + all element ResourceConfigs ---
             ValidationReport report = Validators.validateAll(root, elementConfigs);
             for (ValidationMessage message : report.messages()) {
-                logger.log(
-                        message.severity() == Severity.ERROR ? Level.SEVERE : Level.WARNING,
-                        message.toString());
+                logger.log(message.severity() == Severity.ERROR ? Level.SEVERE : Level.WARNING, message.toString());
             }
             if (report.hasErrors()) {
-                throw new ExportException(
-                        "DCAT export aborted: validation errors in element configs");
+                throw new ExportException("DCAT export aborted: validation errors in element configs");
             }
 
             // Merge all element models
@@ -175,14 +165,10 @@ public abstract class Dcat3ExporterBase implements Exporter {
             for (Relation relation : root.relations()) {
                 List<Resource> subjList = subjects.get(relation.subjectElementId());
                 List<Resource> objList = subjects.get(relation.objectElementId());
-                if (subjList == null
-                        || subjList.isEmpty()
-                        || objList == null
-                        || objList.isEmpty()) {
+                if (subjList == null || subjList.isEmpty() || objList == null || objList.isEmpty()) {
                     continue;
                 }
-                Property property =
-                        model.createProperty(prefixes.expand(relation.predicateCurieOrIri()));
+                Property property = model.createProperty(prefixes.expand(relation.predicateCurieOrIri()));
                 for (Resource s : subjList) {
                     for (Resource o : objList) {
                         model.add(s, property, o);
@@ -191,11 +177,10 @@ public abstract class Dcat3ExporterBase implements Exporter {
             }
 
             // make writing atomic, make sure no half written output stream leaves this code.
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream( 64 * 1024);
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream(64 * 1024);
             model.write(buffer, getJenaWriterName());
             buffer.writeTo(outputStream);
-        }
-        catch ( JenaException | IOException e) {
+        } catch (JenaException | IOException e) {
             logger.warning(e.getMessage());
             throw new ExportException("DCAT export failed", e);
         }

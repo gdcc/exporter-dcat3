@@ -49,15 +49,13 @@ class DcatApNL30ComplianceTest {
         assumeTrue(enabled || looksOnline(), "Online SHACL validation is disabled or offline");
 
         // -- prepare configuration (same location as in your AP_NL30 tests)
-        URL dcatRootPropertiesUrl =
-                getClass().getClassLoader().getResource("AP_NL30/mapping/dcat-root.properties");
+        URL dcatRootPropertiesUrl = getClass().getClassLoader().getResource("AP_NL30/mapping/dcat-root.properties");
         assertThat(dcatRootPropertiesUrl).isNotNull();
         File dcatRootPropetiesFile = new File(dcatRootPropertiesUrl.toURI());
         System.setProperty(RootConfigLoader.SYS_PROP, dcatRootPropetiesFile.getAbsolutePath());
 
         // -- prepare export data provider (your dataset for AP_NL30 tests)
-        ExportDataProvider provider =
-                getExportDataProvider("src/test/resources/input/export_data_source_AP_NL30");
+        ExportDataProvider provider = getExportDataProvider("src/test/resources/input/export_data_source_AP_NL30");
 
         // -- prepare exporter (RDF/XML only)
         Dcat3ExporterRdfXml exporter = new Dcat3ExporterRdfXml();
@@ -74,27 +72,23 @@ class DcatApNL30ComplianceTest {
         exporter.exportDataset(provider, out);
         byte[] bytes = out.toByteArray();
         assertThat(bytes).as("Exporter should write RDF bytes").isNotEmpty();
-        System.out.println( new String(bytes));
 
         // -- parse exported RDF/XML
         Model dataModel = readModel(bytes, Lang.RDFXML);
 
         // -- fetch shapes from canonical online sources (EU baseline + NL specialization)
-        Model shapes =
-                fetchShapesModel(
-                        List.of(
-                                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-OPT.ttl",
-                                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-SHACL.ttl",
-                                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-nl-OPT.ttl",
-                                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-nl-SHACL-aanbevolen.ttl",
-                                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-nl-SHACL-klassebereik-codelijsten.ttl",
-                                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-nl-SHACL-klassebereik.ttl",
-                                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-nl-SHACL.ttl",
-                                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/optionaliteit.ttl"));
+        Model shapes = fetchShapesModel(List.of(
+                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-OPT.ttl",
+                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-SHACL.ttl",
+                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-nl-OPT.ttl",
+                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-nl-SHACL-aanbevolen.ttl",
+                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-nl-SHACL-klassebereik-codelijsten.ttl",
+                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-nl-SHACL-klassebereik.ttl",
+                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-nl-SHACL.ttl",
+                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/optionaliteit.ttl"));
 
         // -- SHACL validation
-        ValidationReport report =
-                ShaclValidator.get().validate(shapes.getGraph(), dataModel.getGraph());
+        ValidationReport report = ShaclValidator.get().validate(shapes.getGraph(), dataModel.getGraph());
 
         assertThat(report.conforms()).as(toValidationReport(report)).isTrue();
     }

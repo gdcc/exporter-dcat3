@@ -7,22 +7,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import io.gdcc.spi.export.ExportDataProvider;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
  * ExportData is the mapping context root for the DCAT3 exporter.
  *
- * <p>All fields are converted to a single JsonNode tree (see Dcat3ExporterBase),
- * which is then queried by JSONPath expressions in the mapping configuration.</p>
+ * <p>All fields are converted to a single JsonNode tree (see Dcat3ExporterBase), which is then
+ * queried by JSONPath expressions in the mapping configuration.
  *
  * <p>New: env node containing environment-derived values, notably:
+ *
  * <ul>
- *   <li>env.siteUrl: the public base URL of the Dataverse installation</li>
- *   <li>env.apiBaseUrl: siteUrl + "/api/"</li>
+ *   <li>env.siteUrl: the public base URL of the Dataverse installation
+ *   <li>env.apiBaseUrl: siteUrl + "/api/"
  * </ul>
- * This enables environment-independent mappings (no localhost constants).</p>
+ *
+ * This enables environment-independent mappings (no localhost constants).
  *
  * @param datasetJson native JSON tree
  * @param datasetORE ORE JSON tree
@@ -32,13 +33,12 @@ import java.net.URISyntaxException;
  * @param env environment context (computed)
  */
 public record ExportData(
-    JsonNode datasetJson,
-    JsonNode datasetORE,
-    JsonNode datasetFileDetails,
-    JsonNode datasetSchemaDotOrg,
-    JsonNode dataCiteXml,
-    JsonNode env
-) {
+        JsonNode datasetJson,
+        JsonNode datasetORE,
+        JsonNode datasetFileDetails,
+        JsonNode datasetSchemaDotOrg,
+        JsonNode dataCiteXml,
+        JsonNode env) {
 
     public static ExportDataBuilder builder() {
         return new ExportDataBuilder();
@@ -61,10 +61,14 @@ public record ExportData(
 
             try {
                 // provider already returns JsonObject/JsonArray for JSON sources
-                JsonNode datasetJson = jsonMapper.readTree(provider.getDatasetJson().toString());
-                JsonNode datasetORE = jsonMapper.readTree(provider.getDatasetORE().toString());
-                JsonNode datasetFileDetails = jsonMapper.readTree(provider.getDatasetFileDetails().toString());
-                JsonNode datasetSchemaDotOrg = jsonMapper.readTree(provider.getDatasetSchemaDotOrg().toString());
+                JsonNode datasetJson =
+                        jsonMapper.readTree(provider.getDatasetJson().toString());
+                JsonNode datasetORE =
+                        jsonMapper.readTree(provider.getDatasetORE().toString());
+                JsonNode datasetFileDetails =
+                        jsonMapper.readTree(provider.getDatasetFileDetails().toString());
+                JsonNode datasetSchemaDotOrg =
+                        jsonMapper.readTree(provider.getDatasetSchemaDotOrg().toString());
 
                 // DataCite XML → JsonNode once
                 JsonNode dataCiteXml = xmlMapper.readTree(provider.getDataCiteXml());
@@ -73,13 +77,7 @@ public record ExportData(
                 ObjectNode env = buildEnv(jsonMapper, datasetSchemaDotOrg, datasetORE);
 
                 return new ExportData(
-                    datasetJson,
-                    datasetORE,
-                    datasetFileDetails,
-                    datasetSchemaDotOrg,
-                    dataCiteXml,
-                    env
-                );
+                        datasetJson, datasetORE, datasetFileDetails, datasetSchemaDotOrg, dataCiteXml, env);
             } catch (JsonProcessingException e) {
                 throw new IllegalArgumentException(e);
             }
@@ -88,10 +86,8 @@ public record ExportData(
         /**
          * Build the environment object used by mappings.
          *
-         * Priority:
-         *  1) -Ddataverse.siteUrl
-         *  2) datasetSchemaDotOrg.includedInDataCatalog.url
-         *  3) parse datasetORE["@id"] and use scheme://authority
+         * <p>Priority: 1) -Ddataverse.siteUrl 2) datasetSchemaDotOrg.includedInDataCatalog.url 3)
+         * parse datasetORE["@id"] and use scheme://authority
          */
         private static ObjectNode buildEnv(ObjectMapper jsonMapper, JsonNode datasetSchemaDotOrg, JsonNode datasetORE) {
             String siteUrl = trimToNull(System.getProperty("dataverse.siteUrl"));
@@ -105,9 +101,7 @@ public record ExportData(
 
             // Normalize siteUrl and build apiBaseUrl
             String normalizedSiteUrl = normalizeBaseUrl(siteUrl);
-            String apiBaseUrl = normalizedSiteUrl.isEmpty()
-                ? ""
-                : ensureTrailingSlash(normalizedSiteUrl + "/api");
+            String apiBaseUrl = normalizedSiteUrl.isEmpty() ? "" : ensureTrailingSlash(normalizedSiteUrl + "/api");
 
             ObjectNode env = jsonMapper.createObjectNode();
             env.put("siteUrl", normalizedSiteUrl);

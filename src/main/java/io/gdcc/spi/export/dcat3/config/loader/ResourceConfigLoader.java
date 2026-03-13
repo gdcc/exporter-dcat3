@@ -13,14 +13,15 @@ import java.util.regex.Pattern;
 /**
  * ResourceConfigLoader: parses .properties-based resource mapping configuration.
  *
- * Refactor (Step 6): final-field model classes (Subject, ResourceConfig, NodeTemplate) require
- * constructor-based creation. We accumulate values first, then build immutable instances once per id.
+ * <p>Refactor (Step 6): final-field model classes (Subject, ResourceConfig, NodeTemplate) require
+ * constructor-based creation. We accumulate values first, then build immutable instances once per
+ * id.
  */
 public class ResourceConfigLoader {
 
-    private static final Pattern PROPERTY_PATTERN = Pattern.compile( "^props\\.([^.]+)\\.(.+)$");
-    private static final Pattern NODE_PATTERN = Pattern.compile( "^nodes\\.([^.]+)\\.(.+)$");
-    private static final Pattern NODE_PROPERTY_PATTERN = Pattern.compile( "^props\\.([^.]+)\\.(.+)$");
+    private static final Pattern PROPERTY_PATTERN = Pattern.compile("^props\\.([^.]+)\\.(.+)$");
+    private static final Pattern NODE_PATTERN = Pattern.compile("^nodes\\.([^.]+)\\.(.+)$");
+    private static final Pattern NODE_PROPERTY_PATTERN = Pattern.compile("^props\\.([^.]+)\\.(.+)$");
 
     // NEW: subject indexed JSON: subject.iri.json.1, subject.iri.json.2, ...
     private static final Pattern SUBJECT_JSON_INDEXED = Pattern.compile("^subject\\.iri\\.json\\.(\\d+)$");
@@ -82,7 +83,7 @@ public class ResourceConfigLoader {
             String v = property.getProperty(propertyName);
 
             NodeAccumulators nodeAccumulators =
-                nodeAccumulatorMap.computeIfAbsent(nodeId, k -> new NodeAccumulators(nodeId));
+                    nodeAccumulatorMap.computeIfAbsent(nodeId, k -> new NodeAccumulators(nodeId));
 
             switch (tail) {
                 case "kind" -> nodeAccumulators.kind = v;
@@ -98,7 +99,7 @@ public class ResourceConfigLoader {
                         String propId = nodePropertyPatternMatcher.group(1);
                         String propTail = nodePropertyPatternMatcher.group(2);
                         ValueSourceAccumulator vAcc =
-                            nodeAccumulators.props.computeIfAbsent(propId, k -> new ValueSourceAccumulator());
+                                nodeAccumulators.props.computeIfAbsent(propId, k -> new ValueSourceAccumulator());
                         apply(vAcc, propTail, v);
                     }
                     // node-level iriMap (nodes.X.map.KEY = IRI)
@@ -118,17 +119,8 @@ public class ResourceConfigLoader {
             for (Map.Entry<String, ValueSourceAccumulator> pe : na.props.entrySet()) {
                 nodeProps.put(pe.getKey(), pe.getValue().toValueSource());
             }
-            NodeTemplate nodeTemplate =
-                new NodeTemplate(
-                    na.nodeId,
-                    na.kind,
-                    na.iriConst,
-                    na.iriJson,
-                    na.iriFormat,
-                    na.type,
-                    na.multi,
-                    na.iriMap,
-                    nodeProps);
+            NodeTemplate nodeTemplate = new NodeTemplate(
+                    na.nodeId, na.kind, na.iriConst, na.iriJson, na.iriFormat, na.type, na.multi, na.iriMap, nodeProps);
             nodes.put(na.nodeId, nodeTemplate);
         }
 
@@ -137,7 +129,8 @@ public class ResourceConfigLoader {
     }
 
     private static List<String> readSubjectIndexedJsonPaths(Properties property) {
-        // collect into a numeric map to preserve intended order even if Properties enumerates differently
+        // collect into a numeric map to preserve intended order even if Properties enumerates
+        // differently
         Map<Integer, String> ordered = new TreeMap<>();
         for (String name : property.stringPropertyNames()) {
             Matcher m = SUBJECT_JSON_INDEXED.matcher(name);
@@ -166,7 +159,8 @@ public class ResourceConfigLoader {
         Map<String, String> map = new LinkedHashMap<>();
 
         ValueSource toValueSource() {
-            return new ValueSource(predicate, as, lang, datatype, json, constValue, jsonPaths, nodeRef, multi, when, map, format);
+            return new ValueSource(
+                    predicate, as, lang, datatype, json, constValue, jsonPaths, nodeRef, multi, when, map, format);
         }
     }
 
