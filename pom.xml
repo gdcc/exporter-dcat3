@@ -208,14 +208,8 @@
             <importOrder>
               <wildcardsLast>false</wildcardsLast>
             </importOrder>
-            <removeUnusedImports>
-              <engine>google-java-format</engine>
-            </removeUnusedImports>
-            <googleJavaFormat>
-              <version>1.17.0</version>
-              <style>AOSP</style>
-              <reflowLongStrings>true</reflowLongStrings>
-            </googleJavaFormat>
+            <removeUnusedImports></removeUnusedImports>
+            <palantirJavaFormat></palantirJavaFormat>
           </java>
           <pom>
             <includes>

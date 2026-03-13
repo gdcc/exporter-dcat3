@@ -6,11 +6,12 @@ import java.util.function.Function;
 /**
  * Generic template formatter used consistently for subjects, node IRIs and property values.
  *
- * <p>Supported placeholders:</p>
+ * <p>Supported placeholders:
+ *
  * <ul>
- *   <li>${value} - replaced by the base value (optionally normalized)</li>
- *   <li>${1}, ${2}, ... - replaced by values resolved from jsonPaths in order</li>
- *   <li>${$.path} / ${$$.path} - inline JSONPath placeholders resolved via JaywayJsonFinder</li>
+ *   <li>${value} - replaced by the base value (optionally normalized)
+ *   <li>${1}, ${2}, ... - replaced by values resolved from jsonPaths in order
+ *   <li>${$.path} / ${$$.path} - inline JSONPath placeholders resolved via JaywayJsonFinder
  * </ul>
  */
 public final class TemplateFormatter {
@@ -22,19 +23,19 @@ public final class TemplateFormatter {
     /**
      * Formats a template using a base value, optional jsonPaths list, and inline JSON placeholders.
      *
-     * @param template       the template string, may contain placeholders
-     * @param baseValue      the base value for ${value} (may be null)
-     * @param jsonPaths      JSONPaths providing indexed placeholders ${1}, ${2}, ... (may be null/empty)
-     * @param finder         JSON finder for resolving jsonPaths and inline placeholders
+     * @param template the template string, may contain placeholders
+     * @param baseValue the base value for ${value} (may be null)
+     * @param jsonPaths JSONPaths providing indexed placeholders ${1}, ${2}, ... (may be null/empty)
+     * @param finder JSON finder for resolving jsonPaths and inline placeholders
      * @param baseNormalizer normalizer for baseValue when interpolated into ${value}
      * @return formatted string (never null; may be empty)
      */
     public static String format(
-        String template,
-        String baseValue,
-        List<String> jsonPaths,
-        JaywayJsonFinder finder,
-        Function<String, String> baseNormalizer) {
+            String template,
+            String baseValue,
+            List<String> jsonPaths,
+            JaywayJsonFinder finder,
+            Function<String, String> baseNormalizer) {
 
         if (template == null || template.isBlank()) {
             return baseValue == null ? "" : baseValue;
@@ -68,8 +69,8 @@ public final class TemplateFormatter {
     }
 
     /**
-     * Resolve inline placeholders ${$.path} and ${$$.path} in a template.
-     * Unknown tokens are left intact.
+     * Resolve inline placeholders ${$.path} and ${$$.path} in a template. Unknown tokens are left
+     * intact.
      */
     public static String resolveInlineJsonPlaceholders(String template, JaywayJsonFinder finder) {
         if (template == null || template.isEmpty()) {

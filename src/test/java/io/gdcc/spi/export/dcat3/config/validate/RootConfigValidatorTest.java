@@ -17,9 +17,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class RootConfigValidatorTest {
 
-    @Mock RootConfig root;
-    @Mock Element element;
-    @Mock Relation relation;
+    @Mock
+    RootConfig root;
+
+    @Mock
+    Element element;
+
+    @Mock
+    Relation relation;
 
     @Test
     @DisplayName("RootConfigValidator warns on missing prefixes and elements")
@@ -30,9 +35,7 @@ class RootConfigValidatorTest {
         when(root.relations()).thenReturn(List.of());
 
         List<ValidationMessage> messages = validator.validate(root);
-        assertThat(messages)
-                .extracting(ValidationMessage::code)
-                .contains("DCATCFG-001", "DCATCFG-010");
+        assertThat(messages).extracting(ValidationMessage::code).contains("DCATCFG-001", "DCATCFG-010");
     }
 
     @Test
@@ -47,8 +50,6 @@ class RootConfigValidatorTest {
         when(root.relations()).thenReturn(List.of());
 
         List<ValidationMessage> messages = validator.validate(root);
-        assertThat(messages)
-                .extracting(ValidationMessage::code)
-                .contains("DCATCFG-015", "DCATCFG-016");
+        assertThat(messages).extracting(ValidationMessage::code).contains("DCATCFG-015", "DCATCFG-016");
     }
 }

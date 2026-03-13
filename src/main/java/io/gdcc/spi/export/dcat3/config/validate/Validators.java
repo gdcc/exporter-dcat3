@@ -13,8 +13,7 @@ public final class Validators {
         return report;
     }
 
-    public static ValidationReport validateResource(
-            ResourceConfig rc, Map<String, String> prefixes) {
+    public static ValidationReport validateResource(ResourceConfig rc, Map<String, String> prefixes) {
         ValidationReport report = new ValidationReport();
         report.addAll(new ResourceConfigValidator(prefixes).validate(rc));
         return report;
@@ -24,8 +23,7 @@ public final class Validators {
      * Validate all resource configs loaded for elements; caller provides a map of
      * elementId->ResourceConfig
      */
-    public static ValidationReport validateAll(
-            RootConfig root, Map<String, ResourceConfig> elementConfigs) {
+    public static ValidationReport validateAll(RootConfig root, Map<String, ResourceConfig> elementConfigs) {
         ValidationReport report = validateRoot(root);
         Map<String, String> prefixes = (root != null) ? root.prefixes() : null;
         if (elementConfigs != null) {

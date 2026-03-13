@@ -8,10 +8,8 @@ import java.util.Objects;
  * @param message human-readable
  * @param hint optional remediation hint
  */
-public record ValidationMessage(
-        Severity severity, String code, String path, String message, String hint) {
-    public ValidationMessage(
-            Severity severity, String code, String path, String message, String hint) {
+public record ValidationMessage(Severity severity, String code, String path, String message, String hint) {
+    public ValidationMessage(Severity severity, String code, String path, String message, String hint) {
         this.severity = Objects.requireNonNull(severity);
         this.code = code;
         this.path = path;

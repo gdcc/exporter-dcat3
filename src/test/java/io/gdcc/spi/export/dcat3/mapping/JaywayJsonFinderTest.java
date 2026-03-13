@@ -29,9 +29,8 @@ class JaywayJsonFinderTest {
     @Test
     @DisplayName("list() returns stringified values from root scope")
     void list_from_root_scope() throws Exception {
-        JsonNode root =
-                jsonNode(
-                        """
+        JsonNode root = jsonNode(
+                """
             {"dataset":{"title":"Example","id":123,"tags":["A","B"]},
              "other":{"title":"Else"}}
         """);
@@ -50,9 +49,8 @@ class JaywayJsonFinderTest {
     @Test
     @DisplayName("nodes() returns matching subtrees as JsonNode list")
     void nodes_returns_subtrees() throws Exception {
-        JsonNode root =
-                jsonNode(
-                        """
+        JsonNode root = jsonNode(
+                """
             {"dataset":{"title":"Example","id":123},
              "other":{"dataset":{"title":"Nested","id":999}}}
         """);
@@ -67,9 +65,8 @@ class JaywayJsonFinderTest {
     @Test
     @DisplayName("at() scopes the finder while listRoot() still reads from the original root")
     void at_scopes_finder_and_listRoot_reads_original() throws Exception {
-        JsonNode root =
-                jsonNode(
-                        """
+        JsonNode root = jsonNode(
+                """
             {"dataset":{"title":"Example","id":123},
              "other":{"title":"Else"}}
         """);

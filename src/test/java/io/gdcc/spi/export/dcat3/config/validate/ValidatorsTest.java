@@ -17,9 +17,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class ValidatorsTest {
 
-    @Mock RootConfig root;
-    @Mock Element element;
-    @Mock ResourceConfig rc;
+    @Mock
+    RootConfig root;
+
+    @Mock
+    Element element;
+
+    @Mock
+    ResourceConfig rc;
 
     @Test
     @DisplayName("Validators.validateRoot delegates to RootConfigValidator")
@@ -27,9 +32,7 @@ class ValidatorsTest {
         when(root.prefixes()).thenReturn(Map.of());
         when(root.elements()).thenReturn(List.of());
         ValidationReport report = Validators.validateRoot(root);
-        assertThat(report.messages())
-                .extracting(ValidationMessage::code)
-                .contains("DCATCFG-001", "DCATCFG-010");
+        assertThat(report.messages()).extracting(ValidationMessage::code).contains("DCATCFG-001", "DCATCFG-010");
     }
 
     @Test

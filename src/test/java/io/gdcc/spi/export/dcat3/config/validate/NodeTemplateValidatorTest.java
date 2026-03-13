@@ -15,7 +15,8 @@ import org.mockito.Mock;
 
 class NodeTemplateValidatorTest {
 
-    @Mock private NodeTemplate node;
+    @Mock
+    private NodeTemplate node;
 
     @BeforeEach
     void initMocks() {
@@ -34,16 +35,13 @@ class NodeTemplateValidatorTest {
         when(node.props()).thenReturn(Map.<String, ValueSource>of());
 
         List<ValidationMessage> messages = validator.validate(node);
-        assertThat(messages)
-                .extracting(ValidationMessage::code)
-                .contains("DCATRSC-201", "DCATRSC-203");
+        assertThat(messages).extracting(ValidationMessage::code).contains("DCATRSC-201", "DCATRSC-203");
     }
 
     @Test
     @DisplayName("NodeTemplateValidator accepts valid CURIE and bnode kind")
     void nodeTemplate_valid_cases() {
-        Map<String, String> prefixes =
-                Map.of("dcat", "http://www.w3.org/ns/dcat#", "ex", "http://example.org/");
+        Map<String, String> prefixes = Map.of("dcat", "http://www.w3.org/ns/dcat#", "ex", "http://example.org/");
         NodeTemplateValidator validator = new NodeTemplateValidator(prefixes);
 
         when(node.id()).thenReturn("n1");

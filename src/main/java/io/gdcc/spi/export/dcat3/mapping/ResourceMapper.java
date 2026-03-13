@@ -65,12 +65,11 @@ public class ResourceMapper {
     /**
      * Create subject resource for each scope.
      *
-     * Supported:
-     * - iriConst
-     * - iriTemplate (treated as fixed string)
-     * - iriJson (+ optional iriFormat)
+     * <p>Supported: - iriConst - iriTemplate (treated as fixed string) - iriJson (+ optional
+     * iriFormat)
      *
-     * Formatting now uses TemplateFormatter for consistency and supports inline JSON placeholders.
+     * <p>Formatting now uses TemplateFormatter for consistency and supports inline JSON
+     * placeholders.
      */
     private Resource createSubject(Model model, JaywayJsonFinder finder) {
         Subject subjectCfg = resourceConfig.subject();
@@ -88,14 +87,15 @@ public class ResourceMapper {
             iri = base; // fallback if no format provided
         }
 
-        if (iri == null && (subjectCfg.iriJsonPaths() != null && !subjectCfg.iriJsonPaths().isEmpty())) {
+        if (iri == null
+                && (subjectCfg.iriJsonPaths() != null
+                        && !subjectCfg.iriJsonPaths().isEmpty())) {
             // If only jsonPaths exist (no iriJson), we still can build via iriFormat
             iri = ""; // placeholder, will be replaced by formatter if iriFormat exists
         }
 
         if (subjectCfg.iriFormat() != null && !subjectCfg.iriFormat().isBlank()) {
-            iri =
-                TemplateFormatter.format(
+            iri = TemplateFormatter.format(
                     subjectCfg.iriFormat(),
                     base == null ? "" : base,
                     subjectCfg.iriJsonPaths() == null ? java.util.Collections.emptyList() : subjectCfg.iriJsonPaths(),
@@ -120,27 +120,25 @@ public class ResourceMapper {
     private List<RDFNode> resolveObjects(Model model, JaywayJsonFinder finder, ValueSource valueSource) {
         return switch (valueSource.as()) {
             case "node-ref" -> buildNodeRefs(model, finder, valueSource);
-            case "iri" ->
-                valuesFromSource(finder, valueSource).stream()
-                                                     .map(applyMapIfAny(valueSource))
-                                                     .map(applyFormatIfAny(valueSource, finder)) // unified formatter
-                                                     .filter(s -> s != null && !s.isBlank()) // guard: avoid <rdfs:Resource/>
-                                                     .map(model::createResource)
-                                                     .collect(Collectors.toList());
-            default ->
-                valuesFromSource(finder, valueSource).stream()
-                                                     .map(applyMapIfAny(valueSource))
-                                                     .map(applyFormatIfAny(valueSource, finder)) // unified formatter
-                                                     .filter(Objects::nonNull)
-                                                     .map(val -> literal(model, val, valueSource.lang(), valueSource.datatype()))
-                                                     .collect(Collectors.toList());
+            case "iri" -> valuesFromSource(finder, valueSource).stream()
+                    .map(applyMapIfAny(valueSource))
+                    .map(applyFormatIfAny(valueSource, finder)) // unified formatter
+                    .filter(s -> s != null && !s.isBlank()) // guard: avoid <rdfs:Resource/>
+                    .map(model::createResource)
+                    .collect(Collectors.toList());
+            default -> valuesFromSource(finder, valueSource).stream()
+                    .map(applyMapIfAny(valueSource))
+                    .map(applyFormatIfAny(valueSource, finder)) // unified formatter
+                    .filter(Objects::nonNull)
+                    .map(val -> literal(model, val, valueSource.lang(), valueSource.datatype()))
+                    .collect(Collectors.toList());
         };
     }
 
     /**
-     * Build node references for a property defined as "node-ref" in the config.
-     * This version normalizes ${value} when used inside iriFormat, so that values like
-     * "text/plain; charset=US-ASCII" never end up inside IRIs.
+     * Build node references for a property defined as "node-ref" in the config. This version
+     * normalizes ${value} when used inside iriFormat, so that values like "text/plain;
+     * charset=US-ASCII" never end up inside IRIs.
      */
     private List<RDFNode> buildNodeRefs(Model model, JaywayJsonFinder finder, ValueSource vs) {
         NodeTemplate nodeTemplate = resourceConfig.nodes().get(vs.nodeRef());
@@ -150,7 +148,9 @@ public class ResourceMapper {
 
         // Gather base values from iriJson (handles multi)
         List<String> bases;
-        if ("iri".equals(nodeTemplate.kind()) && nodeTemplate.iriJson() != null && !nodeTemplate.iriJson().isBlank()) {
+        if ("iri".equals(nodeTemplate.kind())
+                && nodeTemplate.iriJson() != null
+                && !nodeTemplate.iriJson().isBlank()) {
             bases = listScopedOrRoot(finder, nodeTemplate.iriJson());
             if (!nodeTemplate.multi() && !bases.isEmpty()) {
                 bases = Collections.singletonList(bases.get(0));
@@ -177,19 +177,24 @@ public class ResourceMapper {
 
                     String base = baseRaw == null ? null : baseRaw.trim();
 
-                    // 2) node-level map (normalize lookup key; also strip parameters like "; charset=...")
-                    if (base != null && nodeTemplate.iriMap() != null && !nodeTemplate.iriMap().isEmpty()) {
+                    // 2) node-level map (normalize lookup key; also strip parameters like ";
+                    // charset=...")
+                    if (base != null
+                            && nodeTemplate.iriMap() != null
+                            && !nodeTemplate.iriMap().isEmpty()) {
                         String key = stripParameters(base).toLowerCase();
-                        iri = nodeTemplate.iriMap().getOrDefault(key, nodeTemplate.iriMap().get(base));
+                        iri = nodeTemplate
+                                .iriMap()
+                                .getOrDefault(key, nodeTemplate.iriMap().get(base));
                     }
 
-                    // 3) format: use TemplateFormatter (supports ${value} + inline JSON placeholders)
+                    // 3) format: use TemplateFormatter (supports ${value} + inline JSON
+                    // placeholders)
                     if ((iri == null || iri.isBlank())
-                        && nodeTemplate.iriFormat() != null
-                        && !nodeTemplate.iriFormat().isBlank()) {
+                            && nodeTemplate.iriFormat() != null
+                            && !nodeTemplate.iriFormat().isBlank()) {
 
-                        iri =
-                            TemplateFormatter.format(
+                        iri = TemplateFormatter.format(
                                 nodeTemplate.iriFormat(),
                                 base,
                                 Collections.emptyList(),
@@ -204,7 +209,9 @@ public class ResourceMapper {
                 }
 
                 // guard: invalid or blank -> fall back to bnode (prevents "<false>" crash)
-                resource = (iri == null || iri.isBlank() || !looksLikeIri(iri)) ? model.createResource() : model.createResource(iri);
+                resource = (iri == null || iri.isBlank() || !looksLikeIri(iri))
+                        ? model.createResource()
+                        : model.createResource(iri);
 
             } else {
                 resource = model.createResource(); // bnode
@@ -216,15 +223,12 @@ public class ResourceMapper {
             }
 
             // attach any nested properties
-            nodeTemplate
-                .props()
-                .forEach(
-                    (pid, pvs) -> {
-                        Property property = model.createProperty(prefixes.expand(pvs.predicate()));
-                        for (RDFNode obj : resolveObjects(model, finder, pvs)) {
-                            resource.addProperty(property, obj);
-                        }
-                    });
+            nodeTemplate.props().forEach((pid, pvs) -> {
+                Property property = model.createProperty(prefixes.expand(pvs.predicate()));
+                for (RDFNode obj : resolveObjects(model, finder, pvs)) {
+                    resource.addProperty(property, obj);
+                }
+            });
 
             out.add(resource);
         }
@@ -232,7 +236,10 @@ public class ResourceMapper {
         return out;
     }
 
-    /** Strip parameters from a content-type-like value (e.g., "text/plain; charset=US-ASCII" -> "text/plain"). */
+    /**
+     * Strip parameters from a content-type-like value (e.g., "text/plain; charset=US-ASCII" ->
+     * "text/plain").
+     */
     private static String stripParameters(String s) {
         if (s == null) {
             return null;
@@ -243,8 +250,8 @@ public class ResourceMapper {
     }
 
     /**
-     * Normalize a media-type-like base to a safe "type/subtype" token (lowercase, no params/whitespace).
-     * Used only when interpolating ${value} into IRIs (e.g., IANA media types).
+     * Normalize a media-type-like base to a safe "type/subtype" token (lowercase, no
+     * params/whitespace). Used only when interpolating ${value} into IRIs (e.g., IANA media types).
      */
     private static String normalizeMediaTypeBase(String base) {
         if (base == null) {
@@ -270,7 +277,8 @@ public class ResourceMapper {
             }
             return values.isEmpty() ? Collections.emptyList() : Collections.singletonList(values.get(0));
         }
-        // If format contains inline JSONPaths or indexed placeholders, ensure we have a single base value
+        // If format contains inline JSONPaths or indexed placeholders, ensure we have a single base
+        // value
         if (valueSource.format() != null && !valueSource.format().isBlank()) {
             return Collections.singletonList("");
         }
@@ -300,8 +308,8 @@ public class ResourceMapper {
     /**
      * Unified formatting for literal/iri values. Delegates to TemplateFormatter.
      *
-     * - Supports ${value}, ${1..n}, inline ${$.path}/${$$.path}
-     * - Keeps existing "media type normalization" behavior for ${value}
+     * <p>- Supports ${value}, ${1..n}, inline ${$.path}/${$$.path} - Keeps existing "media type
+     * normalization" behavior for ${value}
      */
     private Function<String, String> applyFormatIfAny(ValueSource valueSource, JaywayJsonFinder finder) {
         return s -> {
@@ -317,11 +325,11 @@ public class ResourceMapper {
             }
 
             return TemplateFormatter.format(
-                valueSource.format(),
-                base,
-                valueSource.jsonPaths(),
-                finder,
-                ResourceMapper::normalizeMediaTypeBase);
+                    valueSource.format(),
+                    base,
+                    valueSource.jsonPaths(),
+                    finder,
+                    ResourceMapper::normalizeMediaTypeBase);
         };
     }
 

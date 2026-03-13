@@ -18,12 +18,8 @@ class TemplateFormatterTest {
     void format_replaces_value_with_normalizer() throws Exception {
         JaywayJsonFinder finder = finderFor("{\"x\":\"ignored\"}");
         String out =
-            TemplateFormatter.format(
-                "https://example.org/${value}/end",
-                "  AbC  ",
-                List.of(),
-                finder,
-                s -> s.trim().toLowerCase());
+                TemplateFormatter.format("https://example.org/${value}/end", "  AbC  ", List.of(), finder, s -> s.trim()
+                        .toLowerCase());
 
         assertThat(out).isEqualTo("https://example.org/abc/end");
     }
@@ -32,13 +28,7 @@ class TemplateFormatterTest {
     @DisplayName("format() replaces indexed ${1}/${2} from jsonPaths")
     void format_replaces_indexed_placeholders() throws Exception {
         JaywayJsonFinder finder = finderFor("{\"a\":\"ONE\",\"b\":\"TWO\"}");
-        String out =
-            TemplateFormatter.format(
-                "X-${1}-${2}-Y",
-                null,
-                List.of("$.a", "$.b"),
-                finder,
-                s -> s);
+        String out = TemplateFormatter.format("X-${1}-${2}-Y", null, List.of("$.a", "$.b"), finder, s -> s);
 
         assertThat(out).isEqualTo("X-ONE-TWO-Y");
     }
@@ -46,16 +36,10 @@ class TemplateFormatterTest {
     @Test
     @DisplayName("format() resolves inline JSONPath placeholders (scoped and root)")
     void format_resolves_inline_json_placeholders() throws Exception {
-        JaywayJsonFinder finder =
-            finderFor("{\"env\":{\"apiBaseUrl\":\"https://acc.example/api/\"},\"id\":\"5\"}");
+        JaywayJsonFinder finder = finderFor("{\"env\":{\"apiBaseUrl\":\"https://acc.example/api/\"},\"id\":\"5\"}");
 
-        String out =
-            TemplateFormatter.format(
-                "${$$.env.apiBaseUrl}access/datafile/${$.id}",
-                null,
-                List.of(),
-                finder,
-                s -> s);
+        String out = TemplateFormatter.format(
+                "${$$.env.apiBaseUrl}access/datafile/${$.id}", null, List.of(), finder, s -> s);
 
         assertThat(out).isEqualTo("https://acc.example/api/access/datafile/5");
     }
