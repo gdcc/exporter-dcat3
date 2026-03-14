@@ -411,4 +411,105 @@ class ResourceMapperTest {
         Resource subject = model.listSubjects().next();
         assertThat(subject.getURI()).isEqualTo("https://acc.example/api/access/datafile/6");
     }
+
+    @Test
+    @DisplayName("Issue #34: node-ref kind=iri with blank IRI value is omitted (no empty typed nodes)")
+    void node_ref_iri_blank_is_omitted() throws Exception {
+        Map<String, String> ns = new LinkedHashMap<>();
+        ns.put("dcat", "http://www.w3.org/ns/dcat#");
+        ns.put("dcatap", "http://data.europa.eu/r5r/");
+        ns.put("eli", "http://data.europa.eu/eli/ontology#");
+        Prefixes prefixes = new Prefixes(ns);
+
+        ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
+        when(rc.subject().iriConst()).thenReturn("http://example.org/ds/1");
+        when(rc.scopeJson()).thenReturn(null);
+
+        // NodeTemplate 'legi' is kind=iri and type=eli:LegalResource, but input is blank.
+        NodeTemplate legiT = new NodeTemplate(
+                "legi",
+                "iri",
+                null,
+                "$.legi[*]",
+                null,
+                "eli:LegalResource",
+                true,
+                java.util.Collections.emptyMap(),
+                java.util.Collections.emptyMap());
+
+        Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
+        nodes.put("legi", legiT);
+        when(rc.nodes()).thenReturn(nodes);
+
+        ValueSource vs = mock(ValueSource.class);
+        when(vs.predicate()).thenReturn("dcatap:applicableLegislation");
+        when(vs.as()).thenReturn("node-ref");
+        when(vs.nodeRef()).thenReturn("legi");
+
+        Map<String, ValueSource> props = new LinkedHashMap<>();
+        props.put("appLeg", vs);
+        when(rc.props()).thenReturn(props);
+
+        JaywayJsonFinder finder = finderFor("{\"legi\":[\"\"]}");
+        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Dataset");
+        Model model = mapper.build(finder);
+
+        // No triple must be present for applicableLegislation.
+        assertThat(model.contains(
+                        null, model.getProperty("http://data.europa.eu/r5r/applicableLegislation"), (RDFNode) null))
+                .isFalse();
+    }
+
+    @Test
+    @DisplayName("Issue #34: node-ref kind=bnode with no emitted nested props is omitted (no typed-only bnodes)")
+    void node_ref_bnode_without_props_is_omitted() throws Exception {
+        Map<String, String> ns = new LinkedHashMap<>();
+        ns.put("dcat", "http://www.w3.org/ns/dcat#");
+        ns.put("skos", "http://www.w3.org/2004/02/skos/core#");
+        Prefixes prefixes = new Prefixes(ns);
+
+        ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
+        when(rc.subject().iriConst()).thenReturn("http://example.org/ds/1");
+        when(rc.scopeJson()).thenReturn(null);
+
+        // NodeTemplate 'dtype' is a bnode skos:Concept with prefLabel from JSON, but JSON value is blank.
+        ValueSource prefLabel = mock(ValueSource.class);
+        when(prefLabel.predicate()).thenReturn("skos:prefLabel");
+        when(prefLabel.as()).thenReturn("literal");
+        when(prefLabel.json()).thenReturn("$.label");
+        when(prefLabel.multi()).thenReturn(false);
+        when(prefLabel.lang()).thenReturn("en");
+        when(prefLabel.datatype()).thenReturn(null);
+        when(prefLabel.map()).thenReturn(java.util.Collections.emptyMap());
+        when(prefLabel.jsonPaths()).thenReturn(java.util.Collections.emptyList());
+        when(prefLabel.format()).thenReturn(null);
+        when(prefLabel.constValue()).thenReturn(null);
+
+        Map<String, ValueSource> nodeProps = new LinkedHashMap<>();
+        nodeProps.put("prefLabel", prefLabel);
+
+        NodeTemplate dtypeT = new NodeTemplate(
+                "dtype", "bnode", null, null, null, "skos:Concept", false, java.util.Collections.emptyMap(), nodeProps);
+
+        Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
+        nodes.put("dtype", dtypeT);
+        when(rc.nodes()).thenReturn(nodes);
+
+        ValueSource vs = mock(ValueSource.class);
+        when(vs.predicate()).thenReturn("dcat:theme");
+        when(vs.as()).thenReturn("node-ref");
+        when(vs.nodeRef()).thenReturn("dtype");
+
+        Map<String, ValueSource> props = new LinkedHashMap<>();
+        props.put("theme", vs);
+        when(rc.props()).thenReturn(props);
+
+        JaywayJsonFinder finder = finderFor("{\"label\":\"   \"}");
+        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Dataset");
+        Model model = mapper.build(finder);
+
+        // No theme triple should exist (dtype node omitted).
+        assertThat(model.contains(null, model.getProperty("http://www.w3.org/ns/dcat#theme"), (RDFNode) null))
+                .isFalse();
+    }
 }

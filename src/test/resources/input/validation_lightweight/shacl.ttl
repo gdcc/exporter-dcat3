@@ -43,7 +43,8 @@ exs:dcatDatasetShape a sh:NodeShape ;
 exs:dcatDistributionShape a sh:NodeShape ;
   sh:targetClass dcat:Distribution ;
   sh:property [ sh:path dct:title ;       sh:minCount 1 ; sh:datatype xsd:string ] ;
-  sh:property [ sh:path dct:description ; sh:minCount 1 ; sh:datatype rdf:langString ] ;
+  # File description is optional in Dataverse; exporter emits it only when present
+  sh:property [ sh:path dct:description ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
   sh:property [ sh:path dcat:byteSize ;   sh:minCount 1 ; sh:datatype xsd:integer ] ;
   sh:property [ sh:path dcat:mediaType ;  sh:minCount 1 ; sh:nodeKind sh:IRI ] ;
   sh:property [ sh:path dcat:accessURL ;  sh:minCount 1 ; sh:nodeKind sh:IRI ] ;

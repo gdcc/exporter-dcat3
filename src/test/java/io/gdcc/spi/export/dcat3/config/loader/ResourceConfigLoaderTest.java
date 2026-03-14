@@ -172,13 +172,12 @@ public class ResourceConfigLoaderTest {
     @Test
     void fails_cleanly_on_missing_resource() {
         assertThatThrownBy(() -> {
-            try (InputStream in =
-                getClass().getClassLoader().getResourceAsStream("mappings/nope.properties")) {
-                new ResourceConfigLoader().load(in); // now throws IllegalArgumentException if in == null
-            }
-        })
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("InputStream is null");
+                    try (InputStream in = getClass().getClassLoader().getResourceAsStream("mappings/nope.properties")) {
+                        new ResourceConfigLoader().load(in); // now throws IllegalArgumentException if in == null
+                    }
+                })
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("InputStream is null");
     }
 
     @Test
