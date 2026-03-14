@@ -278,6 +278,57 @@ public class RootConfigLoaderTest {
         assertThat(csv.harvestable()).isTrue(); // missing -> TRUE default
     }
 
+    @Test
+    void elements_and_relations_are_sorted_deterministically() throws Exception {
+        // Arrange: root file with elements and relations in "unsorted" key order.
+        Path rootFile = temp.resolve("dcat-root-sort.properties");
+        Files.writeString(
+                rootFile,
+                """
+            dcat.trace.enabled = false
+            prefix.dcat = http://www.w3.org/ns/dcat#
+            prefix.dct  = http://purl.org/dc/terms/
+
+            element.zeta.id = zeta
+            element.zeta.type = dcat:Dataset
+            element.zeta.file = zeta.properties
+
+            element.alpha.id = alpha
+            element.alpha.type = dcat:Catalog
+            element.alpha.file = alpha.properties
+
+            element.beta.id = beta
+            element.beta.type = dcat:Distribution
+            element.beta.file = beta.properties
+
+            relation.r2.subject = zeta
+            relation.r2.predicate = dcat:distribution
+            relation.r2.object = beta
+
+            relation.r1.subject = alpha
+            relation.r1.predicate = dcat:dataset
+            relation.r1.object = zeta
+            """);
+
+        // dummy element files (needed only if some code path tries to resolve them later; harmless anyway)
+        Files.writeString(temp.resolve("alpha.properties"), "subject.iri.const = https://example.org/a");
+        Files.writeString(temp.resolve("beta.properties"), "subject.iri.const = https://example.org/b");
+        Files.writeString(temp.resolve("zeta.properties"), "subject.iri.const = https://example.org/z");
+
+        System.setProperty(RootConfigLoader.SYS_PROP, rootFile.toString());
+
+        // Act
+        RootConfig rootConfig = RootConfigLoader.load();
+
+        // Assert: element ids sorted deterministically
+        assertThat(rootConfig.elements()).extracting(e -> e.id()).containsExactly("alpha", "beta", "zeta");
+
+        // Assert: relations sorted deterministically (subject, predicate, object)
+        assertThat(rootConfig.relations())
+                .extracting(r -> r.subjectElementId() + "|" + r.predicateCurieOrIri() + "|" + r.objectElementId())
+                .containsExactly("alpha|dcat:dataset|zeta", "zeta|dcat:distribution|beta");
+    }
+
     // --- helpers ---
 
     private static void assumeHomeAvailable(String home) {

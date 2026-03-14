@@ -1,0 +1,22 @@
+[
+  {
+    "id": 3,
+    "filename": "a.pdf",
+    "description": "File A",
+    "filesize": 10,
+    "contentType": "application/pdf",
+    "restricted": false,
+    "publicationDate": "2026-03-13",
+    "checksum": { "type": "MD5", "value": "00" }
+  },
+  {
+    "id": 4,
+    "filename": "b.pdf",
+    "description": "File B",
+    "filesize": 20,
+    "contentType": "application/pdf",
+    "restricted": false,
+    "publicationDate": "2026-03-13",
+    "checksum": { "type": "MD5", "value": "11" }
+  }
+]

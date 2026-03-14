@@ -186,6 +186,16 @@ Place SHACL shapes under `src/test/resources/shacl/` and wire them in the tests.
 
 ---
 
+## Determinism note (RDF/XML & Turtle)
+
+This exporter produces an RDF **graph** (a set of triples). RDF serializations such as **RDF/XML** and **Turtle** are **not canonical**: the same RDF graph may be written in different, but equivalent textual forms (e.g., different statement ordering, grouping, or blank node identifiers). [3](http://infolab.stanford.edu/~stefan/daml/order.html)[4](https://github.com/gdcc/dataverse-exporters)
+
+In practice, this means repeated exports can be **byte-different** while still representing the **same RDF graph** (graph-isomorphic), especially when the output contains **blank nodes** (used for nested structures like contact points, standards, locations, checksums, etc.). [4](https://github.com/gdcc/dataverse-exporters)[3](http://infolab.stanford.edu/~stefan/daml/order.html)
+
+**Recommendation for regression tests:** do not compare RDF/XML or Turtle output as raw bytes. Instead, parse output into a model and compare graphs using **isomorphism** (e.g., Jena `Model.isIsomorphicWith`).
+
+---
+
 ## Roadmap / Extensibility
 
 - Additional DCAT elements and relations can be added by extending the root config and adding new per‑element files.
