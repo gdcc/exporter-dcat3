@@ -225,5 +225,35 @@ The following validations are carried out:
 - type must be CURIE/IRI; check prefixes → ERROR
 
 ---
-
 *This mechanism is designed to be declarative, composable, and profile-friendly for DCAT/DCAT‑AP exports.*
+
+## Contributing new application profiles (national / sectoral)
+
+When adding a new Application Profile (AP), such as DCAT‑AP‑DE, DCAT‑AP‑NO or an organisation‑specific profile, place your mapping files and test fixtures in:
+```
+application_profiles/
+    <profile_name>/
+        mapping/
+            dcat-root.properties
+            dcat-dataset.properties
+            dcat-distribution.properties
+            ...
+            README.md          # purpose, scope, external spec links
+
+src/test/resources/application_profiles/
+    <profile_name>/input/      # export_data_source_*.json fixtures
+    <profile_name>/expected/   # optional expected RDF outputs (not required) and order in RDF is non deterministic
+```
+You can add a testcase just like is done for the NL profile.
+
+### Testing strategy
+- Unit tests use local JSON fixtures combined with the mapping files in the profile.
+- Integration tests load the Application Profile via the JVM system property:
+
+`-Ddataverse.dcat3.config=/path/to/profile/mapping/dcat-root.properties`
+
+### Why this layout
+- Keeps all Application Profiles self‑contained.
+- Allows multiple national/organisational profiles to coexist without clashes.
+- Ensures test‑only data does not pollute production mappings.
+

@@ -12,7 +12,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import org.junit.jupiter.api.Test;
 
-public class PropertiesMappingLoaderTest {
+public class ResourceConfigLoaderTest {
 
     private ResourceConfig load(String resource) throws Exception {
         try (InputStream in = getClass().getClassLoader().getResourceAsStream(resource)) {
@@ -172,14 +172,13 @@ public class PropertiesMappingLoaderTest {
     @Test
     void fails_cleanly_on_missing_resource() {
         assertThatThrownBy(() -> {
-                    try (InputStream in = getClass().getClassLoader().getResourceAsStream("mappings/nope.properties")) {
-                        new ResourceConfigLoader().load(in); // in == null → NPE if you don’t guard
-                    }
-                })
-                .isInstanceOf(NullPointerException.class)
-                .as("Guard against null InputStream in your loader (or throw FileNotFound)")
-                .withFailMessage("Consider making PropertiesMappingLoader.load throw FileNotFoundException"
-                        + " when InputStream is null");
+            try (InputStream in =
+                getClass().getClassLoader().getResourceAsStream("mappings/nope.properties")) {
+                new ResourceConfigLoader().load(in); // now throws IllegalArgumentException if in == null
+            }
+        })
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("InputStream is null");
     }
 
     @Test
@@ -240,5 +239,25 @@ public class PropertiesMappingLoaderTest {
         assertThat(acc.type()).isEqualTo("rdfs:Resource");
         assertThat(acc.iriJson()).isEqualTo("$.id");
         assertThat(acc.iriFormat()).isEqualTo("http://localhost:8080/api/access/datafile/${value}");
+    }
+
+    @Test
+    void orders_indexed_json_paths_numerically_for_value_sources() throws Exception {
+        // Deliberately put json.2 before json.1 to prove numeric ordering.
+        String props =
+                """
+            subject.iri.const = https://example.org/s
+            props.accessURL.predicate = dcat:accessURL
+            props.accessURL.as = iri
+            props.accessURL.json.2 = $$.env.apiBaseUrl
+            props.accessURL.json.1 = $.id
+            props.accessURL.format = ${1}access/datafile/${2}
+            """;
+
+        ResourceConfig cfg = new ResourceConfigLoader().load(new ByteArrayInputStream(props.getBytes()));
+
+        ValueSource vs = cfg.props().get("accessURL");
+        assertThat(vs).isNotNull();
+        assertThat(vs.jsonPaths()).containsExactly("$.id", "$$.env.apiBaseUrl");
     }
 }

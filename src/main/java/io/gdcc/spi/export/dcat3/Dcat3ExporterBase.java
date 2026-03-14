@@ -45,10 +45,10 @@ import org.apache.jena.vocabulary.RDF;
 /**
  * Abstract base class for DCAT3 exporters.
  *
- * <p>NOTE: This refactor removes any dependency on dcat.output.format from the root configuration.
  * Each concrete subclass decides its own media type and serialization format.
  */
 public abstract class Dcat3ExporterBase implements Exporter {
+
     private static final Logger logger = Logger.getLogger(Dcat3ExporterBase.class.getCanonicalName());
 
     protected RootConfig root;
@@ -79,7 +79,7 @@ public abstract class Dcat3ExporterBase implements Exporter {
     /** The Jena writer name (e.g. "TURTLE", "JSON-LD", "RDF/XML"). */
     protected abstract String getJenaWriterName();
 
-    /** The key in the configuration * */
+    /** The key in the configuration */
     protected abstract String getConfigurationKey();
 
     @Override
@@ -90,99 +90,167 @@ public abstract class Dcat3ExporterBase implements Exporter {
     @Override
     public void exportDataset(ExportDataProvider dataProvider, OutputStream outputStream) throws ExportException {
         try {
-            // --- Root-level validation before any export work ---
-            ValidationReport rootReport = Validators.validateRoot(root);
-            for (ValidationMessage message : rootReport.messages()) {
-                logger.log(message.severity() == Severity.ERROR ? Level.SEVERE : Level.WARNING, message.toString());
-            }
-            if (rootReport.hasErrors()) {
-                throw new ExportException("DCAT export aborted: invalid root configuration");
-            }
+            validateRootOrThrow(root);
 
-            ExportData exportData = ExportData.builder().provider(dataProvider).build();
+            ExportData exportData = buildExportData(dataProvider);
             ObjectMapper mapper = new ObjectMapper();
-            if (root.trace()) {
-                try {
-                    String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportData);
-                    logger.info(json);
-                } catch (JsonProcessingException e) {
-                    logger.warning(e.getMessage());
-                    return; // don't continue if trace can't be produced
-                }
-            }
+
+            traceInputIfEnabled(mapper, exportData, root);
 
             JsonNode rootJson = mapper.valueToTree(exportData);
-            JaywayJsonFinder jaywayJsonFinder = new JaywayJsonFinder(rootJson);
-
-            // Build each element
-            Map<String, Model> models = new LinkedHashMap<>();
-            Map<String, List<Resource>> subjects = new LinkedHashMap<>();
+            JaywayJsonFinder finder = new JaywayJsonFinder(rootJson);
             Prefixes prefixes = new Prefixes(root.prefixes());
 
-            // Collect ResourceConfig per element for validation
-            Map<String, ResourceConfig> elementConfigs = new LinkedHashMap<>();
+            MapBuildResult build = buildElementModels(root, finder, prefixes);
 
-            for (Element element : root.elements()) {
-                try (InputStream in = resolveElementFile(root.baseDir(), element.file())) {
-                    ResourceConfig resourceConfig = new ResourceConfigLoader().load(in);
-                    elementConfigs.put(element.id(), resourceConfig);
+            validateAllOrThrow(root, build.elementConfigs());
 
-                    ResourceMapper resourceMapper =
-                            new ResourceMapper(resourceConfig, prefixes, element.typeCurieOrIri());
-                    Model elementModel = resourceMapper.build(jaywayJsonFinder);
+            Model merged = mergeModels(prefixes, build.models());
+            applyRelations(merged, prefixes, root.relations(), build.subjects());
 
-                    // Collect all subjects by rdf:type
-                    String typeIri = prefixes.expand(element.typeCurieOrIri());
-                    ResIterator it =
-                            elementModel.listResourcesWithProperty(RDF.type, elementModel.createResource(typeIri));
-                    List<Resource> subjectList = new ArrayList<>();
-                    while (it.hasNext()) {
-                        subjectList.add(it.next());
-                    }
+            writeAtomic(merged, getJenaWriterName(), outputStream);
 
-                    models.put(element.id(), elementModel);
-                    if (!subjectList.isEmpty()) {
-                        subjects.put(element.id(), subjectList);
-                    }
-                }
-            }
-
-            // --- Cross-validation of root + all element ResourceConfigs ---
-            ValidationReport report = Validators.validateAll(root, elementConfigs);
-            for (ValidationMessage message : report.messages()) {
-                logger.log(message.severity() == Severity.ERROR ? Level.SEVERE : Level.WARNING, message.toString());
-            }
-            if (report.hasErrors()) {
-                throw new ExportException("DCAT export aborted: validation errors in element configs");
-            }
-
-            // Merge all element models
-            Model model = ModelFactory.createDefaultModel();
-            model.setNsPrefixes(prefixes.jena());
-            models.values().forEach(model::add);
-
-            // Apply relations from root (n:m)
-            for (Relation relation : root.relations()) {
-                List<Resource> subjList = subjects.get(relation.subjectElementId());
-                List<Resource> objList = subjects.get(relation.objectElementId());
-                if (subjList == null || subjList.isEmpty() || objList == null || objList.isEmpty()) {
-                    continue;
-                }
-                Property property = model.createProperty(prefixes.expand(relation.predicateCurieOrIri()));
-                for (Resource s : subjList) {
-                    for (Resource o : objList) {
-                        model.add(s, property, o);
-                    }
-                }
-            }
-
-            // make writing atomic, make sure no half written output stream leaves this code.
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream(64 * 1024);
-            model.write(buffer, getJenaWriterName());
-            buffer.writeTo(outputStream);
         } catch (JenaException | IOException e) {
             logger.warning(e.getMessage());
             throw new ExportException("DCAT export failed", e);
         }
     }
+
+    // ---------------------------------------------------------------------------
+    // Orchestration helpers (3.1 refactor)
+    // ---------------------------------------------------------------------------
+
+    private static void validateRootOrThrow(RootConfig root) throws ExportException {
+        ValidationReport rootReport = Validators.validateRoot(root);
+        for (ValidationMessage message : rootReport.messages()) {
+            logger.log(message.severity() == Severity.ERROR ? Level.SEVERE : Level.WARNING, message.toString());
+        }
+        if (rootReport.hasErrors()) {
+            throw new ExportException("DCAT export aborted: invalid root configuration");
+        }
+    }
+
+    private static ExportData buildExportData(ExportDataProvider provider) {
+        return ExportData.builder().provider(provider).build();
+    }
+
+    private static void traceInputIfEnabled(ObjectMapper mapper, ExportData exportData, RootConfig root)
+            throws ExportException {
+        if (!root.trace()) {
+            return;
+        }
+        try {
+            String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportData);
+            logger.info(json);
+        } catch (JsonProcessingException e) {
+            logger.warning(e.getMessage());
+            // do not continue if trace can't be produced
+            throw new ExportException("DCAT export aborted: trace output failed", e);
+        }
+    }
+
+    private static MapBuildResult buildElementModels(RootConfig root, JaywayJsonFinder finder, Prefixes prefixes)
+            throws IOException {
+
+        Map<String, Model> models = new LinkedHashMap<>();
+        Map<String, List<Resource>> subjects = new LinkedHashMap<>();
+        Map<String, ResourceConfig> elementConfigs = new LinkedHashMap<>();
+
+        for (Element element : root.elements()) {
+            try (InputStream in = resolveElementFile(root.baseDir(), element.file())) {
+                ResourceConfig resourceConfig = new ResourceConfigLoader().load(in);
+                elementConfigs.put(element.id(), resourceConfig);
+
+                ResourceMapper resourceMapper = new ResourceMapper(resourceConfig, prefixes, element.typeCurieOrIri());
+
+                Model elementModel = resourceMapper.build(finder);
+
+                // Collect all subjects by rdf:type (for later relation wiring)
+                String typeIri = prefixes.expand(element.typeCurieOrIri());
+                ResIterator it = elementModel.listResourcesWithProperty(RDF.type, elementModel.createResource(typeIri));
+
+                List<Resource> subjectList = new ArrayList<>();
+                while (it.hasNext()) {
+                    subjectList.add(it.next());
+                }
+
+                models.put(element.id(), elementModel);
+                if (!subjectList.isEmpty()) {
+                    subjects.put(element.id(), subjectList);
+                }
+            }
+        }
+
+        return new MapBuildResult(models, subjects, elementConfigs);
+    }
+
+    private static void validateAllOrThrow(RootConfig root, Map<String, ResourceConfig> elementConfigs)
+            throws ExportException {
+
+        ValidationReport report = Validators.validateAll(root, elementConfigs);
+        for (ValidationMessage message : report.messages()) {
+            logger.log(message.severity() == Severity.ERROR ? Level.SEVERE : Level.WARNING, message.toString());
+        }
+        if (report.hasErrors()) {
+            throw new ExportException("DCAT export aborted: validation errors in element configs");
+        }
+    }
+
+    private static Model mergeModels(Prefixes prefixes, Map<String, Model> models) {
+        Model model = ModelFactory.createDefaultModel();
+        model.setNsPrefixes(prefixes.jena());
+        models.values().forEach(model::add);
+        return model;
+    }
+
+    private static void applyRelations(
+            Model model, Prefixes prefixes, List<Relation> relations, Map<String, List<Resource>> subjects) {
+
+        for (Relation relation : relations) {
+            List<Resource> subjList = subjects.get(relation.subjectElementId());
+            List<Resource> objList = subjects.get(relation.objectElementId());
+
+            if (subjList == null || subjList.isEmpty() || objList == null || objList.isEmpty()) {
+                continue;
+            }
+
+            Property property = model.createProperty(prefixes.expand(relation.predicateCurieOrIri()));
+
+            // Deterministic iteration order for relation materialization
+            subjList.sort(Dcat3ExporterBase::compareResources);
+            objList.sort(Dcat3ExporterBase::compareResources);
+
+            for (Resource s : subjList) {
+                for (Resource o : objList) {
+                    model.add(s, property, o);
+                }
+            }
+        }
+    }
+
+    private static void writeAtomic(Model model, String writerName, OutputStream outputStream) throws IOException {
+        // make writing atomic, make sure no half written output stream leaves this code.
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream(64 * 1024);
+        model.write(buffer, writerName);
+        buffer.writeTo(outputStream);
+    }
+
+    // ---------------------------------------------------------------------------
+    // Small utilities
+    // ---------------------------------------------------------------------------
+
+    private static int compareResources(Resource a, Resource b) {
+        String ka = a.isURIResource() ? a.getURI() : a.getId().getLabelString();
+        String kb = b.isURIResource() ? b.getURI() : b.getId().getLabelString();
+        return ka.compareTo(kb);
+    }
+
+    /**
+     * Internal carrier for build results: element models, discovered subjects, and configs for
+     * validation.
+     */
+    private record MapBuildResult(
+            Map<String, Model> models,
+            Map<String, List<Resource>> subjects,
+            Map<String, ResourceConfig> elementConfigs) {}
 }

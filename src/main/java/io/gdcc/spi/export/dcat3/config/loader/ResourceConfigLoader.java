@@ -6,27 +6,49 @@ import io.gdcc.spi.export.dcat3.config.model.Subject;
 import io.gdcc.spi.export.dcat3.config.model.ValueSource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * ResourceConfigLoader: parses .properties-based resource mapping configuration.
  *
- * <p>Refactor (Step 6): final-field model classes (Subject, ResourceConfig, NodeTemplate) require
- * constructor-based creation. We accumulate values first, then build immutable instances once per
- * id.
+ * <p>Design: model classes are immutable (Subject, ResourceConfig, NodeTemplate, ValueSource).
+ * We therefore accumulate values first, then build final instances once per id.
+ *
+ * <p>Determinism: .properties enumeration order is not defined. This loader therefore normalises
+ * ordering deterministically at finalisation time (alphabetical by key) for:
+ * <ul>
+ *   <li>ResourceConfig.props (prop id)</li>
+ *   <li>ResourceConfig.nodes (node id)</li>
+ *   <li>NodeTemplate.props (prop id)</li>
+ *   <li>NodeTemplate.iriMap (map key)</li>
+ *   <li>ValueSource.map (map key)</li>
+ * </ul>
+ *
+ * <p>Indexed JSON paths: json.N ordering is preserved numerically (1..N) using a TreeMap.
  */
 public class ResourceConfigLoader {
 
     private static final Pattern PROPERTY_PATTERN = Pattern.compile("^props\\.([^.]+)\\.(.+)$");
     private static final Pattern NODE_PATTERN = Pattern.compile("^nodes\\.([^.]+)\\.(.+)$");
     private static final Pattern NODE_PROPERTY_PATTERN = Pattern.compile("^props\\.([^.]+)\\.(.+)$");
-
-    // NEW: subject indexed JSON: subject.iri.json.1, subject.iri.json.2, ...
     private static final Pattern SUBJECT_JSON_INDEXED = Pattern.compile("^subject\\.iri\\.json\\.(\\d+)$");
 
     public ResourceConfig load(InputStream in) throws IOException {
+        // 3.5: fail cleanly on missing mapping resource
+        if (in == null) {
+            throw new IllegalArgumentException(
+                    "ResourceConfigLoader.load: InputStream is null (mapping resource not found)");
+        }
+
         Properties property = new Properties();
         property.load(in);
 
@@ -38,10 +60,7 @@ public class ResourceConfigLoader {
         subjectAcc.iriTemplate = property.getProperty("subject.iri.template");
         subjectAcc.iriJson = property.getProperty("subject.iri.json");
         subjectAcc.iriFormat = property.getProperty("subject.iri.format");
-
-        // NEW: subject.iri.json.N -> iriJsonPaths (numeric order)
         subjectAcc.iriJsonPaths = readSubjectIndexedJsonPaths(property);
-
         Subject subject = subjectAcc.toSubject();
 
         // Scope JSON
@@ -63,10 +82,11 @@ public class ResourceConfigLoader {
             apply(acc, tail, v);
         }
 
-        // finalize props
+        // Finalize props (deterministic alphabetical order by prop id)
         Map<String, ValueSource> props = new LinkedHashMap<>();
-        for (Map.Entry<String, ValueSourceAccumulator> e : propAcc.entrySet()) {
-            props.put(e.getKey(), e.getValue().toValueSource());
+        for (String propId : sortedKeys(propAcc)) {
+            ValueSourceAccumulator acc = propAcc.get(propId);
+            props.put(propId, acc.toValueSource());
         }
 
         // -------------------------
@@ -81,7 +101,6 @@ public class ResourceConfigLoader {
             String nodeId = propertyMatcher.group(1);
             String tail = propertyMatcher.group(2);
             String v = property.getProperty(propertyName);
-
             NodeAccumulators nodeAccumulators =
                     nodeAccumulatorMap.computeIfAbsent(nodeId, k -> new NodeAccumulators(nodeId));
 
@@ -93,7 +112,7 @@ public class ResourceConfigLoader {
                 case "type" -> nodeAccumulators.type = v;
                 case "multi" -> nodeAccumulators.multi = Boolean.parseBoolean(v);
                 default -> {
-                    // existing: node.props.*
+                    // node props: nodes.<nodeId>.props.<propId>.<...>
                     Matcher nodePropertyPatternMatcher = NODE_PROPERTY_PATTERN.matcher(tail);
                     if (nodePropertyPatternMatcher.matches()) {
                         String propId = nodePropertyPatternMatcher.group(1);
@@ -102,7 +121,7 @@ public class ResourceConfigLoader {
                                 nodeAccumulators.props.computeIfAbsent(propId, k -> new ValueSourceAccumulator());
                         apply(vAcc, propTail, v);
                     }
-                    // node-level iriMap (nodes.X.map.KEY = IRI)
+                    // node-level iriMap: nodes.<nodeId>.map.<key> = <iri>
                     else if (tail.startsWith("map.")) {
                         String key = tail.substring("map.".length());
                         nodeAccumulators.iriMap.put(key, v);
@@ -111,16 +130,31 @@ public class ResourceConfigLoader {
             }
         }
 
-        // finalize nodes
+        // Finalize nodes (deterministic alphabetical order by node id)
         Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
-        for (Map.Entry<String, NodeAccumulators> e : nodeAccumulatorMap.entrySet()) {
-            NodeAccumulators na = e.getValue();
+        for (String nodeId : sortedKeys(nodeAccumulatorMap)) {
+            NodeAccumulators na = nodeAccumulatorMap.get(nodeId);
+
+            // Finalize node props deterministically (alphabetical by prop id)
             Map<String, ValueSource> nodeProps = new LinkedHashMap<>();
-            for (Map.Entry<String, ValueSourceAccumulator> pe : na.props.entrySet()) {
-                nodeProps.put(pe.getKey(), pe.getValue().toValueSource());
+            for (String propId : sortedKeys(na.props)) {
+                nodeProps.put(propId, na.props.get(propId).toValueSource());
             }
+
+            // Sort node iriMap deterministically (alphabetical by map key)
+            Map<String, String> iriMapSorted = sortedByKey(na.iriMap);
+
             NodeTemplate nodeTemplate = new NodeTemplate(
-                    na.nodeId, na.kind, na.iriConst, na.iriJson, na.iriFormat, na.type, na.multi, na.iriMap, nodeProps);
+                    na.nodeId,
+                    na.kind,
+                    na.iriConst,
+                    na.iriJson,
+                    na.iriFormat,
+                    na.type,
+                    na.multi,
+                    iriMapSorted,
+                    nodeProps);
+
             nodes.put(na.nodeId, nodeTemplate);
         }
 
@@ -129,8 +163,7 @@ public class ResourceConfigLoader {
     }
 
     private static List<String> readSubjectIndexedJsonPaths(Properties property) {
-        // collect into a numeric map to preserve intended order even if Properties enumerates
-        // differently
+        // Collect into a numeric map to preserve intended order even if Properties enumerates differently
         Map<Integer, String> ordered = new TreeMap<>();
         for (String name : property.stringPropertyNames()) {
             Matcher m = SUBJECT_JSON_INDEXED.matcher(name);
@@ -139,6 +172,30 @@ public class ResourceConfigLoader {
             ordered.put(idx, property.getProperty(name));
         }
         return ordered.isEmpty() ? Collections.emptyList() : new ArrayList<>(ordered.values());
+    }
+
+    /**
+     * Deterministic alphabetical key ordering helper.
+     */
+    private static <V> List<String> sortedKeys(Map<String, V> map) {
+        if (map == null || map.isEmpty()) return Collections.emptyList();
+        List<String> keys = new ArrayList<>(map.keySet());
+        keys.sort(Comparator.naturalOrder());
+        return keys;
+    }
+
+    /**
+     * Return a LinkedHashMap with the same entries as {@code in}, but in alphabetical key order.
+     */
+    private static <V> Map<String, V> sortedByKey(Map<String, V> in) {
+        if (in == null || in.isEmpty()) {
+            return in == null ? null : Collections.emptyMap();
+        }
+        Map<String, V> out = new LinkedHashMap<>();
+        for (String k : sortedKeys(in)) {
+            out.put(k, in.get(k));
+        }
+        return out;
     }
 
     /** Accumulator for Subject fields prior to construction. */
@@ -155,12 +212,21 @@ public class ResourceConfigLoader {
     static final class ValueSourceAccumulator {
         String predicate, as, lang, datatype, json, constValue, nodeRef, when, format;
         boolean multi;
+
+        Map<Integer, String> indexedJsonPaths = new TreeMap<>();
         List<String> jsonPaths = new ArrayList<>();
+
         Map<String, String> map = new LinkedHashMap<>();
 
         ValueSource toValueSource() {
+            List<String> ordered = new ArrayList<>();
+            ordered.addAll(indexedJsonPaths.values());
+            ordered.addAll(jsonPaths);
+
+            Map<String, String> sortedMap = sortedByKey(map);
+
             return new ValueSource(
-                    predicate, as, lang, datatype, json, constValue, jsonPaths, nodeRef, multi, when, map, format);
+                    predicate, as, lang, datatype, json, constValue, ordered, nodeRef, multi, when, sortedMap, format);
         }
     }
 
@@ -173,6 +239,8 @@ public class ResourceConfigLoader {
         String iriFormat;
         String type;
         boolean multi;
+
+        // node-level iriMap and props (sorted at finalisation)
         Map<String, String> iriMap = new LinkedHashMap<>();
         Map<String, ValueSourceAccumulator> props = new LinkedHashMap<>();
 
@@ -193,11 +261,17 @@ public class ResourceConfigLoader {
             case "node" -> acc.nodeRef = value;
             case "multi" -> acc.multi = Boolean.parseBoolean(value);
             case "when" -> acc.when = value;
-            case "format" -> acc.format = value; // formatter with placeholders
+            case "format" -> acc.format = value;
             default -> {
                 if (keyTail.startsWith("json.")) {
-                    // Supports json.1, json.2, ...
-                    acc.jsonPaths.add(value);
+                    String suffix = keyTail.substring("json.".length());
+                    try {
+                        int idx = Integer.parseInt(suffix);
+                        acc.indexedJsonPaths.put(idx, value);
+                    } catch (NumberFormatException e) {
+                        // Fallback: support non-numeric variants like json.foo if ever introduced
+                        acc.jsonPaths.add(value);
+                    }
                 } else if (keyTail.startsWith("map.")) {
                     String k = keyTail.substring("map.".length());
                     acc.map.put(k, value);
