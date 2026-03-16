@@ -1,4 +1,3 @@
-// src/test/java/io/gdcc/spi/export/dcat3/DcatApNL30RemoteShapesRdfXmlTest.java
 package io.gdcc.spi.export.dcat3;
 
 import static io.gdcc.spi.export.util.TestUtil.fetchShapesModel;
