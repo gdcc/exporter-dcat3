@@ -9,15 +9,21 @@ import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.util.List;
+import java.util.Properties;
+import java.util.stream.Stream;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.Lang;
@@ -142,5 +148,44 @@ public class TestUtil {
                 .append(entry.severity())
                 .append('\n'));
         return sb.toString();
+    }
+
+    public static void copyDirectory(Path srcDir, Path dstDir) throws IOException {
+        try (Stream<Path> stream = Files.walk(srcDir)) {
+            for (Path src : (Iterable<Path>) stream::iterator) {
+                Path dst = dstDir.resolve(srcDir.relativize(src));
+                if (Files.isDirectory(src)) {
+                    Files.createDirectories(dst);
+                } else {
+                    Files.createDirectories(dst.getParent());
+                    Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
+        }
+    }
+
+    public static Properties loadProps(Path file) throws IOException {
+        Properties p = new Properties();
+        try (InputStream in = Files.newInputStream(file)) {
+            p.load(in);
+        }
+        return p;
+    }
+
+    public static void storeProps(Path file, Properties p, String header) throws IOException {
+        try (OutputStream out = Files.newOutputStream(file)) {
+            p.store(out, header);
+        }
+    }
+
+    public static void removeByPrefix(Properties p, String... prefixes) {
+        for (String key : p.stringPropertyNames().toArray(new String[0])) {
+            for (String prefix : prefixes) {
+                if (key.startsWith(prefix)) {
+                    p.remove(key);
+                    break;
+                }
+            }
+        }
     }
 }
