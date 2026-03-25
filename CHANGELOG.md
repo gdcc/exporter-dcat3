@@ -1,4 +1,1 @@
-0.1.1
-=====
-
-Initial release.
+See **[release](https://github.com/gdcc/exporter-dcat3/releases)** documentation on GitHub. 

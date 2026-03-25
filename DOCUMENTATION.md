@@ -47,6 +47,10 @@ relation.dataset_has_distribution.cardinality = 0..n
 ### trace option
 The trace option can be used to trace the internal data received from Dataverse so that proper JSON queries can be defined.
 
+> **TIP:** When exploring the structure of the traced JSON, you can use helpful external tools:
+> - **https://jsonpathfinder.com/** — discover and navigate the nested path to a specific property.
+> - **https://jsonpath.com/** — test and validate your JSONPath expressions against real trace output.
+
 ### harvestable vs availableToUsers
 
 * This exporter provides DCAT serializations in **RDF/XML**, **Turtle**, and **JSON‑LD**. 
