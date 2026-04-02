@@ -315,7 +315,7 @@ public class ResourceMapper {
             return "";
         }
         String contentType = stripParameters(base);
-        contentType = contentType == null ? "" : contentType.trim().toLowerCase();
+        contentType = contentType == null ? "" : contentType.trim();
         String[] parts = contentType.split("/");
         if (parts.length == 2 && !parts[0].isBlank() && !parts[1].isBlank()) {
             return parts[0] + "/" + parts[1];

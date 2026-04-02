@@ -512,4 +512,74 @@ class ResourceMapperTest {
         assertThat(model.contains(null, model.getProperty("http://www.w3.org/ns/dcat#theme"), (RDFNode) null))
                 .isFalse();
     }
+
+    @Test
+    @DisplayName("Reproducer #47: ValueSource format ${value} lowercases DOI in landingPage")
+    void reproducer_47_landingpage_doi_is_lowercased() throws Exception {
+        // Prefixes
+        Map<String, String> ns = new LinkedHashMap<>();
+        ns.put("dcat", "http://www.w3.org/ns/dcat#");
+        ns.put("dct", "http://purl.org/dc/terms/");
+        Prefixes prefixes = new Prefixes(ns);
+
+        // ResourceConfig + subject
+        ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
+        when(rc.subject().iriConst()).thenReturn("http://example.org/ds/1");
+        when(rc.subject().iriTemplate()).thenReturn(null);
+        when(rc.subject().iriFormat()).thenReturn(null);
+        when(rc.subject().iriJson()).thenReturn(null);
+
+        // ValueSource: landingPage is IRI created via format + ${value}
+        ValueSource vsLanding = mock(ValueSource.class);
+        when(vsLanding.predicate()).thenReturn("dcat:landingPage");
+        when(vsLanding.as()).thenReturn("iri");
+        when(vsLanding.constValue()).thenReturn(null);
+        when(vsLanding.json()).thenReturn("$.datasetJson.datasetVersion.datasetPersistentId");
+        when(vsLanding.multi()).thenReturn(false);
+        when(vsLanding.lang()).thenReturn(null);
+        when(vsLanding.datatype()).thenReturn(null);
+        when(vsLanding.map()).thenReturn(java.util.Collections.emptyMap());
+        when(vsLanding.jsonPaths()).thenReturn(java.util.Collections.emptyList());
+
+        // The format described in the issue
+        when(vsLanding.format()).thenReturn(
+            "https://ssh.datastations.nl/datasets.xhtml&persistentId=${value}"
+        );
+
+        Map<String, ValueSource> props = new LinkedHashMap<>();
+        props.put("landing", vsLanding);
+        when(rc.props()).thenReturn(props);
+        when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
+        when(rc.scopeJson()).thenReturn(null);
+
+        // Minimal input JSON (case-sensitive DOI suffix)
+        String json =
+            "{"
+                + "\"datasetJson\":{"
+                + "  \"datasetVersion\":{"
+                + "    \"datasetPersistentId\":\"doi:10.5072/DSS/SDPOVA\""
+                + "  }"
+                + "}"
+                + "}";
+
+        JaywayJsonFinder finder = finderFor(json);
+        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Dataset");
+        Model model = mapper.build(finder);
+
+        // Extract produced landingPage URI
+        List<Statement> stmts = model.listStatements(
+                                         null,
+                                         model.getProperty("http://www.w3.org/ns/dcat#landingPage"),
+                                         (RDFNode) null)
+                                     .toList();
+
+        assertThat(stmts).hasSize(1);
+        assertThat(stmts.get(0).getObject().isResource()).isTrue();
+
+        String produced = stmts.get(0).getObject().asResource().getURI();
+
+        // What we EXPECT (case preserved)
+        assertThat(produced)
+            .isEqualTo("https://ssh.datastations.nl/datasets.xhtml&persistentId=doi:10.5072/DSS/SDPOVA");
+    }
 }
