@@ -33,7 +33,8 @@ public class JaywayJsonFinder {
                 .mappingProvider(new JacksonMappingProvider())
                 .options(Option.ALWAYS_RETURN_LIST, Option.SUPPRESS_EXCEPTIONS)
                 .build();
-        return JsonPath.using(config).parse(root.toString());
+        JsonNode node = root != null ? root : MAPPER.createObjectNode();
+        return JsonPath.using(config).parse(node.toString());
     }
 
     public JaywayJsonFinder(JsonNode root) {

@@ -63,12 +63,10 @@ public class ResourceMapper {
 
     /**
      * Create subject resource for each scope.
-     *
      * Supported:
      * - iriConst
      * - iriTemplate (treated as fixed string)
      * - iriJson (+ optional iriFormat)
-     *
      * Formatting uses TemplateFormatter for consistency and supports inline JSON placeholders.
      */
     private Resource createSubject(Model model, JaywayJsonFinder finder) {
@@ -141,10 +139,11 @@ public class ResourceMapper {
 
     /**
      * Build node references for a property defined as "node-ref" in the config.
-     *
      * Issue #34 fix: do NOT emit empty typed nodes.
      * - kind=iri: if IRI resolves blank/invalid -> omit node (no bnode fallback)
      * - kind=bnode: emit only if at least one nested property emitted
+     * - If no input value is present, use nodeTemplate.onNoInputValue if configured.
+     * - If input is present but mapping fails, use nodeTemplate.onUnMappedValue if configured.
      */
     private List<RDFNode> buildNodeRefs(Model model, JaywayJsonFinder finder, ValueSource vs) {
         NodeTemplate nodeTemplate = resourceConfig.nodes().get(vs.nodeRef());
@@ -162,9 +161,14 @@ public class ResourceMapper {
             if (!nodeTemplate.multi() && !bases.isEmpty()) {
                 bases = Collections.singletonList(bases.get(0));
             }
-            // If empty, nothing to emit for IRI nodes.
+
+            // if no input, still allow emission if onNoInputValue exists
             if (bases.isEmpty()) {
-                return Collections.emptyList();
+                if (!isBlank(nodeTemplate.onNoInputValue())) {
+                    bases = Collections.singletonList(null); // signals "no input" to buildIriNode
+                } else {
+                    return Collections.emptyList();
+                }
             }
         } else {
             bases = Collections.singletonList(null);
@@ -192,51 +196,75 @@ public class ResourceMapper {
     private Resource buildIriNode(Model model, JaywayJsonFinder finder, NodeTemplate nodeTemplate, String baseRaw) {
         String iri = null;
 
-        // 1) iriConst wins
+        // Normalize base input
+        String base = baseRaw == null ? null : baseRaw.trim();
+        boolean hasInput = !isBlank(base);
+
+        // 1) iriConst wins (always)
         if (nodeTemplate.iriConst() != null && !nodeTemplate.iriConst().isBlank()) {
             iri = nodeTemplate.iriConst();
-        } else {
-            String base = baseRaw == null ? null : baseRaw.trim();
+        }
 
-            // 2) node-level map (normalize lookup key; also strip parameters like "; charset=...")
-            if (!isBlank(base)
+        // 2) If no input and iri is still not set, try onNoInputValue
+        if (iri == null && !hasInput) {
+            iri = trimToNull(nodeTemplate.onNoInputValue());
+        }
+
+        // 3) node-level map (normalize lookup key; also strip parameters like "; charset=...")
+        if (iri == null
+                && hasInput
+                && nodeTemplate.iriMap() != null
+                && !nodeTemplate.iriMap().isEmpty()) {
+
+            String key = stripParameters(base).toLowerCase();
+            iri = nodeTemplate.iriMap().getOrDefault(key, nodeTemplate.iriMap().get(base));
+        }
+
+        // 4) unmapped input -> onUnMappedValue (only when input exists)
+        if (iri == null && hasInput) {
+            String unmapped = trimToNull(nodeTemplate.onUnMappedValue());
+            if (unmapped != null
                     && nodeTemplate.iriMap() != null
-                    && !nodeTemplate.iriMap().isEmpty()) {
-                String key = stripParameters(base).toLowerCase();
-                iri = nodeTemplate
-                        .iriMap()
-                        .getOrDefault(key, nodeTemplate.iriMap().get(base));
+                    && !nodeTemplate.iriMap().isEmpty()
+                    && !nodeTemplate.iriMap().containsKey(stripParameters(base).toLowerCase())
+                    && !nodeTemplate.iriMap().containsKey(base)) {
+                iri = unmapped;
             }
+        }
 
-            // 3) format: TemplateFormatter (supports ${value} + inline JSON placeholders)
-            if (isBlank(iri)
-                    && nodeTemplate.iriFormat() != null
-                    && !nodeTemplate.iriFormat().isBlank()) {
-                iri = TemplateFormatter.format(
-                        nodeTemplate.iriFormat(),
-                        base,
-                        Collections.emptyList(),
-                        finder,
-                        ResourceMapper::normalizeMediaTypeBase);
-            }
+        // 5) format: TemplateFormatter (supports ${value} + inline JSON placeholders)
+        if (iri == null
+                && nodeTemplate.iriFormat() != null
+                && !nodeTemplate.iriFormat().isBlank()) {
+            iri = TemplateFormatter.format(
+                    nodeTemplate.iriFormat(),
+                    base,
+                    Collections.emptyList(),
+                    finder,
+                    ResourceMapper::normalizeMediaTypeBase);
+        }
 
-            // 4) last resort: only use base as IRI if it looks like an absolute IRI
-            if (isBlank(iri) && looksLikeIri(base)) {
-                iri = base;
-            }
+        // 4) last resort: only use base as IRI if it looks like an absolute IRI
+        if (iri == null && looksLikeIri(base)) {
+            iri = base;
+        }
+
+        // 4b) Issue #41: if input exists but still no resolvable IRI -> onUnMappedValue
+        if (iri == null && hasInput) {
+            iri = trimToNull(nodeTemplate.onUnMappedValue());
         }
 
         iri = trimToNull(iri);
 
-        // Issue #34: if we cannot resolve a proper IRI, omit entirely (no blank node fallback).
-        if (iri == null || !looksLikeIri(iri)) {
+        // If we cannot resolve a proper IRI, omit entirely (no blank node fallback).
+        if (!looksLikeIri(iri)) {
             return null;
         }
 
         Resource resource = model.createResource(iri);
 
         // Attach nested properties (if any)
-        int emittedProps = emitNestedProps(model, finder, nodeTemplate, resource);
+        emitNestedProps(model, finder, nodeTemplate, resource);
 
         // rdf:type if provided (even if no nested props; IRI resource is not "empty")
         if (nodeTemplate.type() != null) {
@@ -252,10 +280,8 @@ public class ResourceMapper {
 
         int emittedProps = emitNestedProps(model, finder, nodeTemplate, resource);
 
-        // Issue #34: suppress typed-only (or completely empty) bnodes.
+        // suppress typed-only (or completely empty) bnodes.
         if (emittedProps == 0) {
-            // We did not add any statements for this bnode -> omit by returning null.
-            // (No need to remove statements, since none were added.)
             return null;
         }
 
@@ -263,18 +289,15 @@ public class ResourceMapper {
         if (nodeTemplate.type() != null) {
             resource.addProperty(RDF.type, model.createResource(prefixes.expand(nodeTemplate.type())));
         }
-
         return resource;
     }
 
     private int emitNestedProps(Model model, JaywayJsonFinder finder, NodeTemplate nodeTemplate, Resource resource) {
         int emitted = 0;
-
         Map<String, ValueSource> nested = nodeTemplate.props();
         if (nested == null || nested.isEmpty()) {
             return 0;
         }
-
         for (Map.Entry<String, ValueSource> entry : nested.entrySet()) {
             ValueSource pvs = entry.getValue();
             String pred = prefixes.expand(pvs.predicate());
@@ -282,7 +305,6 @@ public class ResourceMapper {
                 continue;
             }
             Property property = model.createProperty(pred);
-
             List<RDFNode> objs = resolveObjects(model, finder, pvs);
             if (objs == null || objs.isEmpty()) {
                 continue;
@@ -292,11 +314,9 @@ public class ResourceMapper {
                 emitted++;
             }
         }
-
         return emitted;
     }
 
-    /** Strip parameters from a content-type-like value: "text/plain; charset=US-ASCII" -> "text/plain". */
     private static String stripParameters(String s) {
         if (s == null) {
             return null;
@@ -363,7 +383,6 @@ public class ResourceMapper {
 
     /**
      * Unified formatting for literal/iri values. Delegates to TemplateFormatter.
-     *
      * - Supports ${value}, ${1..n}, inline ${$.path}/${$$.path}
      * - Keeps existing "media type normalization" behavior for ${value}
      */
@@ -372,7 +391,6 @@ public class ResourceMapper {
             if (valueSource.format() == null || valueSource.format().isBlank()) {
                 return s;
             }
-            // legacy behavior: if ${value} exists and base is missing, resolve from vs.json
             String base = s;
             if ((base == null || base.isEmpty()) && valueSource.json() != null) {
                 List<String> values = listScopedOrRoot(finder, valueSource.json());
