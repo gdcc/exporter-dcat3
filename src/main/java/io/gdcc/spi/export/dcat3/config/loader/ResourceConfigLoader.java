@@ -202,6 +202,7 @@ public class ResourceConfigLoader {
     /** Accumulator for ValueSource fields prior to construction. */
     static final class ValueSourceAccumulator {
         String predicate, as, lang, datatype, json, constValue, nodeRef, when, format;
+        String onUnMappedValue, onNoInputValue;
         boolean multi;
 
         Map<Integer, String> indexedJsonPaths = new TreeMap<>();
@@ -217,7 +218,7 @@ public class ResourceConfigLoader {
             Map<String, String> sortedMap = sortedByKey(map);
 
             return new ValueSource(
-                    predicate, as, lang, datatype, json, constValue, ordered, nodeRef, multi, when, sortedMap, format);
+                    predicate, as, lang, datatype, json, constValue, ordered, nodeRef, multi, when, sortedMap, format, onUnMappedValue, onNoInputValue);
         }
     }
 
@@ -255,6 +256,8 @@ public class ResourceConfigLoader {
             case "multi" -> acc.multi = Boolean.parseBoolean(value);
             case "when" -> acc.when = value;
             case "format" -> acc.format = value;
+            case "onUnMappedValue" -> acc.onUnMappedValue = value;
+            case "onNoInputValue" -> acc.onNoInputValue = value;
             default -> {
                 if (keyTail.startsWith("json.")) {
                     String suffix = keyTail.substring("json.".length());

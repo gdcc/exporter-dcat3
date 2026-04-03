@@ -565,4 +565,89 @@ class ResourceMapperTest {
         assertThat(produced)
                 .isEqualTo("https://ssh.datastations.nl/datasets.xhtml&persistentId=doi:10.5072/DSS/SDPOVA");
     }
+
+    @Test
+    @DisplayName("ValueSource literal with map supports onUnMappedValue and onNoInputValue fallbacks")
+    void literal_fallback_values_work() throws Exception {
+        // Real Prefixes
+        Map<String, String> ns = new LinkedHashMap<>();
+        ns.put("dct", "http://purl.org/dc/terms/");
+        Prefixes prefixes = new Prefixes(ns);
+
+        // ResourceConfig with deep stubs for subject()
+        ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
+        when(rc.subject().iriConst()).thenReturn("http://example.org/id");
+        when(rc.subject().iriTemplate()).thenReturn(null);
+        when(rc.subject().iriFormat()).thenReturn(null);
+        when(rc.subject().iriJson()).thenReturn(null);
+
+        // ValueSource for dct:status with mapping and fallbacks
+        Map<String, String> statusMap = new LinkedHashMap<>();
+        statusMap.put("published", "published");
+        statusMap.put("draft", "draft");
+
+        ValueSource vsStatus = mock(ValueSource.class);
+        when(vsStatus.predicate()).thenReturn("dct:status");
+        when(vsStatus.as()).thenReturn("literal");
+        when(vsStatus.json()).thenReturn("$.status");
+        when(vsStatus.map()).thenReturn(statusMap);
+        when(vsStatus.onUnMappedValue()).thenReturn("unknown");
+        when(vsStatus.onNoInputValue()).thenReturn("not specified");
+        when(vsStatus.lang()).thenReturn(null);
+        when(vsStatus.datatype()).thenReturn(null);
+        when(vsStatus.multi()).thenReturn(false);
+        when(vsStatus.format()).thenReturn(null);
+        when(vsStatus.jsonPaths()).thenReturn(emptyList());
+
+        Map<String, ValueSource> props = new LinkedHashMap<>();
+        props.put("status", vsStatus);
+
+        when(rc.props()).thenReturn(props);
+        when(rc.scopeJson()).thenReturn(null);
+        when(rc.nodes()).thenReturn(emptyMap());
+
+        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Dataset");
+
+        // Test 1: Mapped value works normally
+        JaywayJsonFinder finder1 = finderFor("{\"status\": \"published\"}");
+        Model model1 = mapper.build(finder1);
+
+        List<Statement> stmts1 = model1.listStatements().toList();
+        assertThat(stmts1).hasSize(2); // type + status
+
+        Statement statusStmt1 = stmts1.stream()
+                .filter(s -> s.getPredicate().getURI().equals("http://purl.org/dc/terms/status"))
+                .findFirst().orElseThrow();
+
+        assertThat(statusStmt1.getObject().isLiteral()).isTrue();
+        assertThat(statusStmt1.getObject().asLiteral().getString()).isEqualTo("published");
+
+        // Test 2: Unmapped value uses onUnMappedValue
+        JaywayJsonFinder finder2 = finderFor("{\"status\": \"archived\"}");
+        Model model2 = mapper.build(finder2);
+
+        List<Statement> stmts2 = model2.listStatements().toList();
+        assertThat(stmts2).hasSize(2); // type + status
+
+        Statement statusStmt2 = stmts2.stream()
+                .filter(s -> s.getPredicate().getURI().equals("http://purl.org/dc/terms/status"))
+                .findFirst().orElseThrow();
+
+        assertThat(statusStmt2.getObject().isLiteral()).isTrue();
+        assertThat(statusStmt2.getObject().asLiteral().getString()).isEqualTo("unknown");
+
+        // Test 3: No input uses onNoInputValue
+        JaywayJsonFinder finder3 = finderFor("{}");
+        Model model3 = mapper.build(finder3);
+
+        List<Statement> stmts3 = model3.listStatements().toList();
+        assertThat(stmts3).hasSize(2); // type + status
+
+        Statement statusStmt3 = stmts3.stream()
+                .filter(s -> s.getPredicate().getURI().equals("http://purl.org/dc/terms/status"))
+                .findFirst().orElseThrow();
+
+        assertThat(statusStmt3.getObject().isLiteral()).isTrue();
+        assertThat(statusStmt3.getObject().asLiteral().getString()).isEqualTo("not specified");
+    }
 }
