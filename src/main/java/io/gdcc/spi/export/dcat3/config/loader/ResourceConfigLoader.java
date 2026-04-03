@@ -19,7 +19,6 @@ import java.util.regex.Pattern;
 
 /**
  * ResourceConfigLoader: parses .properties-based resource mapping configuration.
- *
  * Deterministic ordering: see class comments.
  */
 public class ResourceConfigLoader {
@@ -203,6 +202,7 @@ public class ResourceConfigLoader {
     static final class ValueSourceAccumulator {
         String predicate, as, lang, datatype, json, constValue, nodeRef, when, format;
         String onUnMappedValue, onNoInputValue;
+        String mapEmpty, mapNonEmpty;
         boolean multi;
 
         Map<Integer, String> indexedJsonPaths = new TreeMap<>();
@@ -218,7 +218,22 @@ public class ResourceConfigLoader {
             Map<String, String> sortedMap = sortedByKey(map);
 
             return new ValueSource(
-                    predicate, as, lang, datatype, json, constValue, ordered, nodeRef, multi, when, sortedMap, format, onUnMappedValue, onNoInputValue);
+                    predicate,
+                    as,
+                    lang,
+                    datatype,
+                    json,
+                    constValue,
+                    ordered,
+                    nodeRef,
+                    multi,
+                    when,
+                    sortedMap,
+                    format,
+                    onUnMappedValue,
+                    onNoInputValue,
+                    mapEmpty,
+                    mapNonEmpty);
         }
     }
 
@@ -258,6 +273,8 @@ public class ResourceConfigLoader {
             case "format" -> acc.format = value;
             case "onUnMappedValue" -> acc.onUnMappedValue = value;
             case "onNoInputValue" -> acc.onNoInputValue = value;
+            case "map_empty" -> acc.mapEmpty = value;
+            case "map_nonempty" -> acc.mapNonEmpty = value;
             default -> {
                 if (keyTail.startsWith("json.")) {
                     String suffix = keyTail.substring("json.".length());

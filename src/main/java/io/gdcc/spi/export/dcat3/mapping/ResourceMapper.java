@@ -438,26 +438,33 @@ public class ResourceMapper {
         List<String> rawValues = valuesFromSource(finder, valueSource);
         boolean hasInput = !rawValues.isEmpty();
 
-        List<String> processedValues = rawValues.stream()
-                .map(applyMapIfAny(valueSource))
-                .collect(Collectors.toList());
+        List<String> processedValues;
 
-        // Apply fallback logic for unmapped values
-        if (hasInput && valueSource.map() != null && !valueSource.map().isEmpty()) {
-            processedValues = processedValues.stream()
-                    .map(val -> {
-                        // If value was mapped to null (unmapped), use onUnMappedValue
-                        if (val == null && valueSource.onUnMappedValue() != null) {
-                            return valueSource.onUnMappedValue();
-                        }
-                        return val;
-                    })
-                    .collect(Collectors.toList());
-        }
+        // Special handling for map_empty/map_nonempty: map based on collection emptiness
+        if (valueSource.mapEmpty() != null || valueSource.mapNonEmpty() != null) {
+            String mappedValue = hasInput ? valueSource.mapNonEmpty() : valueSource.mapEmpty();
+            processedValues = (mappedValue != null) ? Collections.singletonList(mappedValue) : Collections.emptyList();
+        } else {
+            // Normal processing: apply map to each value
+            processedValues = rawValues.stream().map(applyMapIfAny(valueSource)).collect(Collectors.toList());
 
-        // If no input at all, use onNoInputValue if configured
-        if (!hasInput && valueSource.onNoInputValue() != null) {
-            processedValues = Collections.singletonList(valueSource.onNoInputValue());
+            // Apply fallback logic for unmapped values
+            if (hasInput && valueSource.map() != null && !valueSource.map().isEmpty()) {
+                processedValues = processedValues.stream()
+                        .map(val -> {
+                            // If value was mapped to null (unmapped), use onUnMappedValue
+                            if (val == null && valueSource.onUnMappedValue() != null) {
+                                return valueSource.onUnMappedValue();
+                            }
+                            return val;
+                        })
+                        .collect(Collectors.toList());
+            }
+
+            // If no input at all, use onNoInputValue if configured
+            if (!hasInput && valueSource.onNoInputValue() != null) {
+                processedValues = Collections.singletonList(valueSource.onNoInputValue());
+            }
         }
 
         return processedValues.stream()

@@ -1,4 +1,3 @@
-
 # DCAT-3 Export Properties Mechanism — Quick Reference
 
 This document describes the declarative properties/config files used by the DCAT-3 exporter.
@@ -115,6 +114,8 @@ Each `props.<id>.*` block describes **one property**. Supported keys:
 - `multi` – `true` to emit multiple values from a multi-match JSONPath
 - `node` – **node id** for `as=node-ref` (see nodes below)
 - `when` – future conditional emission (reserved)
+- `onUnMappedValue` – fallback value when input exists but doesn't match any map key (for literal properties)
+- `onNoInputValue` – fallback value when no input is present from JSON path (for literal properties)
 
 **Examples**
 
@@ -157,6 +158,55 @@ props.hasVersion.format    = V${1}.${2}
 # Alternate one-liner using inline JSONPaths
 # props.hasVersion.format = V${$$.datasetJson.datasetVersion.versionNumber}.${$$.datasetJson.datasetVersion.versionMinorNumber}
 ```
+
+### 2.3.1 Fallback Values for Literal Properties
+
+When working with literal properties that use mapping tables (`map.*`), you can provide fallback values for cases where:
+
+1. **No input is present**: Use `onNoInputValue` when the JSON path returns no data
+2. **Input doesn't match mapping**: Use `onUnMappedValue` when input exists but doesn't match any key in the mapping table
+
+```properties
+# Status property with mapping and fallbacks
+props.status.predicate = dct:status
+props.status.as        = literal
+props.status.json      = $.publicationState
+props.status.map.published = published
+props.status.map.draft    = draft
+props.status.onUnMappedValue = unknown
+props.status.onNoInputValue  = not specified
+```
+
+**Behavior:**
+- If `$.publicationState` contains `"published"` → emits `"published"`
+- If `$.publicationState` contains `"draft"` → emits `"draft"`
+- If `$.publicationState` contains `"archived"` → emits `"unknown"` (unmapped fallback)
+- If `$.publicationState` is missing/null → emits `"not specified"` (no input fallback)
+
+### 2.3.2 Fallback Values for IRI Nodes
+
+For IRI nodes referenced via `as=node-ref`, similar fallback logic applies when the node uses mapping tables:
+
+```properties
+# Access rights node with fallbacks
+nodes.accessRights.kind      = iri
+nodes.accessRights.type      = dct:RightsStatement
+nodes.accessRights.iri.json  = $.accessLevel
+nodes.accessRights.map.public    = http://publications.europa.eu/resource/authority/access-right/PUBLIC
+nodes.accessRights.map.restricted = http://publications.europa.eu/resource/authority/access-right/RESTRICTED
+nodes.accessRights.onUnMappedValue = http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC
+nodes.accessRights.onNoInputValue  = http://publications.europa.eu/resource/authority/access-right/PUBLIC
+
+# Reference the node
+props.accessRights.predicate = dct:accessRights
+props.accessRights.as        = node-ref
+props.accessRights.node      = accessRights
+```
+
+**Behavior:**
+- If `$.accessLevel` contains `"public"` → creates IRI node `http://publications.europa.eu/resource/authority/access-right/PUBLIC`
+- If `$.accessLevel` contains `"internal"` → creates IRI node `http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC` (unmapped fallback)
+- If `$.accessLevel` is missing/null → creates IRI node `http://publications.europa.eu/resource/authority/access-right/PUBLIC` (no input fallback)
 
 ### 2.4 Nodes
 Use `nodes.<id>.*` to describe embedded nodes for `as=node-ref`:
@@ -227,6 +277,82 @@ The following validations are carried out:
 - Empty id → ERROR
 - kind must be bnode or iri → ERROR
 - type must be CURIE/IRI; check prefixes → ERROR
+
+## 7. Real-World Example: Aggregate Access Control (Administrator Responsibility Pattern)
+
+### Scenario
+
+A dataset contains multiple files with different access restrictions:
+- Some files are public (restricted=false)
+- Some files are restricted (restricted=true)
+
+**Requirement**: Dataset-level accessRights should reflect the most restrictive file access level.
+
+### Solution Pattern
+
+This pattern demonstrates handling aggregation of file-level properties to dataset level without adding new DSL features. The key principle is that **data governance decisions belong with administrators**, not automation logic.
+
+#### Distribution-Level (Per File) — Automatic Mapping
+Each distribution's rights are automatically derived from its file's `restricted` flag:
+
+```properties
+# Each file's restricted boolean is directly mapped
+nodes.rights.kind      = iri
+nodes.rights.type      = dct:RightsStatement
+nodes.rights.iri.json  = $.restricted
+nodes.rights.map.true  = http://publications.europa.eu/resource/authority/access-right/RESTRICTED
+nodes.rights.map.false = http://publications.europa.eu/resource/authority/access-right/PUBLIC
+props.rights.predicate = dct:rights
+props.rights.as        = node-ref
+props.rights.node      = rights
+```
+
+#### Dataset-Level (Aggregate) — Administrator Responsibility
+The dataset's accessRights are set through administrator configuration via metadata:
+
+```properties
+# Dataset rights are configured by administrator via metadata field
+# Admin must set DCATaccessRights to match the most restrictive file level
+nodes.ar.kind                = iri
+nodes.ar.type                = dct:RightsStatement
+nodes.ar.iri.json            = $..DCATaccessRights
+nodes.ar.map.public          = http://publications.europa.eu/resource/authority/access-right/PUBLIC
+nodes.ar.map.restricted      = http://publications.europa.eu/resource/authority/access-right/RESTRICTED
+nodes.ar.map.non-public      = http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC
+props.accessRights.predicate = dct:accessRights
+props.accessRights.as        = node-ref
+props.accessRights.node      = ar
+```
+
+### Key Principles
+
+1. **Distribution-level rights are automatic**: Each file's `restricted` boolean determines its distribution's rights
+2. **Dataset-level rights are manual**: Administrator/curator explicitly configures metadata to reflect governance policy
+3. **Each can differ appropriately**: DCAT-AP-NL 3.0 treats Dataset and Distribution as separate concerns
+4. **Mapping system stays focused**: Configuration-driven mapping, not business logic
+
+### Administrator Workflow
+
+1. Publish dataset with files (some may be access-restricted)
+2. Set `DCATaccessRights` metadata field:
+   - If **any file is restricted** → select "restricted"
+   - If **all files are public** → select "public"
+3. Export to DCAT
+   - Mapping reads configured metadata and outputs it
+   - Each distribution has its own rights (per file)
+   - Dataset has aggregate rights (per admin configuration)
+
+### Why This Approach
+
+✅ **DCAT-AP-NL 3.0 Compliant**: Treats Dataset and Distribution as separate concerns  
+✅ **Governance Best Practice**: Access policy decisions belong with data stewards, not automation  
+✅ **Mapping System Simple**: Remains focused on configuration, not business logic  
+✅ **Extensible**: Organizations can later add pre-processing at Dataverse level if needed  
+
+### Implementation Reference
+
+See test case: `src/test/java/io/gdcc/spi/export/dcat3/Issue49DatasetAccessRightsTest.java`  
+See detailed explanation: `ISSUE_49_SOLUTION.md`
 
 ---
 *This mechanism is designed to be declarative, composable, and profile-friendly for DCAT/DCAT‑AP exports.*

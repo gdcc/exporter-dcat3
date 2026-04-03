@@ -21,6 +21,8 @@ import java.util.Map;
  *     placeholders like ${$.path} or ${$$.path}.
  * @param onUnMappedValue Fallback value when input exists but doesn't match any map key
  * @param onNoInputValue Fallback value when no input is present from JSON path
+ * @param mapEmpty Value to use when JSON path returns empty collection/array
+ * @param mapNonEmpty Value to use when JSON path returns non-empty collection/array
  */
 public record ValueSource(
         String predicate,
@@ -36,4 +38,6 @@ public record ValueSource(
         Map<String, String> map,
         String format,
         String onUnMappedValue,
-        String onNoInputValue) {}
+        String onNoInputValue,
+        String mapEmpty,
+        String mapNonEmpty) {}

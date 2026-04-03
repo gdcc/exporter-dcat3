@@ -35,7 +35,7 @@ class ResourceMapperTest {
     @DisplayName("build() adds RDF.type and a literal property from constValue with language")
     void build_adds_type_and_literal_from_const() throws Exception {
         // Real Prefixes
-        Map<String, String> ns = new LinkedHashMap<String, String>();
+        Map<String, String> ns = new LinkedHashMap<>();
         ns.put("dcat", "http://www.w3.org/ns/dcat#");
         ns.put("dct", "http://purl.org/dc/terms/");
         Prefixes prefixes = new Prefixes(ns);
@@ -60,7 +60,7 @@ class ResourceMapperTest {
         when(vsTitle.multi()).thenReturn(false);
         when(vsTitle.format()).thenReturn(null);
 
-        Map<String, ValueSource> props = new LinkedHashMap<String, ValueSource>();
+        Map<String, ValueSource> props = new LinkedHashMap<>();
         props.put("title", vsTitle);
 
         when(rc.props()).thenReturn(props);
@@ -95,7 +95,7 @@ class ResourceMapperTest {
     @DisplayName("build() maps IRI object from JSON path with as='iri' and default (single) selection")
     void build_maps_iri_from_json() throws Exception {
         // Real Prefixes
-        Map<String, String> ns = new LinkedHashMap<String, String>();
+        Map<String, String> ns = new LinkedHashMap<>();
         ns.put("dcat", "http://www.w3.org/ns/dcat#");
         ns.put("dct", "http://purl.org/dc/terms/");
         Prefixes prefixes = new Prefixes(ns);
@@ -120,7 +120,7 @@ class ResourceMapperTest {
         when(vsId.map()).thenReturn(emptyMap());
         when(vsId.jsonPaths()).thenReturn(emptyList());
 
-        Map<String, ValueSource> props = new LinkedHashMap<String, ValueSource>();
+        Map<String, ValueSource> props = new LinkedHashMap<>();
         props.put("identifier", vsId);
 
         when(rc.props()).thenReturn(props);
@@ -617,7 +617,8 @@ class ResourceMapperTest {
 
         Statement statusStmt1 = stmts1.stream()
                 .filter(s -> s.getPredicate().getURI().equals("http://purl.org/dc/terms/status"))
-                .findFirst().orElseThrow();
+                .findFirst()
+                .orElseThrow();
 
         assertThat(statusStmt1.getObject().isLiteral()).isTrue();
         assertThat(statusStmt1.getObject().asLiteral().getString()).isEqualTo("published");
@@ -631,7 +632,8 @@ class ResourceMapperTest {
 
         Statement statusStmt2 = stmts2.stream()
                 .filter(s -> s.getPredicate().getURI().equals("http://purl.org/dc/terms/status"))
-                .findFirst().orElseThrow();
+                .findFirst()
+                .orElseThrow();
 
         assertThat(statusStmt2.getObject().isLiteral()).isTrue();
         assertThat(statusStmt2.getObject().asLiteral().getString()).isEqualTo("unknown");
@@ -645,7 +647,8 @@ class ResourceMapperTest {
 
         Statement statusStmt3 = stmts3.stream()
                 .filter(s -> s.getPredicate().getURI().equals("http://purl.org/dc/terms/status"))
-                .findFirst().orElseThrow();
+                .findFirst()
+                .orElseThrow();
 
         assertThat(statusStmt3.getObject().isLiteral()).isTrue();
         assertThat(statusStmt3.getObject().asLiteral().getString()).isEqualTo("not specified");

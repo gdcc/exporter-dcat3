@@ -1,0 +1,76 @@
+{
+  "datasetVersion": {
+    "datasetPersistentId": "doi:10.5555/12345678",
+    "versionNumber": 1,
+    "versionMinorNumber": 0,
+    "publicationDate": "2026-03-13",
+    "lastUpdateTime": "2026-03-13T10:00:00Z",
+    "license": {
+      "uri": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "persistentUrl": "https://dataverse.nl/dataset.xhtml?persistentId=doi:10.5555/12345678",
+  "metadataBlocks": {
+    "citation": {
+      "fields": [
+        {
+          "typeName": "title",
+          "value": "Dataset with Mixed File Restrictions"
+        },
+        {
+          "typeName": "dsDescription",
+          "value": [
+            {
+              "dsDescriptionValue": {
+                "value": "A test dataset containing both public and restricted files"
+              }
+            }
+          ]
+        },
+        {
+          "typeName": "keyword",
+          "value": [
+            {
+              "keywordValue": {
+                "value": "test"
+              }
+            },
+            {
+              "keywordValue": {
+                "value": "restricted"
+              }
+            }
+          ]
+        },
+        {
+          "typeName": "author",
+          "value": [
+            {
+              "authorName": {
+                "value": "Test Author"
+              },
+              "authorAffiliation": {
+                "value": "Test Organization"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "DCATMetadata": {
+      "fields": [
+        {
+          "typeName": "DCATaccessRights",
+          "value": "restricted"
+        },
+        {
+          "typeName": "DCATeuTheme",
+          "value": [
+            "tech"
+          ]
+        }
+      ]
+    }
+  }
+}
+
