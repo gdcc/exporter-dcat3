@@ -20,20 +20,7 @@ import java.util.regex.Pattern;
 /**
  * ResourceConfigLoader: parses .properties-based resource mapping configuration.
  *
- * <p>Design: model classes are immutable (Subject, ResourceConfig, NodeTemplate, ValueSource).
- * We therefore accumulate values first, then build final instances once per id.
- *
- * <p>Determinism: .properties enumeration order is not defined. This loader therefore normalises
- * ordering deterministically at finalisation time (alphabetical by key) for:
- * <ul>
- *   <li>ResourceConfig.props (prop id)</li>
- *   <li>ResourceConfig.nodes (node id)</li>
- *   <li>NodeTemplate.props (prop id)</li>
- *   <li>NodeTemplate.iriMap (map key)</li>
- *   <li>ValueSource.map (map key)</li>
- * </ul>
- *
- * <p>Indexed JSON paths: json.N ordering is preserved numerically (1..N) using a TreeMap.
+ * Deterministic ordering: see class comments.
  */
 public class ResourceConfigLoader {
 
@@ -111,6 +98,8 @@ public class ResourceConfigLoader {
                 case "iri.format" -> nodeAccumulators.iriFormat = v;
                 case "type" -> nodeAccumulators.type = v;
                 case "multi" -> nodeAccumulators.multi = Boolean.parseBoolean(v);
+                case "onUnMappedValue" -> nodeAccumulators.onUnMappedValue = v;
+                case "onNoInputValue" -> nodeAccumulators.onNoInputValue = v;
                 default -> {
                     // node props: nodes.<nodeId>.props.<propId>.<...>
                     Matcher nodePropertyPatternMatcher = NODE_PROPERTY_PATTERN.matcher(tail);
@@ -153,12 +142,14 @@ public class ResourceConfigLoader {
                     na.type,
                     na.multi,
                     iriMapSorted,
-                    nodeProps);
+                    nodeProps,
+                    na.onUnMappedValue,
+                    na.onNoInputValue);
 
             nodes.put(na.nodeId, nodeTemplate);
         }
 
-        // Build final ResourceConfig via constructor
+        // Build final ResourceConfig
         return new ResourceConfig(subject, props, nodes, scopeJson);
     }
 
@@ -239,6 +230,8 @@ public class ResourceConfigLoader {
         String iriFormat;
         String type;
         boolean multi;
+        String onUnMappedValue;
+        String onNoInputValue;
 
         // node-level iriMap and props (sorted at finalisation)
         Map<String, String> iriMap = new LinkedHashMap<>();
@@ -256,7 +249,7 @@ public class ResourceConfigLoader {
             case "as" -> acc.as = value;
             case "lang" -> acc.lang = value;
             case "datatype" -> acc.datatype = value;
-            case "json" -> acc.json = value; // legacy single source
+            case "json" -> acc.json = value;
             case "const" -> acc.constValue = value;
             case "node" -> acc.nodeRef = value;
             case "multi" -> acc.multi = Boolean.parseBoolean(value);

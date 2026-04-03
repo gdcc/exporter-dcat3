@@ -1,5 +1,7 @@
 package io.gdcc.spi.export.dcat3.mapping;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -52,8 +54,8 @@ class ResourceMapperTest {
         when(vsTitle.constValue()).thenReturn("Demo");
         when(vsTitle.lang()).thenReturn("en");
         when(vsTitle.datatype()).thenReturn(null);
-        when(vsTitle.map()).thenReturn(java.util.Collections.emptyMap());
-        when(vsTitle.jsonPaths()).thenReturn(java.util.Collections.emptyList());
+        when(vsTitle.map()).thenReturn(emptyMap());
+        when(vsTitle.jsonPaths()).thenReturn(emptyList());
         when(vsTitle.json()).thenReturn(null);
         when(vsTitle.multi()).thenReturn(false);
         when(vsTitle.format()).thenReturn(null);
@@ -62,7 +64,7 @@ class ResourceMapperTest {
         props.put("title", vsTitle);
 
         when(rc.props()).thenReturn(props);
-        when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
+        when(rc.nodes()).thenReturn(emptyMap());
         when(rc.scopeJson()).thenReturn(null);
 
         JaywayJsonFinder finder = finderFor("{\"dataset\":{\"title\":\"Demo\"}}");
@@ -115,14 +117,14 @@ class ResourceMapperTest {
         when(vsId.format()).thenReturn(null);
         when(vsId.lang()).thenReturn(null);
         when(vsId.datatype()).thenReturn(null);
-        when(vsId.map()).thenReturn(java.util.Collections.emptyMap());
-        when(vsId.jsonPaths()).thenReturn(java.util.Collections.emptyList());
+        when(vsId.map()).thenReturn(emptyMap());
+        when(vsId.jsonPaths()).thenReturn(emptyList());
 
         Map<String, ValueSource> props = new LinkedHashMap<String, ValueSource>();
         props.put("identifier", vsId);
 
         when(rc.props()).thenReturn(props);
-        when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
+        when(rc.nodes()).thenReturn(emptyMap());
         when(rc.scopeJson()).thenReturn(null);
 
         JaywayJsonFinder finder = finderFor("{\"dataset\":{\"identifier\":\"http://example.org/id-iri\"}}");
@@ -155,7 +157,7 @@ class ResourceMapperTest {
         // subject
         ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
         when(rc.subject().iriConst()).thenReturn("http://example.org/dist/4");
-        when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
+        when(rc.nodes()).thenReturn(emptyMap());
         when(rc.scopeJson()).thenReturn(null);
 
         // dcat:accessURL as IRI built from format and inline JSONPath
@@ -164,8 +166,8 @@ class ResourceMapperTest {
         when(vs.as()).thenReturn("iri");
         when(vs.json()).thenReturn(null);
         when(vs.format()).thenReturn("http://localhost:8080/api/access/datafile/${$.id}");
-        when(vs.map()).thenReturn(java.util.Collections.emptyMap());
-        when(vs.jsonPaths()).thenReturn(java.util.Collections.emptyList());
+        when(vs.map()).thenReturn(emptyMap());
+        when(vs.jsonPaths()).thenReturn(emptyList());
         when(vs.multi()).thenReturn(false);
 
         Map<String, ValueSource> props = new LinkedHashMap<>();
@@ -196,7 +198,7 @@ class ResourceMapperTest {
 
         ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
         when(rc.subject().iriConst()).thenReturn("http://example.org/ds/1");
-        when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
+        when(rc.nodes()).thenReturn(emptyMap());
         when(rc.scopeJson()).thenReturn(null);
 
         ValueSource vs = mock(ValueSource.class);
@@ -210,7 +212,7 @@ class ResourceMapperTest {
         map.put("true", "http://publications.europa.eu/resource/authority/access-right/RESTRICTED");
         map.put("false", "http://publications.europa.eu/resource/authority/access-right/PUBLIC");
         when(vs.map()).thenReturn(map);
-        when(vs.jsonPaths()).thenReturn(java.util.Collections.emptyList());
+        when(vs.jsonPaths()).thenReturn(emptyList());
 
         Map<String, ValueSource> props = new LinkedHashMap<>();
         props.put("accessRights", vs);
@@ -252,8 +254,10 @@ class ResourceMapperTest {
                 "http://localhost:8080/api/access/datafile/${value}",
                 "rdfs:Resource",
                 false,
-                java.util.Collections.emptyMap(),
-                java.util.Collections.emptyMap());
+                emptyMap(),
+                emptyMap(),
+                null,
+                null);
 
         Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
         nodes.put("acc", accT);
@@ -300,15 +304,7 @@ class ResourceMapperTest {
         nodeMap.put("tech", "http://publications.europa.eu/resource/authority/data-theme/TECH");
 
         NodeTemplate themeT = new NodeTemplate(
-                "theme",
-                "iri",
-                null,
-                "$.themes[*]",
-                null,
-                "skos:Concept",
-                true,
-                nodeMap,
-                java.util.Collections.emptyMap());
+                "theme", "iri", null, "$.themes[*]", null, "skos:Concept", true, nodeMap, emptyMap(), null, null);
 
         Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
         nodes.put("theme", themeT);
@@ -370,8 +366,8 @@ class ResourceMapperTest {
         when(rc.subject().iriJson()).thenReturn("$.id");
         when(rc.subject().iriFormat()).thenReturn("${$$.env.apiBaseUrl}access/datafile/${value}");
 
-        when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
-        when(rc.props()).thenReturn(java.util.Collections.emptyMap());
+        when(rc.nodes()).thenReturn(emptyMap());
+        when(rc.props()).thenReturn(emptyMap());
         when(rc.scopeJson()).thenReturn(null);
 
         JaywayJsonFinder finder = finderFor("{\"env\":{\"apiBaseUrl\":\"https://acc.example/api/\"},\"id\":\"6\"}");
@@ -399,8 +395,8 @@ class ResourceMapperTest {
         when(rc.subject().iriJsonPaths()).thenReturn(List.of("$$.env.apiBaseUrl", "$.id"));
         when(rc.subject().iriFormat()).thenReturn("${1}access/datafile/${2}");
 
-        when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
-        when(rc.props()).thenReturn(java.util.Collections.emptyMap());
+        when(rc.nodes()).thenReturn(emptyMap());
+        when(rc.props()).thenReturn(emptyMap());
         when(rc.scopeJson()).thenReturn(null);
 
         JaywayJsonFinder finder = finderFor("{\"env\":{\"apiBaseUrl\":\"https://acc.example/api/\"},\"id\":\"6\"}");
@@ -427,15 +423,7 @@ class ResourceMapperTest {
 
         // NodeTemplate 'legi' is kind=iri and type=eli:LegalResource, but input is blank.
         NodeTemplate legiT = new NodeTemplate(
-                "legi",
-                "iri",
-                null,
-                "$.legi[*]",
-                null,
-                "eli:LegalResource",
-                true,
-                java.util.Collections.emptyMap(),
-                java.util.Collections.emptyMap());
+                "legi", "iri", null, "$.legi[*]", null, "eli:LegalResource", true, emptyMap(), emptyMap(), null, null);
 
         Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
         nodes.put("legi", legiT);
@@ -480,8 +468,8 @@ class ResourceMapperTest {
         when(prefLabel.multi()).thenReturn(false);
         when(prefLabel.lang()).thenReturn("en");
         when(prefLabel.datatype()).thenReturn(null);
-        when(prefLabel.map()).thenReturn(java.util.Collections.emptyMap());
-        when(prefLabel.jsonPaths()).thenReturn(java.util.Collections.emptyList());
+        when(prefLabel.map()).thenReturn(emptyMap());
+        when(prefLabel.jsonPaths()).thenReturn(emptyList());
         when(prefLabel.format()).thenReturn(null);
         when(prefLabel.constValue()).thenReturn(null);
 
@@ -489,7 +477,7 @@ class ResourceMapperTest {
         nodeProps.put("prefLabel", prefLabel);
 
         NodeTemplate dtypeT = new NodeTemplate(
-                "dtype", "bnode", null, null, null, "skos:Concept", false, java.util.Collections.emptyMap(), nodeProps);
+                "dtype", "bnode", null, null, null, "skos:Concept", false, emptyMap(), nodeProps, null, null);
 
         Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
         nodes.put("dtype", dtypeT);
@@ -538,23 +526,20 @@ class ResourceMapperTest {
         when(vsLanding.multi()).thenReturn(false);
         when(vsLanding.lang()).thenReturn(null);
         when(vsLanding.datatype()).thenReturn(null);
-        when(vsLanding.map()).thenReturn(java.util.Collections.emptyMap());
-        when(vsLanding.jsonPaths()).thenReturn(java.util.Collections.emptyList());
+        when(vsLanding.map()).thenReturn(emptyMap());
+        when(vsLanding.jsonPaths()).thenReturn(emptyList());
 
         // The format described in the issue
-        when(vsLanding.format()).thenReturn(
-            "https://ssh.datastations.nl/datasets.xhtml&persistentId=${value}"
-        );
+        when(vsLanding.format()).thenReturn("https://ssh.datastations.nl/datasets.xhtml&persistentId=${value}");
 
         Map<String, ValueSource> props = new LinkedHashMap<>();
         props.put("landing", vsLanding);
         when(rc.props()).thenReturn(props);
-        when(rc.nodes()).thenReturn(java.util.Collections.emptyMap());
+        when(rc.nodes()).thenReturn(emptyMap());
         when(rc.scopeJson()).thenReturn(null);
 
         // Minimal input JSON (case-sensitive DOI suffix)
-        String json =
-            "{"
+        String json = "{"
                 + "\"datasetJson\":{"
                 + "  \"datasetVersion\":{"
                 + "    \"datasetPersistentId\":\"doi:10.5072/DSS/SDPOVA\""
@@ -568,10 +553,8 @@ class ResourceMapperTest {
 
         // Extract produced landingPage URI
         List<Statement> stmts = model.listStatements(
-                                         null,
-                                         model.getProperty("http://www.w3.org/ns/dcat#landingPage"),
-                                         (RDFNode) null)
-                                     .toList();
+                        null, model.getProperty("http://www.w3.org/ns/dcat#landingPage"), (RDFNode) null)
+                .toList();
 
         assertThat(stmts).hasSize(1);
         assertThat(stmts.get(0).getObject().isResource()).isTrue();
@@ -580,6 +563,6 @@ class ResourceMapperTest {
 
         // What we EXPECT (case preserved)
         assertThat(produced)
-            .isEqualTo("https://ssh.datastations.nl/datasets.xhtml&persistentId=doi:10.5072/DSS/SDPOVA");
+                .isEqualTo("https://ssh.datastations.nl/datasets.xhtml&persistentId=doi:10.5072/DSS/SDPOVA");
     }
 }
