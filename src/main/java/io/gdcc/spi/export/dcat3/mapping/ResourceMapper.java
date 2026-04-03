@@ -127,13 +127,7 @@ public class ResourceMapper {
                     .filter(ResourceMapper::looksLikeIri)
                     .map(model::createResource)
                     .collect(Collectors.toList());
-            default -> valuesFromSource(finder, valueSource).stream()
-                    .map(applyMapIfAny(valueSource))
-                    .map(applyFormatIfAny(valueSource, finder))
-                    .map(ResourceMapper::trimToNull)
-                    .filter(Objects::nonNull)
-                    .map(val -> literal(model, val, valueSource.lang(), valueSource.datatype()))
-                    .collect(Collectors.toList());
+            default -> resolveLiteralValues(model, finder, valueSource);
         };
     }
 
@@ -438,5 +432,46 @@ public class ResourceMapper {
     private static boolean looksLikeIri(String s) {
         // quick absolute IRI check (scheme ":" ...)
         return s != null && s.matches("^[a-zA-Z][a-zA-Z0-9+.-]*:.*");
+    }
+
+    private List<RDFNode> resolveLiteralValues(Model model, JaywayJsonFinder finder, ValueSource valueSource) {
+        List<String> rawValues = valuesFromSource(finder, valueSource);
+        boolean hasInput = !rawValues.isEmpty();
+
+        List<String> processedValues;
+
+        // Special handling for map_empty/map_nonempty: map based on collection emptiness
+        if (valueSource.mapEmpty() != null || valueSource.mapNonEmpty() != null) {
+            String mappedValue = hasInput ? valueSource.mapNonEmpty() : valueSource.mapEmpty();
+            processedValues = (mappedValue != null) ? Collections.singletonList(mappedValue) : Collections.emptyList();
+        } else {
+            // Normal processing: apply map to each value
+            processedValues = rawValues.stream().map(applyMapIfAny(valueSource)).collect(Collectors.toList());
+
+            // Apply fallback logic for unmapped values
+            if (hasInput && valueSource.map() != null && !valueSource.map().isEmpty()) {
+                processedValues = processedValues.stream()
+                        .map(val -> {
+                            // If value was mapped to null (unmapped), use onUnMappedValue
+                            if (val == null && valueSource.onUnMappedValue() != null) {
+                                return valueSource.onUnMappedValue();
+                            }
+                            return val;
+                        })
+                        .collect(Collectors.toList());
+            }
+
+            // If no input at all, use onNoInputValue if configured
+            if (!hasInput && valueSource.onNoInputValue() != null) {
+                processedValues = Collections.singletonList(valueSource.onNoInputValue());
+            }
+        }
+
+        return processedValues.stream()
+                .map(applyFormatIfAny(valueSource, finder))
+                .map(ResourceMapper::trimToNull)
+                .filter(Objects::nonNull)
+                .map(val -> literal(model, val, valueSource.lang(), valueSource.datatype()))
+                .collect(Collectors.toList());
     }
 }

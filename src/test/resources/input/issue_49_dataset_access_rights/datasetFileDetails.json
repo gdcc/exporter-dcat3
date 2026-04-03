@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "filename": "public_file.txt",
+    "contentType": "text/plain",
+    "filesize": 1024,
+    "restricted": false,
+    "checksum": {
+      "type": "MD5",
+      "value": "5d41402abc4b2a76b9719d911017c592"
+    }
+  },
+  {
+    "id": 2,
+    "filename": "restricted_file.pdf",
+    "contentType": "application/pdf",
+    "filesize": 2048,
+    "restricted": true,
+    "checksum": {
+      "type": "MD5",
+      "value": "6d41402abc4b2a76b9719d911017c593"
+    }
+  },
+  {
+    "id": 3,
+    "filename": "another_public_file.csv",
+    "contentType": "text/csv",
+    "filesize": 512,
+    "restricted": false,
+    "checksum": {
+      "type": "MD5",
+      "value": "7d41402abc4b2a76b9719d911017c594"
+    }
+  }
+]
+

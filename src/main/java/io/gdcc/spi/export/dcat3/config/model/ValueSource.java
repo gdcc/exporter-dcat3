@@ -19,6 +19,10 @@ import java.util.Map;
  * @param map Mapping table (optional): map.raw -> mapped
  * @param format formatting template. Supports ${value}, ${1}, ${2}, ... and inline JSONPath
  *     placeholders like ${$.path} or ${$$.path}.
+ * @param onUnMappedValue Fallback value when input exists but doesn't match any map key
+ * @param onNoInputValue Fallback value when no input is present from JSON path
+ * @param mapEmpty Value to use when JSON path returns empty collection/array
+ * @param mapNonEmpty Value to use when JSON path returns non-empty collection/array
  */
 public record ValueSource(
         String predicate,
@@ -32,4 +36,8 @@ public record ValueSource(
         boolean multi,
         String when,
         Map<String, String> map,
-        String format) {}
+        String format,
+        String onUnMappedValue,
+        String onNoInputValue,
+        String mapEmpty,
+        String mapNonEmpty) {}
