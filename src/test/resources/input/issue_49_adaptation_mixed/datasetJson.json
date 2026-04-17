@@ -1,0 +1,64 @@
+{
+  "datasetVersion": {
+    "datasetPersistentId": "doi:10.5555/adaptation-mixed",
+    "versionNumber": 1,
+    "versionMinorNumber": 0,
+    "publicationDate": "2026-03-13",
+    "lastUpdateTime": "2026-03-13T10:00:00Z",
+    "license": {
+      "uri": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "persistentUrl": "https://dataverse.nl/dataset.xhtml?persistentId=doi:10.5555/adaptation-mixed",
+  "metadataBlocks": {
+    "citation": {
+      "fields": [
+        {
+          "typeName": "title",
+          "value": "Adaptation Dataset: Mixed File Restrictions"
+        },
+        {
+          "typeName": "dsDescription",
+          "value": [
+            {
+              "dsDescriptionValue": {
+                "value": "Adaptation scenario: no metadata accessRights, one restricted file - should derive RESTRICTED"
+              }
+            }
+          ]
+        },
+        {
+          "typeName": "keyword",
+          "value": [
+            {
+              "keywordValue": {
+                "value": "adaptation"
+              }
+            }
+          ]
+        },
+        {
+          "typeName": "author",
+          "value": [
+            {
+              "authorName": {
+                "value": "Admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "DCATMetadata": {
+      "fields": [
+        {
+          "typeName": "DCATeuTheme",
+          "value": [
+            "tech"
+          ]
+        }
+      ]
+    }
+  }
+}
+

@@ -148,10 +148,8 @@ public class ResourceMapper {
 
         // Gather base values from iriJson (handles multi)
         List<String> bases;
-        if ("iri".equals(nodeTemplate.kind())
-                && nodeTemplate.iriJson() != null
-                && !nodeTemplate.iriJson().isBlank()) {
-            bases = listScopedOrRoot(finder, nodeTemplate.iriJson());
+        if ("iri".equals(nodeTemplate.kind())) {
+            bases = resolveNodeIriInputs(finder, nodeTemplate);
             if (!nodeTemplate.multi() && !bases.isEmpty()) {
                 bases = Collections.singletonList(bases.get(0));
             }
@@ -185,6 +183,35 @@ public class ResourceMapper {
         }
 
         return out;
+    }
+
+    private List<String> resolveNodeIriInputs(JaywayJsonFinder finder, NodeTemplate nodeTemplate) {
+        if (nodeTemplate.iriJson() != null && !nodeTemplate.iriJson().isBlank()) {
+            return listScopedOrRoot(finder, nodeTemplate.iriJson());
+        }
+        if (nodeTemplate.iriConst() != null && !nodeTemplate.iriConst().isBlank()) {
+            // iri.const nodes do not depend on JSON input; emit once.
+            return Collections.singletonList(null);
+        }
+        if (nodeTemplate.iriFormat() != null && !nodeTemplate.iriFormat().isBlank()) {
+            // Format-only nodes may rely on inline placeholders and should still attempt emission.
+            return Collections.singletonList(null);
+        }
+        if (nodeTemplate.iriJsonPaths() == null || nodeTemplate.iriJsonPaths().isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        // Resolve the first configured path that yields values.
+        for (String jsonPath : nodeTemplate.iriJsonPaths()) {
+            if (jsonPath == null || jsonPath.isBlank()) {
+                continue;
+            }
+            List<String> values = listScopedOrRoot(finder, jsonPath);
+            if (!values.isEmpty()) {
+                return values;
+            }
+        }
+        return Collections.emptyList();
     }
 
     private Resource buildIriNode(Model model, JaywayJsonFinder finder, NodeTemplate nodeTemplate, String baseRaw) {
