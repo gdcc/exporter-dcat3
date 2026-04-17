@@ -214,6 +214,7 @@ public class ResourceConfigLoaderTest {
         assertThat(rights.kind()).isEqualTo("iri");
         assertThat(rights.type()).isEqualTo("dct:RightsStatement");
         assertThat(rights.iriJson()).isEqualTo("$.restricted");
+        assertThat(rights.iriJsonPaths()).isEmpty();
         assertThat(rights.iriFormat()).isNull();
         assertThat(rights.multi()).isFalse();
         assertThat(rights.iriMap())
@@ -237,7 +238,29 @@ public class ResourceConfigLoaderTest {
         assertThat(acc.kind()).isEqualTo("iri");
         assertThat(acc.type()).isEqualTo("rdfs:Resource");
         assertThat(acc.iriJson()).isEqualTo("$.id");
+        assertThat(acc.iriJsonPaths()).isEmpty();
         assertThat(acc.iriFormat()).isEqualTo("http://localhost:8080/api/access/datafile/${value}");
+    }
+
+    @Test
+    void orders_indexed_json_paths_numerically_for_node_templates() throws Exception {
+        String props =
+                """
+            nodes.ar.kind = iri
+            nodes.ar.type = dct:RightsStatement
+            nodes.ar.iri.json.2 = $.datasetFileDetails[?(@.restricted==true)].restricted
+            nodes.ar.iri.json.1 = $.datasetJson.metadataBlocks.DCATMetadata.fields[?(@.typeName=='DCATaccessRights')].value
+            """;
+
+        ResourceConfig cfg = new ResourceConfigLoader().load(new ByteArrayInputStream(props.getBytes()));
+
+        NodeTemplate ar = cfg.nodes().get("ar");
+        assertThat(ar).isNotNull();
+        assertThat(ar.iriJson()).isNull();
+        assertThat(ar.iriJsonPaths())
+                .containsExactly(
+                        "$.datasetJson.metadataBlocks.DCATMetadata.fields[?(@.typeName=='DCATaccessRights')].value",
+                        "$.datasetFileDetails[?(@.restricted==true)].restricted");
     }
 
     @Test

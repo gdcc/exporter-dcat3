@@ -1,5 +1,6 @@
 package io.gdcc.spi.export.dcat3.config.model;
 
+import java.util.List;
 import java.util.Map;
 
 public record NodeTemplate(
@@ -7,6 +8,7 @@ public record NodeTemplate(
         String kind,
         String iriConst,
         String iriJson,
+        List<String> iriJsonPaths,
         String iriFormat,
         String type,
         boolean multi,

@@ -251,6 +251,7 @@ class ResourceMapperTest {
                 "iri",
                 null,
                 "$.id",
+                emptyList(),
                 "http://localhost:8080/api/access/datafile/${value}",
                 "rdfs:Resource",
                 false,
@@ -304,7 +305,7 @@ class ResourceMapperTest {
         nodeMap.put("tech", "http://publications.europa.eu/resource/authority/data-theme/TECH");
 
         NodeTemplate themeT = new NodeTemplate(
-                "theme", "iri", null, "$.themes[*]", null, "skos:Concept", true, nodeMap, emptyMap(), null, null);
+                "theme", "iri", null, "$.themes[*]", emptyList(), null, "skos:Concept", true, nodeMap, emptyMap(), null, null);
 
         Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
         nodes.put("theme", themeT);
@@ -423,7 +424,7 @@ class ResourceMapperTest {
 
         // NodeTemplate 'legi' is kind=iri and type=eli:LegalResource, but input is blank.
         NodeTemplate legiT = new NodeTemplate(
-                "legi", "iri", null, "$.legi[*]", null, "eli:LegalResource", true, emptyMap(), emptyMap(), null, null);
+                "legi", "iri", null, "$.legi[*]", emptyList(), null, "eli:LegalResource", true, emptyMap(), emptyMap(), null, null);
 
         Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
         nodes.put("legi", legiT);
@@ -477,7 +478,7 @@ class ResourceMapperTest {
         nodeProps.put("prefLabel", prefLabel);
 
         NodeTemplate dtypeT = new NodeTemplate(
-                "dtype", "bnode", null, null, null, "skos:Concept", false, emptyMap(), nodeProps, null, null);
+                "dtype", "bnode", null, null, emptyList(), null, "skos:Concept", false, emptyMap(), nodeProps, null, null);
 
         Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
         nodes.put("dtype", dtypeT);
@@ -499,6 +500,124 @@ class ResourceMapperTest {
         // No theme triple should exist (dtype node omitted).
         assertThat(model.contains(null, model.getProperty("http://www.w3.org/ns/dcat#theme"), (RDFNode) null))
                 .isFalse();
+    }
+
+    @Test
+    @DisplayName("NodeTemplate iri.json paths use metadata first, then restricted-files fallback")
+    void node_ref_uses_metadata_first_then_restricted_files_fallback() throws Exception {
+        Map<String, String> ns = new LinkedHashMap<>();
+        ns.put("dcat", "http://www.w3.org/ns/dcat#");
+        ns.put("dct", "http://purl.org/dc/terms/");
+        Prefixes prefixes = new Prefixes(ns);
+
+        ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
+        when(rc.subject().iriConst()).thenReturn("http://example.org/ds/1");
+        when(rc.scopeJson()).thenReturn(null);
+
+        Map<String, String> nodeMap = new LinkedHashMap<>();
+        nodeMap.put("public", "http://publications.europa.eu/resource/authority/access-right/PUBLIC");
+        nodeMap.put("restricted", "http://publications.europa.eu/resource/authority/access-right/RESTRICTED");
+        nodeMap.put("true", "http://publications.europa.eu/resource/authority/access-right/RESTRICTED");
+
+        NodeTemplate ar = new NodeTemplate(
+                "ar",
+                "iri",
+                null,
+                null,
+                List.of(
+                        "$.datasetJson.metadataBlocks.DCATMetadata.fields[?(@.typeName=='DCATaccessRights')].value",
+                        "$.datasetFileDetails[?(@.restricted==true)].restricted"),
+                null,
+                "dct:RightsStatement",
+                false,
+                nodeMap,
+                emptyMap(),
+                null,
+                "http://publications.europa.eu/resource/authority/access-right/PUBLIC");
+
+        Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
+        nodes.put("ar", ar);
+        when(rc.nodes()).thenReturn(nodes);
+
+        ValueSource vs = mock(ValueSource.class);
+        when(vs.predicate()).thenReturn("dct:accessRights");
+        when(vs.as()).thenReturn("node-ref");
+        when(vs.nodeRef()).thenReturn("ar");
+
+        Map<String, ValueSource> props = new LinkedHashMap<>();
+        props.put("accessRights", vs);
+        when(rc.props()).thenReturn(props);
+
+        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dcat:Dataset");
+
+        JaywayJsonFinder withMetadata = finderFor(
+                """
+                {
+                  "datasetJson": {
+                    "metadataBlocks": {
+                      "DCATMetadata": {
+                        "fields": [
+                          {"typeName":"DCATaccessRights","value":"public"}
+                        ]
+                      }
+                    }
+                  },
+                  "datasetFileDetails": [
+                    {"restricted": true}
+                  ]
+                }
+                """);
+        Model modelWithMetadata = mapper.build(withMetadata);
+        Statement withMetadataStmt = modelWithMetadata
+                .listStatements(null, modelWithMetadata.getProperty("http://purl.org/dc/terms/accessRights"), (RDFNode) null)
+                .next();
+        assertThat(withMetadataStmt.getObject().asResource().getURI())
+                .isEqualTo("http://publications.europa.eu/resource/authority/access-right/PUBLIC");
+
+        JaywayJsonFinder withDerivedFallback = finderFor(
+                """
+                {
+                  "datasetJson": {
+                    "metadataBlocks": {
+                      "DCATMetadata": {
+                        "fields": []
+                      }
+                    }
+                  },
+                  "datasetFileDetails": [
+                    {"restricted": false},
+                    {"restricted": true}
+                  ]
+                }
+                """);
+        Model modelWithFallback = mapper.build(withDerivedFallback);
+        Statement withFallbackStmt = modelWithFallback
+                .listStatements(null, modelWithFallback.getProperty("http://purl.org/dc/terms/accessRights"), (RDFNode) null)
+                .next();
+        assertThat(withFallbackStmt.getObject().asResource().getURI())
+                .isEqualTo("http://publications.europa.eu/resource/authority/access-right/RESTRICTED");
+
+        JaywayJsonFinder withPublicFallback = finderFor(
+                """
+                {
+                  "datasetJson": {
+                    "metadataBlocks": {
+                      "DCATMetadata": {
+                        "fields": []
+                      }
+                    }
+                  },
+                  "datasetFileDetails": [
+                    {"restricted": false}
+                  ]
+                }
+                """);
+        Model modelWithPublicFallback = mapper.build(withPublicFallback);
+        Statement withPublicFallbackStmt = modelWithPublicFallback
+                .listStatements(null, modelWithPublicFallback.getProperty("http://purl.org/dc/terms/accessRights"), (RDFNode) null)
+                .next();
+        assertThat(withPublicFallbackStmt.getObject().asResource().getURI())
+                .isEqualTo("http://publications.europa.eu/resource/authority/access-right/PUBLIC");
     }
 
     @Test

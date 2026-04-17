@@ -27,6 +27,7 @@ public class ResourceConfigLoader {
     private static final Pattern NODE_PATTERN = Pattern.compile("^nodes\\.([^.]+)\\.(.+)$");
     private static final Pattern NODE_PROPERTY_PATTERN = Pattern.compile("^props\\.([^.]+)\\.(.+)$");
     private static final Pattern SUBJECT_JSON_INDEXED = Pattern.compile("^subject\\.iri\\.json\\.(\\d+)$");
+    private static final Pattern NODE_IRI_JSON_INDEXED = Pattern.compile("^iri\\.json\\.(\\d+)$");
 
     public ResourceConfig load(InputStream in) throws IOException {
         // 3.5: fail cleanly on missing mapping resource
@@ -109,6 +110,11 @@ public class ResourceConfigLoader {
                                 nodeAccumulators.props.computeIfAbsent(propId, k -> new ValueSourceAccumulator());
                         apply(vAcc, propTail, v);
                     }
+                    Matcher indexedIriJson = NODE_IRI_JSON_INDEXED.matcher(tail);
+                    if (indexedIriJson.matches()) {
+                        int idx = Integer.parseInt(indexedIriJson.group(1));
+                        nodeAccumulators.iriJsonPaths.put(idx, v);
+                    }
                     // node-level iriMap: nodes.<nodeId>.map.<key> = <iri>
                     else if (tail.startsWith("map.")) {
                         String key = tail.substring("map.".length());
@@ -137,6 +143,7 @@ public class ResourceConfigLoader {
                     na.kind,
                     na.iriConst,
                     na.iriJson,
+                    new ArrayList<>(na.iriJsonPaths.values()),
                     na.iriFormat,
                     na.type,
                     na.multi,
@@ -243,6 +250,7 @@ public class ResourceConfigLoader {
         String kind;
         String iriConst;
         String iriJson;
+        Map<Integer, String> iriJsonPaths = new TreeMap<>();
         String iriFormat;
         String type;
         boolean multi;
