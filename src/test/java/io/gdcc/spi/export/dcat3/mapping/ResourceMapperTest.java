@@ -289,6 +289,65 @@ class ResourceMapperTest {
     }
 
     @Test
+    @DisplayName("NodeTemplate as node-ref emits iri.const node without JSON input paths")
+    void node_ref_emits_iri_const_without_json_inputs() throws Exception {
+        Map<String, String> ns = new LinkedHashMap<>();
+        ns.put("dct", "http://purl.org/dc/terms/");
+        ns.put("foaf", "http://xmlns.com/foaf/0.1/");
+        ns.put("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        Prefixes prefixes = new Prefixes(ns);
+
+        ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
+        when(rc.subject().iriConst()).thenReturn("http://example.org/ds/1");
+        when(rc.scopeJson()).thenReturn(null);
+
+        NodeTemplate publisher = new NodeTemplate(
+                "publisher",
+                "iri",
+                "https://ror.org/01bnjb948",
+                null,
+                emptyList(),
+                null,
+                "foaf:Agent",
+                false,
+                emptyMap(),
+                emptyMap(),
+                null,
+                null);
+
+        Map<String, NodeTemplate> nodes = new LinkedHashMap<>();
+        nodes.put("publisher", publisher);
+        when(rc.nodes()).thenReturn(nodes);
+
+        ValueSource vs = mock(ValueSource.class);
+        when(vs.predicate()).thenReturn("dct:publisher");
+        when(vs.as()).thenReturn("node-ref");
+        when(vs.nodeRef()).thenReturn("publisher");
+
+        Map<String, ValueSource> props = new LinkedHashMap<>();
+        props.put("publisher", vs);
+        when(rc.props()).thenReturn(props);
+
+        JaywayJsonFinder finder = finderFor("{}");
+        ResourceMapper mapper = new ResourceMapper(rc, prefixes, "dct:Dataset");
+        Model model = mapper.build(finder);
+
+        List<Statement> stmts = model.listStatements(
+                        null, model.getProperty("http://purl.org/dc/terms/publisher"), (RDFNode) null)
+                .toList();
+
+        assertThat(stmts).hasSize(1);
+        assertThat(stmts.get(0).getObject().isResource()).isTrue();
+        assertThat(stmts.get(0).getObject().asResource().getURI()).isEqualTo("https://ror.org/01bnjb948");
+
+        assertThat(model.contains(
+                        model.getResource("https://ror.org/01bnjb948"),
+                        model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+                        model.getResource("http://xmlns.com/foaf/0.1/Agent")))
+                .isTrue();
+    }
+
+    @Test
     @DisplayName("NodeTemplate multi=true + map.* emits multiple mapped concept IRIs with type")
     void node_ref_multi_map_emits_multiple() throws Exception {
         Map<String, String> ns = new LinkedHashMap<>();

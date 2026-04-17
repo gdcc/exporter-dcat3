@@ -189,6 +189,14 @@ public class ResourceMapper {
         if (nodeTemplate.iriJson() != null && !nodeTemplate.iriJson().isBlank()) {
             return listScopedOrRoot(finder, nodeTemplate.iriJson());
         }
+        if (nodeTemplate.iriConst() != null && !nodeTemplate.iriConst().isBlank()) {
+            // iri.const nodes do not depend on JSON input; emit once.
+            return Collections.singletonList(null);
+        }
+        if (nodeTemplate.iriFormat() != null && !nodeTemplate.iriFormat().isBlank()) {
+            // Format-only nodes may rely on inline placeholders and should still attempt emission.
+            return Collections.singletonList(null);
+        }
         if (nodeTemplate.iriJsonPaths() == null || nodeTemplate.iriJsonPaths().isEmpty()) {
             return Collections.emptyList();
         }
