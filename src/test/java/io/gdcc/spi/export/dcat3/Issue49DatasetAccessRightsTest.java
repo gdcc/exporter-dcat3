@@ -45,7 +45,7 @@ class Issue49DatasetAccessRightsTest {
     void testIssue49MixedFileRestrictionsMapping() throws Exception {
         // Set up configuration
         URL dcatRootPropertiesUrl =
-                getClass().getClassLoader().getResource("issue_49_dataset_access_rights/issue-49-root.properties");
+                getClass().getClassLoader().getResource("mapping/issue_49_dataset_access_rights/issue-49-root.properties");
         assertNotNull( dcatRootPropertiesUrl, "Configuration file not found" );
 
         // Load test data with mixed file restrictions
