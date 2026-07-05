@@ -6,7 +6,6 @@ package io.gdcc.spi.export.dcat3;
 import com.google.auto.service.AutoService;
 import io.gdcc.spi.export.Exporter;
 import io.gdcc.spi.export.XMLExporter;
-import java.util.Locale;
 
 @AutoService(Exporter.class)
 public class Dcat3ExporterRdfXml extends Dcat3ExporterBase implements XMLExporter {
@@ -16,8 +15,8 @@ public class Dcat3ExporterRdfXml extends Dcat3ExporterBase implements XMLExporte
     }
 
     @Override
-    public String getDisplayName(Locale locale) {
-        return "DCAT-3 (RDF/XML)";
+    protected String getDefaultDisplayName() {
+        return "DCAT-AP (RDF/XML)";
     }
 
     @Override

@@ -25,7 +25,7 @@ public final class RootConfigLoader {
     private static final Pattern ELEMENT_ID_PATTERN = Pattern.compile("^element\\.([^.]+)\\.id$");
     private static final Pattern RELATION_PREDICATE_PATTERN = Pattern.compile("^relation\\.([^.]+)\\.predicate$");
     private static final Pattern FORMAT_FLAG_PATTERN =
-            Pattern.compile("^dcat\\.format\\.([^.]+)\\.(availableToUsers|harvestable)$");
+            Pattern.compile("^dcat\\.format\\.([^.]+)\\.(availableToUsers|harvestable|displayName)$");
 
     private RootConfigLoader() {}
 
@@ -118,6 +118,7 @@ public final class RootConfigLoader {
         // and collect explicit values when present.
         Map<String, Boolean> availableToUsers = new LinkedHashMap<>();
         Map<String, Boolean> harvestable = new LinkedHashMap<>();
+        Map<String, String> displayNames = new LinkedHashMap<>();
 
         for (String key : properties.stringPropertyNames()) {
             Matcher matcher = FORMAT_FLAG_PATTERN.matcher(key);
@@ -127,23 +128,30 @@ public final class RootConfigLoader {
             String flag = matcher.group(2);
             String raw = properties.getProperty(key);
 
-            boolean value = safeBoolean(raw, true); // parse robustly; default TRUE if missing
-            if ("availableToUsers".equals(flag)) {
-                availableToUsers.put(format, value);
+            if ("displayName".equals(flag)) {
+                if (raw != null && !raw.trim().isEmpty()) {
+                    displayNames.put(format, raw.trim());
+                }
             } else {
-                harvestable.put(format, value);
+                boolean value = safeBoolean(raw, true); // parse robustly; default TRUE if missing
+                if ("availableToUsers".equals(flag)) {
+                    availableToUsers.put(format, value);
+                } else {
+                    harvestable.put(format, value);
+                }
             }
         }
 
         // Second pass: assemble FormatFlags for each discovered format.
         // Even if a format appears only in one flag, the other flag defaults to TRUE.
-        // Also: if NO keys exist for a format at all, we won’t invent formats.
+        // Also: if NO keys exist for a format at all, we won't invent formats.
         // Formats are defined implicitly by the presence of any dcat.format.<format>.* key in the
         // file.
-        for (String format : unionKeys(availableToUsers, harvestable)) {
+        for (String format : unionKeys(availableToUsers, harvestable, displayNames)) {
             boolean a = availableToUsers.getOrDefault(format, true);
             boolean h = harvestable.getOrDefault(format, true);
-            result.put(format, new FormatFlags(a, h));
+            String dn = displayNames.get(format); // null when absent — intentional
+            result.put(format, new FormatFlags(a, h, dn));
         }
 
         return result;
@@ -161,9 +169,10 @@ public final class RootConfigLoader {
         return Boolean.parseBoolean(cleaned);
     }
 
-    private static <T> java.util.Set<T> unionKeys(Map<T, ?> a, Map<T, ?> b) {
-        Set<T> s = new LinkedHashSet<>(a.keySet());
-        s.addAll(b.keySet());
+    @SafeVarargs
+    private static <T> Set<T> unionKeys(Map<T, ?>... maps) {
+        Set<T> s = new LinkedHashSet<>();
+        for (Map<T, ?> m : maps) s.addAll(m.keySet());
         return s;
     }
 }
