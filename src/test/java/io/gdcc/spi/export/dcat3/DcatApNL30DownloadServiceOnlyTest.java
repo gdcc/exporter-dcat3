@@ -113,16 +113,23 @@ class DcatApNL30DownloadServiceOnlyTest {
 
         Model dataModel = readModel(bytes, Lang.RDFXML);
 
+        // Pinned to last known-good commit before Geonovum/DCAT-AP-NL30 commit 531a110 (2026-03-09)
+        // introduced a broken dcat-ap-SHACL.ttl (3.0.1 update): dcat:DataServiceShape references
+        // property shape eb3ac4e4... which is never defined, causing a ShaclParseException.
+        // TODO: re-evaluate once Geonovum fixes the upstream bug or publishes a stable tagged release.
+        String shaclBase =
+                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/dc9527755f6530137b27dd878b04ea30f5f7f3a3/shapes/";
+
         // 5) Validate against baseline shapes (excluding "aanbevolen")
         List<String> urls = new ArrayList<>(List.of(
-                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-OPT.ttl",
-                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-SHACL.ttl",
-                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-nl-OPT.ttl",
+                shaclBase + "dcat-ap-OPT.ttl",
+                shaclBase + "dcat-ap-SHACL.ttl",
+                shaclBase + "dcat-ap-nl-OPT.ttl",
                 // intentionally NOT loading dcat-ap-nl-SHACL-aanbevolen.ttl
-                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-nl-SHACL-klassebereik-codelijsten.ttl",
-                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-nl-SHACL-klassebereik.ttl",
-                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/dcat-ap-nl-SHACL.ttl",
-                "https://raw.githubusercontent.com/Geonovum/DCAT-AP-NL30/refs/heads/main/shapes/optionaliteit.ttl"));
+                shaclBase + "dcat-ap-nl-SHACL-klassebereik-codelijsten.ttl",
+                shaclBase + "dcat-ap-nl-SHACL-klassebereik.ttl",
+                shaclBase + "dcat-ap-nl-SHACL.ttl",
+                shaclBase + "optionaliteit.ttl"));
 
         Model shapes = fetchShapesModel(urls);
         ValidationReport report = ShaclValidator.get().validate(shapes.getGraph(), dataModel.getGraph());
