@@ -63,7 +63,7 @@ class RdfXmlDeterminismTest {
 
         // basic contract checks (optional but helpful)
         assertThat(exporter.getFormatName()).isEqualTo("dcat3-rdfxml");
-        assertThat(exporter.getDisplayName(Locale.ROOT)).isEqualTo("DCAT-3 (RDF/XML)");
+        assertThat(exporter.getDisplayName(Locale.ROOT)).isEqualTo("DCAT-AP (RDF/XML)");
         assertThat(exporter.getMediaType()).isEqualTo("application/rdf+xml");
 
         // --- export 1

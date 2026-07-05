@@ -12,6 +12,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Locale;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -19,17 +21,21 @@ import org.apache.jena.riot.Lang;
 import org.apache.jena.shacl.ShaclValidator;
 import org.apache.jena.shacl.ValidationReport;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class Dcat3ExporterTest {
 
+    @TempDir
+    Path temp;
+
     @ParameterizedTest(name = "{index} => {0}")
     @CsvSource({
         // formatKey, expectedFormatName,expectedDisplayName,expectedMediaType,jenaLang
-        "rdfxml,dcat3-rdfxml,DCAT-3 (RDF/XML),application/rdf+xml,RDFXML,true",
-        "turtle,dcat3-turtle,DCAT-3 (Turtle) ,text/turtle        ,TURTLE,false",
-        "jsonld,dcat3-jsonld,DCAT-3 (JSON-LD),application/ld+json,JSONLD,false"
+        "rdfxml,dcat3-rdfxml,DCAT-AP (RDF/XML),application/rdf+xml,RDFXML,true",
+        "turtle,dcat3-turtle,DCAT-AP (Turtle) ,text/turtle        ,TURTLE,false",
+        "jsonld,dcat3-jsonld,DCAT-AP (JSON-LD),application/ld+json,JSONLD,false"
     })
     void exportSet1_allFormats(
             String formatKey,
@@ -106,6 +112,28 @@ class Dcat3ExporterTest {
         }
         String result = out.toString();
         assertThat(result.trim()).endsWith("</rdf:RDF>");
+    }
+
+    @Test
+    void configuredDisplayName_overrides_default() throws Exception {
+        // Arrange: root file with a custom displayName for turtle
+        Path rootFile = temp.resolve("dcat-root.properties");
+        Files.writeString(
+                rootFile,
+                """
+            dcat.format.turtle.availableToUsers = true
+            dcat.format.turtle.displayName = DCAT-AP-NL (Turtle)
+            element.catalog.id = catalog
+            element.catalog.type = dcat:Catalog
+            element.catalog.file = dcat-catalog.properties
+            """);
+        Files.writeString(temp.resolve("dcat-catalog.properties"), "subject.iri.const = https://example.org/cat");
+
+        System.setProperty(RootConfigLoader.SYS_PROP, rootFile.toString());
+
+        Exporter exporter = new Dcat3ExporterTurtle();
+
+        assertThat(exporter.getDisplayName(Locale.ROOT)).isEqualTo("DCAT-AP-NL (Turtle)");
     }
 
     /** Simple factory mapping the csv 'formatKey' to an exporter instance. */

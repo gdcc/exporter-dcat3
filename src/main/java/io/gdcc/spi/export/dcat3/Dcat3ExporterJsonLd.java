@@ -5,7 +5,6 @@ package io.gdcc.spi.export.dcat3;
 
 import com.google.auto.service.AutoService;
 import io.gdcc.spi.export.Exporter;
-import java.util.Locale;
 
 @AutoService(Exporter.class)
 public class Dcat3ExporterJsonLd extends Dcat3ExporterBase {
@@ -15,8 +14,8 @@ public class Dcat3ExporterJsonLd extends Dcat3ExporterBase {
     }
 
     @Override
-    public String getDisplayName(Locale locale) {
-        return "DCAT-3 (JSON-LD)";
+    protected String getDefaultDisplayName() {
+        return "DCAT-AP (JSON-LD)";
     }
 
     @Override

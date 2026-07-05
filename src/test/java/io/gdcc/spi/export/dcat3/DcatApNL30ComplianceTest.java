@@ -61,7 +61,7 @@ class DcatApNL30ComplianceTest {
 
         // -- basic contract checks
         assertThat(exporter.getFormatName()).isEqualTo("dcat3-rdfxml");
-        assertThat(exporter.getDisplayName(Locale.ROOT)).isEqualTo("DCAT-3 (RDF/XML)");
+        assertThat(exporter.getDisplayName(Locale.ROOT)).isEqualTo("DCAT-AP (RDF/XML)");
         assertThat(exporter.isAvailableToUsers()).isTrue();
         assertThat(exporter.isHarvestable()).isTrue();
         assertThat(exporter.getMediaType()).isEqualTo("application/rdf+xml");

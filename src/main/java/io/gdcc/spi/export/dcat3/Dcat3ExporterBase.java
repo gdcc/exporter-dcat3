@@ -31,6 +31,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,6 +82,20 @@ public abstract class Dcat3ExporterBase implements Exporter {
 
     /** The key in the configuration */
     protected abstract String getConfigurationKey();
+
+    /** The display name shown when no override is configured in dcat-root.properties. */
+    protected abstract String getDefaultDisplayName();
+
+    @Override
+    public String getDisplayName(Locale locale) {
+        if (root != null && root.formats().containsKey(getConfigurationKey())) {
+            String configured = root.formats().get(getConfigurationKey()).displayName();
+            if (configured != null && !configured.isEmpty()) {
+                return configured;
+            }
+        }
+        return getDefaultDisplayName();
+    }
 
     @Override
     public String getMediaType() {
