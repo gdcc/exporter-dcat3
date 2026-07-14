@@ -5,6 +5,8 @@ import io.gdcc.spi.export.dcat3.config.model.NodeTemplate;
 import io.gdcc.spi.export.dcat3.config.model.ResourceConfig;
 import io.gdcc.spi.export.dcat3.config.model.Subject;
 import io.gdcc.spi.export.dcat3.config.model.ValueSource;
+import io.gdcc.spi.export.dcat3.config.validate.IRIFixer;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 import org.apache.jena.datatypes.RDFDatatype;
 import org.apache.jena.datatypes.TypeMapper;
 import org.apache.jena.rdf.model.Literal;
@@ -30,9 +33,14 @@ public class ResourceMapper {
 
     private String sanitizeIri(String iri) {
         // Replace whitespace with underscores, takes care of most issues
-        iri = iri.replaceAll("\\s+", "_"); 
+        iri = iri.replaceAll("\\s+", "_");
+        
         // Try to fix all characters, forcing to URI if successful
         // Maybe make this into an option?
+        // Note that we could have the whitespace percent encoded as well, but we don't. 
+        if (!IRIFixer.isValidIri(iri)) {
+            iri = IRIFixer.buildValidUri(iri);
+        }
         return iri;
     }
     
