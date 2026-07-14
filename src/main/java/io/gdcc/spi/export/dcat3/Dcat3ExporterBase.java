@@ -176,7 +176,8 @@ public abstract class Dcat3ExporterBase implements Exporter {
                 ResourceConfig resourceConfig = new ResourceConfigLoader().load(in);
                 elementConfigs.put(element.id(), resourceConfig);
 
-                ResourceMapper resourceMapper = new ResourceMapper(resourceConfig, prefixes, element.typeCurieOrIri());
+                ResourceMapper resourceMapper =
+                        new ResourceMapper(resourceConfig, prefixes, element.typeCurieOrIri(), root.encodeInvalidIris());
 
                 Model elementModel = resourceMapper.build(finder);
 

@@ -70,6 +70,19 @@ dcat.format.jsonLd.availableToUsers = true
 dcat.format.jsonLd.harvestable      = false   # ignored/overridden
 
 ```
+
+### IRI encoding
+
+When an IRI is constructed from the result of a JSONPath expression it is not guarantied to be valid. 
+The most common problem is the existence of whitespace characters, these are automatically replaced by underscores. 
+This makes the resulting IRI more readable than using the percent encoding for whitespace. 
+However, other characters that are not allowed in IRIs are not replaced by default. 
+In order to have the exporter try to encode the 'invalid' IRI, thus making it valid, you need to specify the following property in the `dcat-root.properties` file:
+
+```properties
+dcat.iri.encodeInvalidChars = true
+```
+
 ### relation
 
 The relations describe which entities are relevant in the application profile. Each of the entities can have a file describing that entity.
