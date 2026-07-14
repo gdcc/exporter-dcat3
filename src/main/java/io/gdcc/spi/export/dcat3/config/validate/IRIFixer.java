@@ -1,5 +1,4 @@
 package io.gdcc.spi.export.dcat3.config.validate;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.*;
 
@@ -31,13 +30,13 @@ public class IRIFixer {
     // --- IRI validation ---
 
     /**
-     * Checks if the given string is a valid IRI according to RFC 3986.
+     * Checks if the given string is a valid URI according to RFC 3986.
      * A valid IRI must have a scheme and be well-formed.
      *
      * @param iri the IRI string to validate
      * @return true if the IRI is valid, false otherwise
      */
-    public static boolean isValidIri(String iri) {
+    public static boolean isValidUri(String iri) {
         if (iri == null || iri.trim().isEmpty()) {
             return false;
         }

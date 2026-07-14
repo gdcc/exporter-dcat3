@@ -38,7 +38,7 @@ public class ResourceMapper {
         // Try to fix all characters, forcing to URI if successful
         // Maybe make this into an option?
         // Note that we could have the whitespace percent encoded as well, but we don't. 
-        if (!IRIFixer.isValidIri(iri)) {
+        if (!IRIFixer.isValidUri(iri)) {
             iri = IRIFixer.buildValidUri(iri);
         }
         return iri;

@@ -65,7 +65,7 @@ class IRIFixerTest {
     // spotless:on
     @DisplayName("Validate IRI format with component-specific character checking")
     void isValidIri_cases(String iri, boolean expected) {
-        assertThat(IRIFixer.isValidIri(iri)).isEqualTo(expected);
+        assertThat(IRIFixer.isValidUri(iri)).isEqualTo(expected);
     }
 
     @ParameterizedTest(name = "Component illegal chars: path=''{0}'' => {1}")
@@ -81,7 +81,7 @@ class IRIFixerTest {
     @DisplayName("Validate path component with proper encoding")
     void componentPath_validation(String path, boolean shouldBeValid) {
         String uri = "http://example.org/" + path;
-        assertThat(IRIFixer.isValidIri(uri)).isEqualTo(shouldBeValid);
+        assertThat(IRIFixer.isValidUri(uri)).isEqualTo(shouldBeValid);
     }
 
     @ParameterizedTest(name = "Component illegal chars: query=''{0}'' => {1}")
@@ -98,7 +98,7 @@ class IRIFixerTest {
     @DisplayName("Validate query component with proper encoding")
     void componentQuery_validation(String query, boolean shouldBeValid) {
         String uri = "http://example.org/path?" + query;
-        assertThat(IRIFixer.isValidIri(uri)).isEqualTo(shouldBeValid);
+        assertThat(IRIFixer.isValidUri(uri)).isEqualTo(shouldBeValid);
     }
 
     @ParameterizedTest(name = "Component illegal chars: fragment=''{0}'' => {1}")
@@ -115,6 +115,6 @@ class IRIFixerTest {
     @DisplayName("Validate fragment component with proper encoding")
     void componentFragment_validation(String fragment, boolean shouldBeValid) {
         String uri = "http://example.org/path#" + fragment;
-        assertThat(IRIFixer.isValidIri(uri)).isEqualTo(shouldBeValid);
+        assertThat(IRIFixer.isValidUri(uri)).isEqualTo(shouldBeValid);
     }
 }
