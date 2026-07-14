@@ -28,12 +28,20 @@ public class ResourceMapper {
     private final Prefixes prefixes;
     private final String resourceTypeCurieOrIri;
 
+    private String sanitizeIri(String iri) {
+        // Replace whitespace with underscores, takes care of most issues
+        iri = iri.replaceAll("\\s+", "_"); 
+        // Try to fix all characters, forcing to URI if successful
+        // Maybe make this into an option?
+        return iri;
+    }
+    
     public ResourceMapper(ResourceConfig resourceConfig, Prefixes prefixes, String resourceTypeCurieOrIri) {
         this.resourceConfig = resourceConfig;
         this.prefixes = prefixes;
         this.resourceTypeCurieOrIri = resourceTypeCurieOrIri;
     }
-
+    
     public Model build(JaywayJsonFinder finder) {
         Model model = ModelFactory.createDefaultModel();
         model.setNsPrefixes(prefixes.jena());
@@ -101,7 +109,7 @@ public class ResourceMapper {
                     s -> s == null ? "" : s.trim());
         }
 
-        return isBlank(iri) ? model.createResource() : model.createResource(iri);
+        return isBlank(iri) ? model.createResource() : model.createResource(sanitizeIri(iri));
     }
 
     private void addProperty(Model model, Resource subject, JaywayJsonFinder finder, ValueSource valueSource) {
