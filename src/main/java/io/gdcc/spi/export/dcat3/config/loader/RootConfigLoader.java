@@ -55,6 +55,8 @@ public final class RootConfigLoader {
 
     private static RootConfig parse(Properties properties, Path baseDir) {
         boolean trace = Boolean.parseBoolean(properties.getProperty("dcat.trace.enabled", "false"));
+        boolean encodeInvalidIris =
+                Boolean.parseBoolean(properties.getProperty("dcat.iri.encodeInvalidChars", "false"));
 
         // prefixes.*
         Map<String, String> prefixes = new LinkedHashMap<>();
@@ -107,7 +109,7 @@ public final class RootConfigLoader {
         // dcat.format.<format>.<flag> -> defaults TRUE on absence
         Map<String, FormatFlags> formats = parseFormats(properties);
 
-        return new RootConfig(trace, prefixes, elements, relations, formats, baseDir);
+        return new RootConfig(trace, encodeInvalidIris, prefixes, elements, relations, formats, baseDir);
     }
 
     /** Parse dcat.format.* flags, defaulting to TRUE when a flag is absent. */

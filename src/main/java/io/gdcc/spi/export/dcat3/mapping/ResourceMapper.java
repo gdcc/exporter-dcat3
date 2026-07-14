@@ -5,6 +5,8 @@ import io.gdcc.spi.export.dcat3.config.model.NodeTemplate;
 import io.gdcc.spi.export.dcat3.config.model.ResourceConfig;
 import io.gdcc.spi.export.dcat3.config.model.Subject;
 import io.gdcc.spi.export.dcat3.config.model.ValueSource;
+import io.gdcc.spi.export.dcat3.config.validate.IRIFixer;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 import org.apache.jena.datatypes.RDFDatatype;
 import org.apache.jena.datatypes.TypeMapper;
 import org.apache.jena.rdf.model.Literal;
@@ -27,13 +30,23 @@ public class ResourceMapper {
     private final ResourceConfig resourceConfig;
     private final Prefixes prefixes;
     private final String resourceTypeCurieOrIri;
+    private final boolean encodeInvalidIris;
 
     public ResourceMapper(ResourceConfig resourceConfig, Prefixes prefixes, String resourceTypeCurieOrIri) {
+        this(resourceConfig, prefixes, resourceTypeCurieOrIri, true);
+    }
+
+    public ResourceMapper(
+            ResourceConfig resourceConfig,
+            Prefixes prefixes,
+            String resourceTypeCurieOrIri,
+            boolean encodeInvalidIris) {
         this.resourceConfig = resourceConfig;
         this.prefixes = prefixes;
         this.resourceTypeCurieOrIri = resourceTypeCurieOrIri;
+        this.encodeInvalidIris = encodeInvalidIris;
     }
-
+    
     public Model build(JaywayJsonFinder finder) {
         Model model = ModelFactory.createDefaultModel();
         model.setNsPrefixes(prefixes.jena());
@@ -101,7 +114,7 @@ public class ResourceMapper {
                     s -> s == null ? "" : s.trim());
         }
 
-        return isBlank(iri) ? model.createResource() : model.createResource(iri);
+        return isBlank(iri) ? model.createResource() : model.createResource(sanitizeIri(iri));
     }
 
     private void addProperty(Model model, Resource subject, JaywayJsonFinder finder, ValueSource valueSource) {
@@ -125,6 +138,7 @@ public class ResourceMapper {
                     .map(ResourceMapper::trimToNull)
                     .filter(Objects::nonNull)
                     .filter(ResourceMapper::looksLikeIri)
+                    .map(this::sanitizeIri)
                     .map(model::createResource)
                     .collect(Collectors.toList());
             default -> resolveLiteralValues(model, finder, valueSource);
@@ -282,7 +296,7 @@ public class ResourceMapper {
             return null;
         }
 
-        Resource resource = model.createResource(iri);
+        Resource resource = model.createResource(sanitizeIri(iri));
 
         // Attach nested properties (if any)
         emitNestedProps(model, finder, nodeTemplate, resource);
@@ -461,6 +475,19 @@ public class ResourceMapper {
         return s != null && s.matches("^[a-zA-Z][a-zA-Z0-9+.-]*:.*");
     }
 
+    private String sanitizeIri(String iri) {
+        // Replace whitespace with underscores, takes care of most issues
+        iri = iri.replaceAll("\\s+", "_");
+
+        // Try to fix all characters
+        // Maybe make this into an option ( or forcing into Uri)?
+        // Note that we could have the whitespace percent encoded as well, but we don't.
+        if (encodeInvalidIris && !IRIFixer.isValidIri(iri)) { // prevent double encoding
+            iri = IRIFixer.buildValidIri(iri);
+        }
+        return iri;
+    }
+ 
     private List<RDFNode> resolveLiteralValues(Model model, JaywayJsonFinder finder, ValueSource valueSource) {
         List<String> rawValues = valuesFromSource(finder, valueSource);
         boolean hasInput = !rawValues.isEmpty();

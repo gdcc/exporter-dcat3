@@ -144,6 +144,89 @@ class ResourceMapperTest {
         assertThat(idStmts.get(0).getObject().asResource().getURI()).isEqualTo("http://example.org/id-iri");
     }
 
+    @Test
+    @DisplayName("subject invalid IRI is encoded only when encodeInvalidIris is enabled")
+    void subject_invalid_iri_respects_encode_invalid_iris_flag() throws Exception {
+        Map<String, String> ns = new LinkedHashMap<>();
+        ns.put("dcat", "http://www.w3.org/ns/dcat#");
+        Prefixes prefixes = new Prefixes(ns);
+
+        ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
+        when(rc.subject().iriConst()).thenReturn("http://example.org/a|b");
+        when(rc.subject().iriTemplate()).thenReturn(null);
+        when(rc.subject().iriFormat()).thenReturn(null);
+        when(rc.subject().iriJson()).thenReturn(null);
+        when(rc.props()).thenReturn(emptyMap());
+        when(rc.nodes()).thenReturn(emptyMap());
+        when(rc.scopeJson()).thenReturn(null);
+
+        JaywayJsonFinder finder = finderFor("{}");
+
+        ResourceMapper encodeMapper = new ResourceMapper(rc, prefixes, "dcat:Dataset", true);
+        Model encodedModel = encodeMapper.build(finder);
+        Resource encodedSubject = encodedModel.listSubjects().next();
+        assertThat(encodedSubject.getURI()).isEqualTo("http://example.org/a%7Cb");
+
+        ResourceMapper passthroughMapper = new ResourceMapper(rc, prefixes, "dcat:Dataset", false);
+        Model passthroughModel = passthroughMapper.build(finder);
+        Resource passthroughSubject = passthroughModel.listSubjects().next();
+        assertThat(passthroughSubject.getURI()).isEqualTo("http://example.org/a|b");
+    }
+
+    @Test
+    @DisplayName("IRI object values are sanitized only when encodeInvalidIris is enabled")
+    void iri_object_invalid_value_respects_encode_invalid_iris_flag() throws Exception {
+        Map<String, String> ns = new LinkedHashMap<>();
+        ns.put("dcat", "http://www.w3.org/ns/dcat#");
+        ns.put("dct", "http://purl.org/dc/terms/");
+        Prefixes prefixes = new Prefixes(ns);
+
+        ResourceConfig rc = mock(ResourceConfig.class, RETURNS_DEEP_STUBS);
+        when(rc.subject().iriConst()).thenReturn("http://example.org/id");
+        when(rc.subject().iriTemplate()).thenReturn(null);
+        when(rc.subject().iriFormat()).thenReturn(null);
+        when(rc.subject().iriJson()).thenReturn(null);
+
+        ValueSource vsId = mock(ValueSource.class);
+        when(vsId.predicate()).thenReturn("dct:identifier");
+        when(vsId.as()).thenReturn("iri");
+        when(vsId.constValue()).thenReturn("http://example.org/a|b");
+        when(vsId.json()).thenReturn(null);
+        when(vsId.multi()).thenReturn(false);
+        when(vsId.format()).thenReturn(null);
+        when(vsId.lang()).thenReturn(null);
+        when(vsId.datatype()).thenReturn(null);
+        when(vsId.map()).thenReturn(emptyMap());
+        when(vsId.jsonPaths()).thenReturn(emptyList());
+
+        Map<String, ValueSource> props = new LinkedHashMap<>();
+        props.put("identifier", vsId);
+
+        when(rc.props()).thenReturn(props);
+        when(rc.nodes()).thenReturn(emptyMap());
+        when(rc.scopeJson()).thenReturn(null);
+
+        JaywayJsonFinder finder = finderFor("{}");
+
+        ResourceMapper encodeMapper = new ResourceMapper(rc, prefixes, "dcat:Dataset", true);
+        Model encodedModel = encodeMapper.build(finder);
+        List<Statement> encodedStatements = encodedModel.listStatements(
+                        null, encodedModel.getProperty("http://purl.org/dc/terms/identifier"), (RDFNode) null)
+                .toList();
+        assertThat(encodedStatements).hasSize(1);
+        assertThat(encodedStatements.get(0).getObject().asResource().getURI())
+                .isEqualTo("http://example.org/a%7Cb");
+
+        ResourceMapper passthroughMapper = new ResourceMapper(rc, prefixes, "dcat:Dataset", false);
+        Model passthroughModel = passthroughMapper.build(finder);
+        List<Statement> passthroughStatements = passthroughModel.listStatements(
+                        null, passthroughModel.getProperty("http://purl.org/dc/terms/identifier"), (RDFNode) null)
+                .toList();
+        assertThat(passthroughStatements).hasSize(1);
+        assertThat(passthroughStatements.get(0).getObject().asResource().getURI())
+                .isEqualTo("http://example.org/a|b");
+    }
+
     // --- NEW TESTS: iri.format & iri.map on ValueSource and NodeTemplate ---
 
     @Test
