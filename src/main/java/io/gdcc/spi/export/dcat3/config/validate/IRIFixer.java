@@ -201,6 +201,7 @@ public class IRIFixer {
     private static String encodePath(String s)      { return pctEncode(s, "-._~!$&'()*+,;=:@/"); }
     private static String encodeAuthority(String s)  { return pctEncode(s, "-._~!$&'()*+,;=:@[]"); }
     private static String encodeQueryOrFragment(String s) { return pctEncode(s, "-._~!$&'()*+,;=:@/?"); }
+    
     private static String encodeIriPath(String s) { return pctEncodeIriAware(s, "-._~!$&'()*+,;=:@/"); }
     private static String encodeIriAuthority(String s) { return pctEncodeIriAware(s, "-._~!$&'()*+,;=:@[]"); }
     private static String encodeIriQueryOrFragment(String s) { return pctEncodeIriAware(s, "-._~!$&'()*+,;=:@/?"); }
@@ -221,6 +222,35 @@ public class IRIFixer {
         return out.toString();
     }
 
+    /**
+     * Checks if the given Unicode code point is a valid UCS character for use in IRIs.
+     *
+     * <p>RFC 3987 defines UCS characters as those Unicode code points that are safe to include
+     * directly in IRIs (International Resource Identifiers) without percent-encoding.
+     * This method validates membership in the allowed UCS character ranges:
+     *
+     * <ul>
+     *   <li>{@code U+00A0..U+D7FF}: Latin supplements, Greek, Cyrillic, CJK, etc.</li>
+     *   <li>{@code U+F900..U+FDCF}: CJK compatibility ideographs</li>
+     *   <li>{@code U+FDF0..U+FFEF}: Arabic presentation forms, half-width forms</li>
+     *   <li>{@code U+10000..U+EFFFD}: Supplementary Multilingual Plane and beyond (including emoji)</li>
+     * </ul>
+     *
+     * <p>Excluded ranges include:
+     *
+     * <ul>
+     *   <li>Control characters ({@code U+0000..U+001F}, {@code U+007F..U+009F})</li>
+     *   <li>Surrogates ({@code U+D800..U+DFFF})</li>
+     *   <li>Noncharacters</li>
+     * </ul>
+     *
+     * <p>Example: {@code café} contains the character {@code é} (U+00E9), which falls in the
+     * first range and is thus a valid UCS character that can appear unencoded in an IRI.
+     *
+     * @param codePoint the Unicode code point to test
+     * @return true if the code point is a valid UCS character, false otherwise
+     * @see <a href="https://tools.ietf.org/html/rfc3987">RFC 3987 - Internationalized Resource Identifiers (IRIs)</a>
+     */
     private static boolean isUcschar(int codePoint) {
         return (codePoint >= 0xA0 && codePoint <= 0xD7FF)
                 || (codePoint >= 0xF900 && codePoint <= 0xFDCF)

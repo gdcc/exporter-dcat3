@@ -30,19 +30,7 @@ public class ResourceMapper {
     private final ResourceConfig resourceConfig;
     private final Prefixes prefixes;
     private final String resourceTypeCurieOrIri;
-
-    private String sanitizeIri(String iri) {
-        // Replace whitespace with underscores, takes care of most issues
-        iri = iri.replaceAll("\\s+", "_");
-        
-        // Try to fix all characters
-        // Maybe make this into an option ( or forcing into Uri)?
-        // Note that we could have the whitespace percent encoded as well, but we don't. 
-        if (!IRIFixer.isValidIri(iri)) { // prevent double encoding
-            iri = IRIFixer.buildValidIri(iri);
-        }
-        return iri;
-    }
+    
     
     public ResourceMapper(ResourceConfig resourceConfig, Prefixes prefixes, String resourceTypeCurieOrIri) {
         this.resourceConfig = resourceConfig;
@@ -298,7 +286,7 @@ public class ResourceMapper {
             return null;
         }
 
-        Resource resource = model.createResource(iri);
+        Resource resource = model.createResource(sanitizeIri(iri));
 
         // Attach nested properties (if any)
         emitNestedProps(model, finder, nodeTemplate, resource);
@@ -477,6 +465,19 @@ public class ResourceMapper {
         return s != null && s.matches("^[a-zA-Z][a-zA-Z0-9+.-]*:.*");
     }
 
+    private String sanitizeIri(String iri) {
+        // Replace whitespace with underscores, takes care of most issues
+        iri = iri.replaceAll("\\s+", "_");
+
+        // Try to fix all characters
+        // Maybe make this into an option ( or forcing into Uri)?
+        // Note that we could have the whitespace percent encoded as well, but we don't. 
+        if (!IRIFixer.isValidIri(iri)) { // prevent double encoding
+            iri = IRIFixer.buildValidIri(iri);
+        }
+        return iri;
+    }
+ 
     private List<RDFNode> resolveLiteralValues(Model model, JaywayJsonFinder finder, ValueSource valueSource) {
         List<String> rawValues = valuesFromSource(finder, valueSource);
         boolean hasInput = !rawValues.isEmpty();
