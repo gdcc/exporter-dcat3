@@ -35,11 +35,11 @@ public class ResourceMapper {
         // Replace whitespace with underscores, takes care of most issues
         iri = iri.replaceAll("\\s+", "_");
         
-        // Try to fix all characters, forcing to URI if successful
-        // Maybe make this into an option?
+        // Try to fix all characters
+        // Maybe make this into an option ( or forcing into Uri)?
         // Note that we could have the whitespace percent encoded as well, but we don't. 
-        if (!IRIFixer.isValidUri(iri)) {
-            iri = IRIFixer.buildValidUri(iri);
+        if (!IRIFixer.isValidIri(iri)) { // prevent double encoding
+            iri = IRIFixer.buildValidIri(iri);
         }
         return iri;
     }
