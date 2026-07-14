@@ -135,7 +135,7 @@ public final class RootConfigLoader {
                     displayNames.put(format, raw.trim());
                 }
             } else {
-                boolean value = parseBooleanDefaultTrue(raw); // parse robustly; default TRUE if missing
+                boolean value = safeBoolean(raw, true); // parse robustly; default TRUE if missing
                 if ("availableToUsers".equals(flag)) {
                     availableToUsers.put(format, value);
                 } else {
@@ -160,12 +160,11 @@ public final class RootConfigLoader {
     }
 
     /**
-     * Robust boolean parsing that defaults to TRUE for missing values, trims whitespace,
-     * ignores a trailing semicolon (e.g., "true;"), and uses Boolean.parseBoolean on
-     * the cleaned token.
+     * Robust boolean parsing: - null -> defaultValue - trims whitespace - ignores a trailing
+     * semicolon (e.g., "true;") - uses Boolean.parseBoolean on the cleaned token
      */
-    private static boolean parseBooleanDefaultTrue(String raw) {
-        if (raw == null) return true;
+    private static boolean safeBoolean(String raw, boolean defaultValue) {
+        if (raw == null) return defaultValue;
         String cleaned = raw.trim();
         if (cleaned.endsWith(";"))
             cleaned = cleaned.substring(0, cleaned.length() - 1).trim();
