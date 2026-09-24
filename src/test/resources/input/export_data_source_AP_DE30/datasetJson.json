@@ -1,0 +1,270 @@
+{
+  "id": 2,
+  "identifier": "123456789",
+  "persistentUrl": "https://health-study-hub.de/resource/nfdi4health-123456789",
+  "protocol": "perma",
+  "authority": "nfdi4health",
+  "separator": "-",
+  "publisher": "NFDI4Health Health Study Hub",
+  "publicationDate": "2026-03-13",
+  "storageIdentifier": "s3://nfdi4health/123456789",
+  "datasetType": "dataset",
+  "datasetVersion": {
+    "id": 1,
+    "datasetId": 2,
+    "datasetPersistentId": "perma:nfdi4health-123456789",
+    "storageIdentifier": "s3://nfdi4health/123456789",
+    "versionNumber": 1,
+    "versionMinorNumber": 0,
+    "versionState": "RELEASED",
+    "latestVersionPublishingState": "RELEASED",
+    "lastUpdateTime": "2026-03-13T11:23:36Z",
+    "releaseTime": "2026-03-13T11:23:36Z",
+    "createTime": "2026-03-13T11:22:36Z",
+    "publicationDate": "2026-03-13",
+    "citationDate": "2026-03-13",
+    "license": {
+      "name": "CC0 1.0",
+      "uri": "http://creativecommons.org/publicdomain/zero/1.0",
+      "iconUri": "https://licensebuttons.net/p/zero/1.0/88x31.png",
+      "rightsIdentifier": "CC0-1.0",
+      "rightsIdentifierScheme": "SPDX",
+      "schemeUri": "https://spdx.org/licenses/",
+      "languageCode": "en"
+    },
+    "fileAccessRequest": true,
+    "metadataBlocks": {
+      "citation": {
+        "displayName": "Citation Metadata",
+        "name": "citation",
+        "fields": [
+          {
+            "typeName": "title",
+            "multiple": false,
+            "typeClass": "primitive",
+            "value": "Clinical Study Dataset: Respiratory Health"
+          },
+          {
+            "typeName": "author",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "authorName": {
+                  "typeName": "authorName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Dr. Maria Musterfrau"
+                },
+                "authorAffiliation": {
+                  "typeName": "authorAffiliation",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Centre for Clinical Research"
+                }
+              },
+              {
+                "authorName": {
+                  "typeName": "authorName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Dr. Anna Schmidt"
+                },
+                "authorAffiliation": {
+                  "typeName": "authorAffiliation",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Institute for Public Health Research"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "datasetContact",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "datasetContactName": {
+                  "typeName": "datasetContactName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Health Study Hub Support"
+                },
+                "datasetContactAffiliation": {
+                  "typeName": "datasetContactAffiliation",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "ZB MED - Information Centre for Life Sciences"
+                },
+                "datasetContactEmail": {
+                  "typeName": "datasetContactEmail",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "support@health-study-hub.de"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "dsDescription",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "dsDescriptionValue": {
+                  "typeName": "dsDescriptionValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "An anonymized dataset from a respiratory health study."
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "subject",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "Medicine, Health and Life Sciences"
+            ]
+          },
+          {
+            "typeName": "keyword",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "keywordValue": {
+                  "typeName": "keywordValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Keyword-1"
+                }
+              },
+              {
+                "keywordValue": {
+                  "typeName": "keywordValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Keyword-2"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "producer",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "producerName": {
+                  "typeName": "producerName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Producer"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "depositor",
+            "multiple": false,
+            "typeClass": "primitive",
+            "value": "ZB MED - Information Centre for Life Sciences"
+          },
+          {
+            "typeName": "dateOfDeposit",
+            "multiple": false,
+            "typeClass": "primitive",
+            "value": "2026-03-13"
+          }
+        ]
+      }
+    },
+    "files": [
+      {
+        "description": "File-1 description",
+        "label": "respiratory-study-data.csv",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 1,
+        "dataFile": {
+          "id": 5,
+          "persistentId": "",
+          "filename": "respiratory-study-data.csv",
+          "contentType": "text/csv",
+          "friendlyType": "CSV",
+          "filesize": 152652,
+          "description": "File-1 description",
+          "storageIdentifier": "s3://19ce6ee770a-19f735da29f8",
+          "rootDataFileId": -1,
+          "md5": "69c03f9cba8a5d4ab8494030f7a2784d",
+          "checksum": {
+            "type": "MD5",
+            "value": "69c03f9cba8a5d4ab8494030f7a2784d"
+          },
+          "tabularData": false,
+          "creationDate": "2026-03-13",
+          "publicationDate": "2026-03-13",
+          "fileAccessRequest": true
+        }
+      },
+      {
+        "description": "File-2 description",
+        "label": "study-protocol.pdf",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 1,
+        "dataFile": {
+          "id": 3,
+          "persistentId": "",
+          "filename": "study-protocol.pdf",
+          "contentType": "application/pdf",
+          "friendlyType": "Adobe PDF",
+          "filesize": 2803974,
+          "description": "File-2 description",
+          "storageIdentifier": "s3://19ce6ee8763-3411a7905250",
+          "rootDataFileId": -1,
+          "md5": "ce0daa3264758a67d54d3f37fcb05d73",
+          "checksum": {
+            "type": "MD5",
+            "value": "ce0daa3264758a67d54d3f37fcb05d73"
+          },
+          "tabularData": false,
+          "creationDate": "2026-03-13",
+          "publicationDate": "2026-03-13",
+          "fileAccessRequest": true
+        }
+      },
+      {
+        "description": "File-3 description",
+        "label": "clinical-study-codebook.xlsx",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 1,
+        "dataFile": {
+          "id": 4,
+          "persistentId": "",
+          "filename": "clinical-study-codebook.xlsx",
+          "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "friendlyType": "Microsoft Excel",
+          "filesize": 116080,
+          "description": "File-3 description",
+          "storageIdentifier": "s3://19ce6ee88f0-ef71b0811b6f",
+          "rootDataFileId": -1,
+          "md5": "38b02f179f291b85b949b6d8832f356c",
+          "checksum": {
+            "type": "MD5",
+            "value": "38b02f179f291b85b949b6d8832f356c"
+          },
+          "tabularData": false,
+          "creationDate": "2026-03-13",
+          "publicationDate": "2026-03-13",
+          "fileAccessRequest": true
+        }
+      }
+    ],
+    "citation": "Dr. Maria Musterfrau, 2026, \"Clinical Study Dataset: Respiratory Health\", https://health-study-hub.de/resource/nfdi4health-123456789, ZB MED - Information Centre for Life Sciences, V1"
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "dcterms:modified": "2026-03-13",
+  "dcterms:creator": "ZB MED - Information Centre for Life Sciences",
+  "@type": "ore:ResourceMap",
+  "schema:additionalType": "Dataverse OREMap Format v1.0.1",
+  "dvcore:generatedBy": {
+    "@type": "schema:SoftwareApplication",
+    "schema:name": "Dataverse",
+    "schema:version": "6.6",
+    "schema:url": "https://github.com/iqss/dataverse"
+  },
+  "@id": "https://health-study-hub.de/api/datasets/export?exporter=OAI_ORE&persistentId=perma:nfdi4health-123456789",
+  "ore:describes": {
+    "author": {
+      "citation:authorName": "Dr. Maria Musterfrau",
+      "citation:authorAffiliation": "Centre for Clinical Research"
+    },
+    "citation:additionalAuthor": {
+      "citation:authorName": "Dr. Anna Schmidt",
+      "citation:authorAffiliation": "Institute for Public Health Research"
+    },
+    "citation:keyword": [
+      {
+        "citation:keywordValue": "Keyword-1"
+      },
+      {
+        "citation:keywordValue": "Keyword-2"
+      }
+    ],
+    "citation:dsDescription": {
+      "citation:dsDescriptionValue": "An anonymized dataset from a respiratory health study."
+    },
+    "citation:datasetContact": {
+      "citation:datasetContactName": "Health Study Hub Support",
+      "citation:datasetContactAffiliation": "ZB MED - Information Centre for Life Sciences",
+      "citation:datasetContactEmail": "support@health-study-hub.de"
+    },
+    "title": "Clinical Study Dataset: Respiratory Health",
+    "citation:depositor": "ZB MED - Information Centre for Life Sciences",
+    "dateOfDeposit": "2026-03-13",
+    "subject": "Medicine, Health and Life Sciences",
+    "citation:producer": {
+      "citation:producerName": "Producer"
+    },
+    "@id": "https://health-study-hub.de/dataset/clinical-001",
+    "@type": [
+      "ore:Aggregation",
+      "schema:Dataset"
+    ],
+    "schema:version": "1.0",
+    "schema:name": "Clinical Study Dataset: Respiratory Health",
+    "schema:dateModified": "2026-03-13 11:23:36.428",
+    "schema:datePublished": "2026-03-13",
+    "schema:creativeWorkStatus": "RELEASED",
+    "schema:license": "http://creativecommons.org/publicdomain/zero/1.0",
+    "dvcore:fileTermsOfAccess": {
+      "dvcore:fileRequestAccess": true
+    },
+    "schema:includedInDataCatalog": "NFDI4Health Health Study Hub",
+    "schema:isPartOf": {
+      "schema:name": "ZB MED - Information Centre for Life Sciences",
+      "@id": "https://health-study-hub.de/collection/health-studies",
+      "schema:description": "The Health Study Hub provides documented clinical and public health study data."
+    },
+    "ore:aggregates": [
+      {
+        "schema:description": "Anonymized respiratory study observations",
+        "schema:name": "respiratory-study-data.csv",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 1,
+        "@id": "https://health-study-hub.de/file.xhtml?fileId=5",
+        "schema:sameAs": "https://health-study-hub.de/api/access/datafile/5",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "text/csv",
+        "dvcore:filesize": 152652,
+        "dvcore:storageIdentifier": "s3://19ce6ee770a-19f735da29f8",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "69c03f9cba8a5d4ab8494030f7a2784d"
+        }
+      },
+      {
+        "schema:description": "Study protocol and methodology",
+        "schema:name": "study-protocol.pdf",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 1,
+        "@id": "https://health-study-hub.de/file.xhtml?fileId=3",
+        "schema:sameAs": "https://health-study-hub.de/api/access/datafile/3",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "application/pdf",
+        "dvcore:filesize": 2803974,
+        "dvcore:storageIdentifier": "s3://19ce6ee8763-3411a7905250",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "ce0daa3264758a67d54d3f37fcb05d73"
+        }
+      },
+      {
+        "schema:description": "Variable definitions and codebook",
+        "schema:name": "clinical-study-codebook.xlsx",
+        "dvcore:restricted": false,
+        "schema:version": 1,
+        "dvcore:datasetVersionId": 1,
+        "@id": "https://health-study-hub.de/file.xhtml?fileId=4",
+        "schema:sameAs": "https://health-study-hub.de/api/access/datafile/4",
+        "@type": "ore:AggregatedResource",
+        "schema:fileFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "dvcore:filesize": 116080,
+        "dvcore:storageIdentifier": "s3://19ce6ee88f0-ef71b0811b6f",
+        "dvcore:rootDataFileId": -1,
+        "dvcore:checksum": {
+          "@type": "MD5",
+          "@value": "38b02f179f291b85b949b6d8832f356c"
+        }
+      }
+    ],
+    "schema:hasPart": [
+      "https://health-study-hub.de/file.xhtml?fileId=5",
+      "https://health-study-hub.de/file.xhtml?fileId=3",
+      "https://health-study-hub.de/file.xhtml?fileId=4"
+    ]
+  },
+  "@context": {
+    "author": "http://purl.org/dc/terms/creator",
+    "citation": "https://dataverse.org/schema/citation/",
+    "dateOfDeposit": "http://purl.org/dc/terms/dateSubmitted",
+    "dcterms": "http://purl.org/dc/terms/",
+    "dvcore": "https://dataverse.org/schema/core#",
+    "ore": "http://www.openarchives.org/ore/terms/",
+    "schema": "http://schema.org/",
+    "subject": "http://purl.org/dc/terms/subject",
+    "title": "http://purl.org/dc/terms/title"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "@context" : "http://schema.org",
+  "@type" : "Dataset",
+  "@id" : "https://health-study-hub.de/resource/nfdi4health-123456789",
+  "identifier" : "https://health-study-hub.de/resource/nfdi4health-123456789",
+  "name" : "Clinical Study Dataset: Respiratory Health",
+  "creator" : [ {
+    "@type" : "Person",
+    "affiliation" : {
+      "@type" : "Organization",
+      "name" : "Centre for Clinical Research"
+    },
+    "name" : "Dr. Maria Musterfrau"
+  }, {
+    "@type" : "Person",
+    "affiliation" : {
+      "@type" : "Organization",
+      "name" : "Institute for Public Health Research"
+    },
+    "name" : "Dr. Anna Schmidt"
+  } ],
+  "author" : [ {
+    "@type" : "Person",
+    "affiliation" : {
+      "@type" : "Organization",
+      "name" : "Centre for Clinical Research"
+    },
+    "name" : "Dr. Maria Musterfrau"
+  }, {
+    "@type" : "Person",
+    "affiliation" : {
+      "@type" : "Organization",
+      "name" : "Institute for Public Health Research"
+    },
+    "name" : "Dr. Anna Schmidt"
+  } ],
+  "datePublished" : "2026-03-13",
+  "dateModified" : "2026-03-13",
+  "version" : "1",
+  "description" : "An anonymized dataset from a respiratory health study.",
+  "keywords" : [ "Medicine, Health and Life Sciences", "Keyword-1", "Keyword-2" ],
+  "license" : "http://creativecommons.org/publicdomain/zero/1.0",
+  "includedInDataCatalog" : {
+    "@type" : "DataCatalog",
+    "name" : "NFDI4Health Health Study Hub",
+    "url" : "https://health-study-hub.de"
+  },
+  "publisher" : {
+    "@type" : "Organization",
+    "name" : "NFDI4Health Health Study Hub"
+  },
+  "provider" : {
+    "@type" : "Organization",
+    "name" : "NFDI4Health Health Study Hub"
+  },
+  "distribution" : [ {
+    "@type" : "DataDownload",
+    "name" : "respiratory-study-data.csv",
+    "encodingFormat" : "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "contentSize" : 152652,
+    "description" : "File-1 description",
+    "contentUrl" : "https://health-study-hub.de/api/access/datafile/5"
+  }, {
+    "@type" : "DataDownload",
+    "name" : "study-protocol.pdf",
+    "encodingFormat" : "application/pdf",
+    "contentSize" : 2803974,
+    "description" : "File-2 description",
+    "contentUrl" : "https://health-study-hub.de/api/access/datafile/3"
+  }, {
+    "@type" : "DataDownload",
+    "name" : "clinical-study-codebook.xlsx",
+    "encodingFormat" : "image/png",
+    "contentSize" : 116080,
+    "description" : "File-3 description",
+    "contentUrl" : "https://health-study-hub.de/api/access/datafile/4"
+  } ]
+}
