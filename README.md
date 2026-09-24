@@ -60,6 +60,9 @@ A minimal configuration that does not require additional metadata. Can act as a 
 ### [Dutch National Application Profile (DCAT-AP-NL 3.0)](https://docs.geostandaarden.nl/dcat/dcat-ap-nl30/)
 The official Dutch profile, including mappings for all mandatory fields. This is completed with the Tab Separated Value definition of required additional fields.
 
+### [German Application Profile (DCAT‑AP.de 3.0)](https://www.dcat-ap.de/def/dcatde/3.0/spec/)
+A profile for the German DCAT-AP.de 3.0, including mappings for all mandatory fields.
+
 ### Why Application Profiles?
 Application profiles define how DCAT is applied in a specific context—national, sectoral, or domain-specific. They ensure interoperability and consistency when publishing metadata.
 

@@ -1,0 +1,69 @@
+[
+  {
+  "id" : 5,
+  "persistentId" : "",
+  "filename" : "respiratory-study-data.csv",
+  "contentType" : "text/csv",
+  "friendlyType" : "CSV",
+  "filesize" : 152652,
+  "description" : "Anonymized respiratory study observations",
+  "storageIdentifier" : "local://19ce6ee770a-19f735da29f8",
+  "rootDataFileId" : -1,
+  "md5" : "69c03f9cba8a5d4ab8494030f7a2784d",
+  "checksum" : {
+    "type" : "MD5",
+    "value" : "69c03f9cba8a5d4ab8494030f7a2784d"
+  },
+  "tabularData" : false,
+  "creationDate" : "2026-03-13",
+  "publicationDate" : "2026-03-13",
+  "fileAccessRequest" : true,
+  "restricted" : false,
+  "fileMetadataId" : 2,
+  "varGroups" : [ ]
+}, {
+  "id" : 3,
+  "persistentId" : "",
+  "filename" : "study-protocol.pdf",
+  "contentType" : "application/pdf",
+  "friendlyType" : "Adobe PDF",
+  "filesize" : 2803974,
+  "description" : "Study protocol and methodology",
+  "storageIdentifier" : "local://19ce6ee8763-3411a7905250",
+  "rootDataFileId" : -1,
+  "md5" : "ce0daa3264758a67d54d3f37fcb05d73",
+  "checksum" : {
+    "type" : "MD5",
+    "value" : "ce0daa3264758a67d54d3f37fcb05d73"
+  },
+  "tabularData" : false,
+  "creationDate" : "2026-03-13",
+  "publicationDate" : "2026-03-13",
+  "fileAccessRequest" : true,
+  "restricted" : false,
+  "fileMetadataId" : 3,
+  "varGroups" : [ ]
+}, {
+  "id" : 4,
+  "persistentId" : "",
+  "filename" : "clinical-study-codebook.xlsx",
+  "contentType" : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "friendlyType" : "Microsoft Excel",
+  "filesize" : 116080,
+  "description" : "Variable definitions and codebook",
+  "storageIdentifier" : "local://19ce6ee88f0-ef71b0811b6f",
+  "rootDataFileId" : -1,
+  "md5" : "38b02f179f291b85b949b6d8832f356c",
+  "checksum" : {
+    "type" : "MD5",
+    "value" : "38b02f179f291b85b949b6d8832f356c"
+  },
+  "tabularData" : false,
+  "creationDate" : "2026-03-13",
+  "publicationDate" : "2026-03-13",
+  "fileAccessRequest" : true,
+  "restricted" : false,
+  "fileMetadataId" : 1,
+  "varGroups" : [ ]
+}
+]
