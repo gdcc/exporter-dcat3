@@ -1,13 +1,13 @@
 
 # DCAT‑3 Exporter for Dataverse — DCAT‑AP‑NL 3.0
 
-> **Status:** Prototype with automated validation. Produces RDF for DCAT 3.0 and DCAT‑AP‑NL 3.0.
+> **Status:** Prototype with automated validation. Produces RDF for DCAT 3.0, DCAT‑AP‑NL 3.0 and DCAT-AP-DK 3.0 (deployment-specific).
 
 This exporter turns Dataverse metadata into DCAT‑compliant RDF using a **declarative mapping** in `.properties` files. It is configuration‑driven, supports multiple RDF serializations, and is built to be validated automatically (SHACL) in CI.
 
 - **Formats:** Turtle (`text/turtle`), JSON‑LD (`application/ld+json`), RDF/XML (`application/rdf+xml`).
 - **Dataverse:** External exporter plugin for Dataverse 6.x (best on 6.2+).
-- **Profiles:** DCAT 3.0 and DCAT‑AP‑NL 3.0.
+- **Profiles:** DCAT 3.0, DCAT‑AP‑NL 3.0, DCAT-AP-DK 3.0 (deployment-specific).
 
 For in‑depth details, see:
 - **Documentation (properties, JSONPath, nodes, validation rules):** [DOCUMENTATION.md](DOCUMENTATION.md)
@@ -62,6 +62,9 @@ The official Dutch profile, including mappings for all mandatory fields. This is
 
 ### [German Application Profile (DCAT‑AP.de 3.0)](https://www.dcat-ap.de/def/dcatde/3.0/spec/)
 A profile for the German DCAT-AP.de 3.0, including mappings for all mandatory fields.
+
+### [Danish Deployment-Specific Application Profile (DCAT‑AP-DK 3.0) - DeiC Dataverse to Datavejviser integration](https://digst.github.io/DCAT-AP-DK/releases/v.3.0/docs/)
+A deployment-specific profile for the Danish DCAT-AP-DK 3.0 for use in metadata transfer from DeiC Dataverse installation to the Danish Datavejviser national data catalog.
 
 ### Why Application Profiles?
 Application profiles define how DCAT is applied in a specific context—national, sectoral, or domain-specific. They ensure interoperability and consistency when publishing metadata.
@@ -224,4 +227,5 @@ See [LICENSE](LICENSE).
 
 - Dataverse external exporters & admin guides (exporters directory, re‑export API)
 - DCAT‑AP 3.0 & DCAT‑AP‑NL 3.0 (specs & SHACL)
+- DCAT-AP-DK 3.0
 

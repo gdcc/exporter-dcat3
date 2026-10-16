@@ -1,0 +1,353 @@
+{
+  "id": 2,
+  "identifier": "GDN/SQOPAL",
+  "persistentUrl": "https://doi.org/10.83300/GDN/SQOPAL",
+  "protocol": "doi",
+  "authority": "10.83300",
+  "separator": "/",
+  "publisher": "Geological Survey of the Netherlands Dataverse",
+  "publicationDate": "2026-03-13",
+  "storageIdentifier": "local://10.83300/GDN/SQOPAL",
+  "datasetType": "dataset",
+  "datasetVersion": {
+    "id": 1,
+    "datasetId": 2,
+    "datasetPersistentId": "doi:10.83300/GDN/SQOPAL",
+    "storageIdentifier": "local://10.83300/GDN/SQOPAL",
+    "versionNumber": 1,
+    "versionMinorNumber": 0,
+    "versionState": "RELEASED",
+    "latestVersionPublishingState": "RELEASED",
+    "lastUpdateTime": "2026-03-13T11:23:36Z",
+    "releaseTime": "2026-03-13T11:23:36Z",
+    "createTime": "2026-03-13T11:22:36Z",
+    "publicationDate": "2026-03-13",
+    "citationDate": "2026-03-13",
+    "license": {
+      "name": "CC0 1.0",
+      "uri": "http://creativecommons.org/publicdomain/zero/1.0",
+      "iconUri": "https://licensebuttons.net/p/zero/1.0/88x31.png",
+      "rightsIdentifier": "CC0-1.0",
+      "rightsIdentifierScheme": "SPDX",
+      "schemeUri": "https://spdx.org/licenses/",
+      "languageCode": "en"
+    },
+    "fileAccessRequest": true,
+    "metadataBlocks": {
+      "citation": {
+        "displayName": "Citation Metadata",
+        "name": "citation",
+        "fields": [
+          {
+            "typeName": "title",
+            "multiple": false,
+            "typeClass": "primitive",
+            "value": "Title of Dataset"
+          },
+          {
+            "typeName": "author",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "authorName": {
+                  "typeName": "authorName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Author of Dataset"
+                },
+                "authorAffiliation": {
+                  "typeName": "authorAffiliation",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "TNO Geological Survey of the Netherlands"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "datasetContact",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "datasetContactName": {
+                  "typeName": "datasetContactName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Geological Survey of the Netherlands Servicedesk"
+                },
+                "datasetContactAffiliation": {
+                  "typeName": "datasetContactAffiliation",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "TNO Geological Survey of the Netherlands"
+                },
+                "datasetContactEmail": {
+                  "typeName": "datasetContactEmail",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "support@geologischedienst.nl"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "dsDescription",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "dsDescriptionValue": {
+                  "typeName": "dsDescriptionValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Description of Dataset"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "subject",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "Earth and Environmental Sciences"
+            ]
+          },
+          {
+            "typeName": "keyword",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "keywordValue": {
+                  "typeName": "keywordValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Keyword-1"
+                }
+              },
+              {
+                "keywordValue": {
+                  "typeName": "keywordValue",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Keyword-2"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "producer",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "producerName": {
+                  "typeName": "producerName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "Producer"
+                }
+              }
+            ]
+          },
+          {
+            "typeName": "depositor",
+            "multiple": false,
+            "typeClass": "primitive",
+            "value": "TNO Geological Survey of the Netherlands"
+          },
+          {
+            "typeName": "dateOfDeposit",
+            "multiple": false,
+            "typeClass": "primitive",
+            "value": "2026-03-13"
+          }
+        ]
+      },
+      "geospatial": {
+        "displayName": "Geospatial Metadata",
+        "name": "geospatial",
+        "fields": [
+          {
+            "typeName": "geographicBoundingBox",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "westLongitude": {
+                  "typeName": "westLongitude",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "5.190"
+                },
+                "eastLongitude": {
+                  "typeName": "eastLongitude",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "5.280"
+                },
+                "northLatitude": {
+                  "typeName": "northLatitude",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "52.110"
+                },
+                "southLatitude": {
+                  "typeName": "southLatitude",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "52.050"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "DCATMetadata": {
+        "displayName": "DCAT AP-NL 3.0 Metadata",
+        "name": "DCATMetadata",
+        "fields": [
+          {
+            "typeName": "DCATpublisher",
+            "multiple": false,
+            "typeClass": "controlledVocabulary",
+            "value": "geo-survey-nl"
+          },
+          {
+            "typeName": "DCATaccessRights",
+            "multiple": false,
+            "typeClass": "controlledVocabulary",
+            "value": "public"
+          },
+          {
+            "typeName": "DCATeuTheme",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "envi"
+            ]
+          },
+          {
+            "typeName": "DCATapplicableLegislation",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "hvd"
+            ]
+          },
+          {
+            "typeName": "DCAThvdCategory",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "energy-resources",
+              "environmental-monitoring-facilities"
+            ]
+          }
+        ]
+      },
+      "GDNMetadata": {
+        "displayName": "Geological Survey of the Netherlands Metadata",
+        "name": "GDNMetadata",
+        "fields": [
+          {
+            "typeName": "GDNtheme",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [
+              "future-proof-land-use",
+              "geo-energy"
+            ]
+          }
+        ]
+      }
+    },
+    "files": [
+      {
+        "description": "File-1 description",
+        "label": "GoldenGateBridge.pptx",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 1,
+        "dataFile": {
+          "id": 5,
+          "persistentId": "",
+          "filename": "GoldenGateBridge.pptx",
+          "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "friendlyType": "MS Powerpoint",
+          "filesize": 152652,
+          "description": "File-1 description",
+          "storageIdentifier": "local://19ce6ee770a-19f735da29f8",
+          "rootDataFileId": -1,
+          "md5": "69c03f9cba8a5d4ab8494030f7a2784d",
+          "checksum": {
+            "type": "MD5",
+            "value": "69c03f9cba8a5d4ab8494030f7a2784d"
+          },
+          "tabularData": false,
+          "creationDate": "2026-03-13",
+          "publicationDate": "2026-03-13",
+          "fileAccessRequest": true
+        }
+      },
+      {
+        "description": "File-2 description",
+        "label": "OpenShift AI Operating Model 1.pdf",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 1,
+        "dataFile": {
+          "id": 3,
+          "persistentId": "",
+          "filename": "OpenShift AI Operating Model 1.pdf",
+          "contentType": "application/pdf",
+          "friendlyType": "Adobe PDF",
+          "filesize": 2803974,
+          "description": "File-2 description",
+          "storageIdentifier": "local://19ce6ee8763-3411a7905250",
+          "rootDataFileId": -1,
+          "md5": "ce0daa3264758a67d54d3f37fcb05d73",
+          "checksum": {
+            "type": "MD5",
+            "value": "ce0daa3264758a67d54d3f37fcb05d73"
+          },
+          "tabularData": false,
+          "creationDate": "2026-03-13",
+          "publicationDate": "2026-03-13",
+          "fileAccessRequest": true
+        }
+      },
+      {
+        "description": "File-3 description",
+        "label": "Untitled Diagram-1770810733190.drawig.xyz",
+        "restricted": false,
+        "version": 1,
+        "datasetVersionId": 1,
+        "dataFile": {
+          "id": 4,
+          "persistentId": "",
+          "filename": "Untitled Diagram-1770810733190.drawig.xyz",
+          "contentType": "image/png",
+          "friendlyType": "PNG Image",
+          "filesize": 116080,
+          "description": "File-3 description",
+          "storageIdentifier": "local://19ce6ee88f0-ef71b0811b6f",
+          "rootDataFileId": -1,
+          "md5": "38b02f179f291b85b949b6d8832f356c",
+          "checksum": {
+            "type": "MD5",
+            "value": "38b02f179f291b85b949b6d8832f356c"
+          },
+          "tabularData": false,
+          "creationDate": "2026-03-13",
+          "publicationDate": "2026-03-13",
+          "fileAccessRequest": true
+        }
+      }
+    ],
+    "citation": "Author of Dataset, 2026, \"Title of Dataset\", https://doi.org/10.83300/GDN/SQOPAL, Geological Survey of the Netherlands Dataverse, V1"
+  }
+}

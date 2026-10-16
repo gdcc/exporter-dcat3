@@ -38,8 +38,12 @@ class DcatApDE30ComplianceTest {
     private static final String PROFILE_RESOURCE = "AP_DE30/mapping/dcat-root.properties";
     private static final String FIXTURE = "src/test/resources/input/export_data_source_AP_DE30";
 
+    // The former init-dcat-ap-de/DCAT-AP mirror has been unreachable (HTTP 404, repo gone) since
+    // 2026-10-09. SEMICeu/DCAT-AP is the official upstream source; pinned to a commit known to
+    // carry a byte-identical copy of the 3.0.0 release shapes.
     private static final String DCAT_AP_BASE_SHACL =
-            "https://raw.githubusercontent.com/init-dcat-ap-de/DCAT-AP/master/releases/3.0.0/shacl/dcat-ap-SHACL.ttl";
+            "https://raw.githubusercontent.com/SEMICeu/DCAT-AP/fff059bd9c14c1adff5abfd6f32ff437eaec3390"
+                    + "/releases/3.0.0/shacl/dcat-ap-SHACL.ttl";
     private static final String DCAT_AP_DE_SHACL =
             "https://raw.githubusercontent.com/GovDataOfficial/DCAT-AP.de-SHACL-Validation/master/validator/resources/v3.0/shapes/";
 
