@@ -1,5 +1,5 @@
 # DCAT‑AP-DK Mapping for Datavejviser
-This package contains mapping configurations to convert JSON metadata from the Danish national [DeiC Dataverse](https://dataverse.deic.dk/) installation into **DCAT‑AP‑DK 3.0–compliant XML/RDF** for transferring metadata to the national [Datavejviser](https://datavejviser.dk/) public data catalog. It covers Dataset, Distribution, DataService, and Catalog metadata. 🗺️
+This package contains mapping configurations to convert JSON metadata from the Danish national [DeiC Dataverse](https://dataverse.deic.dk/) installation into **DCAT‑AP‑DK 3.0–compliant XML/RDF** for transferring metadata to the national [Datavejviser](https://datavejviser.dk/) public data catalog. It covers Dataset, Distribution, and Catalog metadata. DataService is intentionally not modeled; see below. 🗺️
 
 ⚠️ **Point of Attention**: The mapping to the Danish AP-DK-3.0 profile is currently incomplete. It does not include all optional or recommended fields, as it has been tailored to the specific user context. The intention is to remove any fields and TSV entries that do not apply to your organization. Additional relevant DCAT-AP-NL 3.0 mappings can, of course, be added over time.
 
@@ -8,13 +8,14 @@ This package contains mapping configurations to convert JSON metadata from the D
 - **dcat-root.properties**: Defines prefixes, DCAT elements, and structural relations.
 - **dcat-dataset.properties**: Maps Dataverse dataset-level metadata to DCAT fields.
 - **dcat-distribution.properties**: Maps file-level metadata to DCAT distributions.
-- **dcat-dataservice.properties**: Defines and populates the DataService node for the Dataverse API.
 - **dcat-catalog.properties**: Maps catalog-wide metadata including contact and publisher.
+
+> **No DataService**: this deployment does not expose the Dataverse API as a `dcat:DataService`. `element.dataservice.*` and `relation.dataset_has_service.*` are omitted from `dcat-root.properties`, so no DataService node is built or linked.
 
 ## How the Mapping Works
 
 ### 1. dcat-root.properties
-Defines global prefixes, including DCAT, DCT, FOAF, VCARD, SKOS, LOCN, GeoSPARQL, SPDX, RDF, OWL, and ELI. Configures element declarations and their relationships—e.g., linking datasets to catalogs and services.
+Defines global prefixes, including DCAT, DCT, FOAF, VCARD, SKOS, LOCN, GeoSPARQL, SPDX, RDF, OWL, and ELI. Configures element declarations and their relationships—e.g., linking datasets to catalogs and distributions.
 
 ### 2. dcat-dataset.properties
 Translates dataset metadata into key DCAT entities:
@@ -39,19 +40,9 @@ Translates file metadata into DCAT distributions:
 - **Media type**: IANA type mapped to `dct:MediaType`.
 - **Access/download URLs**: Typed as `rdfs:Resource`.
 - **Rights & License**: Typed per DCT standards.
-- **Service**: Links to the API DataService node.
 - **Checksum**: Creates a SPDX `Checksum` node with a typed algorithm and hexBinary value. The algorithm is modeled as a blank node with `owl:sameAs` to standard IRIs, satisfying SHACL constraints.
 
-### 4. dcat-dataservice.properties
-Captures metadata about the Dataverse API:
-- **Title/Description**: Human-readable info.
-- **Identifier**: API base URL.
-- **Endpoint**: `dcat:endpointURL` as `rdfs:Resource`.
-- **Endpoint Description**: Also typed `rdfs:Resource`.
-- **Language, Keywords, Access Rights, Theme, License**: Satisfy DCAT‑AP‑NL minCard constraints.
-- **Creator, Publisher, Contact**: Modeled similarly to dataset.
-
-### 5. dcat-catalog.properties
+### 4. dcat-catalog.properties
 Maps the catalog to DCAT:
 - **Contact**: vCard `Kind` with full name, email, and URL.
 - **Publisher**: FOAF Agent with ROR linking and multilingual names.
