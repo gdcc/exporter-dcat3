@@ -1,0 +1,72 @@
+[
+  {
+  "id" : 5,
+  "persistentId" : "",
+  "filename" : "GoldenGateBridge.pptx",
+  "contentType" : "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  "friendlyType" : "MS Powerpoint",
+  "filesize" : 152652,
+  "description" : "File-1 description",
+  "storageIdentifier" : "local://19ce6ee770a-19f735da29f8",
+  "rootDataFileId" : -1,
+  "md5" : "69c03f9cba8a5d4ab8494030f7a2784d",
+  "checksum" : {
+    "type" : "MD5",
+    "value" : "69c03f9cba8a5d4ab8494030f7a2784d"
+  },
+  "pidURL" : "https://doi.org/10.83300/GDN/SQOPAL/file5",
+  "tabularData" : false,
+  "creationDate" : "2026-03-13",
+  "publicationDate" : "2026-03-13",
+  "fileAccessRequest" : true,
+  "restricted" : false,
+  "fileMetadataId" : 2,
+  "varGroups" : [ ]
+}, {
+  "id" : 3,
+  "persistentId" : "",
+  "filename" : "OpenShift AI Operating Model 1.pdf",
+  "contentType" : "application/pdf",
+  "friendlyType" : "Adobe PDF",
+  "filesize" : 2803974,
+  "description" : "File-2 description",
+  "storageIdentifier" : "local://19ce6ee8763-3411a7905250",
+  "rootDataFileId" : -1,
+  "md5" : "ce0daa3264758a67d54d3f37fcb05d73",
+  "checksum" : {
+    "type" : "MD5",
+    "value" : "ce0daa3264758a67d54d3f37fcb05d73"
+  },
+  "pidURL" : "https://doi.org/10.83300/GDN/SQOPAL/file3",
+  "tabularData" : false,
+  "creationDate" : "2026-03-13",
+  "publicationDate" : "2026-03-13",
+  "fileAccessRequest" : true,
+  "restricted" : false,
+  "fileMetadataId" : 3,
+  "varGroups" : [ ]
+}, {
+  "id" : 4,
+  "persistentId" : "",
+  "filename" : "Untitled Diagram-1770810733190.drawig.xyz",
+  "contentType" : "image/png",
+  "friendlyType" : "PNG Image",
+  "filesize" : 116080,
+  "description" : "File-3 description",
+  "storageIdentifier" : "local://19ce6ee88f0-ef71b0811b6f",
+  "rootDataFileId" : -1,
+  "md5" : "38b02f179f291b85b949b6d8832f356c",
+  "checksum" : {
+    "type" : "MD5",
+    "value" : "38b02f179f291b85b949b6d8832f356c"
+  },
+  "pidURL" : "https://doi.org/10.83300/GDN/SQOPAL/file4",
+  "tabularData" : false,
+  "creationDate" : "2026-03-13",
+  "publicationDate" : "2026-03-13",
+  "fileAccessRequest" : true,
+  "restricted" : false,
+  "fileMetadataId" : 1,
+  "varGroups" : [ ]
+}
+]
