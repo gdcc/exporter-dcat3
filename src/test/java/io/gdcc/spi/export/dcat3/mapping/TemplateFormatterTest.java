@@ -34,6 +34,15 @@ class TemplateFormatterTest {
     }
 
     @Test
+    @DisplayName("format() returns empty when any indexed placeholder has no match")
+    void format_returns_empty_when_indexed_placeholder_unresolved() throws Exception {
+        JaywayJsonFinder finder = finderFor("{\"a\":\"ONE\"}");
+        String out = TemplateFormatter.format("X-${1}-${2}-Y", null, List.of("$.a", "$.missing"), finder, s -> s);
+
+        assertThat(out).isEmpty();
+    }
+
+    @Test
     @DisplayName("format() resolves inline JSONPath placeholders (scoped and root)")
     void format_resolves_inline_json_placeholders() throws Exception {
         JaywayJsonFinder finder = finderFor("{\"env\":{\"apiBaseUrl\":\"https://acc.example/api/\"},\"id\":\"5\"}");

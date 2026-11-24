@@ -10,7 +10,8 @@ import java.util.function.Function;
  *
  * <ul>
  *   <li>${value} - replaced by the base value (optionally normalized)
- *   <li>${1}, ${2}, ... - replaced by values resolved from jsonPaths in order
+ *   <li>${1}, ${2}, ... - replaced by values resolved from jsonPaths in order; if any of them
+ *       resolves to nothing, the whole format yields an empty string
  *   <li>${$.path} / ${$$.path} - inline JSONPath placeholders resolved via JaywayJsonFinder
  * </ul>
  */
@@ -58,6 +59,10 @@ public final class TemplateFormatter {
             for (int i = 0; i < jsonPaths.size(); i++) {
                 String path = jsonPaths.get(i);
                 String value = firstOrEmpty(resolveListScopedOrRoot(finder, path));
+                if (value.isEmpty()) {
+                    // An unresolved indexed placeholder means the whole format has no result.
+                    return "";
+                }
                 formatted = formatted.replace("${" + (i + 1) + "}", value);
             }
         }
