@@ -1,0 +1,23 @@
+{
+  "datasetVersion": {
+    "metadataBlocks": {
+      "geospatial": {
+        "fields": [
+          {
+            "typeName": "geographicBoundingBox",
+            "multiple": true,
+            "typeClass": "compound",
+            "value": [
+              {
+                "westLongitude": {"typeName": "westLongitude", "value": "3.3"},
+                "eastLongitude": {"typeName": "eastLongitude", "value": "7.2"},
+                "northLatitude": {"typeName": "northLatitude", "value": "53.6"},
+                "southLatitude": {"typeName": "southLatitude", "value": "50.7"}
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
