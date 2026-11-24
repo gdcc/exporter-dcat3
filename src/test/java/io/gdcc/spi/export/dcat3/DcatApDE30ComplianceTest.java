@@ -13,6 +13,7 @@ import io.gdcc.spi.export.ExportDataProvider;
 import io.gdcc.spi.export.dcat3.config.loader.RootConfigLoader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -52,8 +53,8 @@ class DcatApDE30ComplianceTest {
     private static final String SPDX_CHECKSUM_ALGORITHM =
             "http://spdx.org/rdf/terms#ChecksumAlgorithm";
 
-    private static final String DCAT_AP_DE_LICENSES =
-            "https://www.dcat-ap.de/def/licenses/20210721.rdf";
+    // Local copy of https://www.dcat-ap.de/def/licenses/20210721.rdf, which is frequently unreachable from CI.
+    private static final String DCAT_AP_DE_LICENSES_RESOURCE = "shacl/dcat-ap-de-licenses-20210721.rdf";
     private static final String DCAT_AP_DE_LICENSE_SCHEME = "http://dcat-ap.de/def/licenses";
     private static final String SKOS_IN_SCHEME = "http://www.w3.org/2004/02/skos/core#inScheme";
     private static final String DCAT_AP_DE_CC0_LICENSE_URI = "http://dcat-ap.de/def/licenses/cc-zero";
@@ -111,7 +112,11 @@ class DcatApDE30ComplianceTest {
         // Load the official DCAT-AP.de license vocabulary. It supplies the skos:inScheme statements required by the DE
         // license shape. We copy only those necessary statements
         Model licenseVocabulary = ModelFactory.createDefaultModel();
-        RDFParser.create().source(DCAT_AP_DE_LICENSES).lang(Lang.RDFXML).parse(licenseVocabulary.getGraph());
+        try (InputStream licenses =
+                getClass().getClassLoader().getResourceAsStream(DCAT_AP_DE_LICENSES_RESOURCE)) {
+            assertThat(licenses).as("Local license vocabulary not found").isNotNull();
+            RDFParser.create().source(licenses).lang(Lang.RDFXML).parse(licenseVocabulary.getGraph());
+        }
         data.add(licenseVocabulary.listStatements(
                 null,
                 licenseVocabulary.createProperty(SKOS_IN_SCHEME),
